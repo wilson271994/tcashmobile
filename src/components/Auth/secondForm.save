@@ -1,0 +1,672 @@
+import React, {Component} from 'react';
+import { bindActionCreators } from 'redux';
+import {connect} from 'react-redux';
+import {View, Text, Image, TextInput, Modal,TouchableOpacity, ActivityIndicator, ImageBackground, StatusBar, Button, Alert,  StyleSheet } from 'react-native';
+import { styles } from '../../assets/styles';
+import { loginstyle } from '../../assets/styles/login';
+import Entypo  from 'react-native-vector-icons/Entypo';
+import FontAwesome  from 'react-native-vector-icons/FontAwesome';
+import { store } from '../../reducers/store';
+import { IS_AUTH_ERROR, PAGE_TITLE, ROOT_NAVIGATION } from '../../reducers/actions/types';
+import { LoginAction, checkAuthDataAction } from '../../reducers/actions';
+import { ScrollView } from 'react-native';
+import AwesomeAlert from 'react-native-awesome-alerts';
+
+
+import { Picker } from '@react-native-picker/picker';
+import DatePicker from 'react-native-datepicker';
+
+
+const Formulaire = () => {
+    const [prenom, setPrenom] = useState('');
+    const [numRue, setNumRue] = useState('');
+    const [pays, setPays] = useState('');
+    const [ville, setVille] = useState('');
+    const [telephone, setTelephone] = useState('');
+    const [dateNaissance, setDateNaissance] = useState('');
+    const [typeCompte, setTypeCompte] = useState('');
+  
+    
+
+    const paysOptions = [
+        { label: 'France', value: 'FR', indicatif: '+33' },
+        { label: 'Belgique', value: 'BE', indicatif: '+32' },
+        { label: 'Canada', value: 'CA', indicatif: '+1' },
+        { label: 'Cameroun', value: 'CM', indicatif: '+237' },
+        { label: 'Maroc', value: 'MR', indicatif: '+212' },
+        { label: 'Afrique du Sud', value: 'SA', indicatif: '+27' },
+        { label: 'Argentine', value: 'AR', indicatif: '+54' },
+        { label: 'Mexique', value: 'MX', indicatif: '+52' },
+        { label: 'Egypte', value: 'EG', indicatif: '+20' },
+        { label: 'Sénégal', value: 'SN', indicatif: '+221' },
+        { label: 'Chine', value: 'CN', indicatif: '+86' },
+        { label: 'Inde', value: 'IN', indicatif: '+91' },
+        { label: 'Pays-Bas', value: 'NL', indicatif: '+31' },
+        { label: 'Russie', value: 'RU', indicatif: '+7' },
+        { label: 'États-Unis', value: 'US', indicatif: '+1' },
+      ];
+    
+      const villesOptions = {
+        FR: ['Paris', 'Lyon', 'Marseille'],
+        CM: ['Douala', 'Yaounde', 'Garoua'],
+        RU: ['Moscow', 'Saint Petersburg', 'Novosibirsk'],
+        CA: ['Vancouver', 'Ottawa', 'Quebec'],
+        MR: ['Casablanca', 'Marrakech', 'Rabat'],
+        SA: ['Dakar', 'Fès', 'Mogadishu'],
+        AR: ['Buenos Aires', 'Córdoba', 'Rosario'],
+        MX: ['Mexico City', 'Guadalajara', 'Monterrey'],
+        EG: ['Cairo', 'Alexandria', 'Giza'],
+        SN: ['Dakar', 'Saint-Louis', 'Louga'],
+        CN: ['Beijing', 'Shanghai', 'Shenzhen'],
+        IN: ['Mumbai', 'Delhi', 'Kolkata'],
+        NL: ['Amsterdam', 'Rotterdam', 'Utrecht'],
+        US: ['Washington D.C.', 'New York', 'Los Angeles'],
+        CA: ['Vancouver', 'Ottawa', 'Quebec'],
+        BE: ['Bruxelles', 'Anvers', 'Liège'],
+    
+      };
+    
+      const typesCompte = [
+        { label: 'Particulier', value: 'particulier' },
+        { label: 'Entreprise', value: 'entreprise' },
+        { label: 'Etudiant', value: 'etudiant' },
+        { label: 'Enseignant', value: 'enseignant' },
+        { label: 'Consultant', value: 'consultant' },
+      ];
+    
+      const handleValidation = () => {
+        if (!prenom || !numRue || !pays || !ville || !telephone || !dateNaissance || !typeCompte) {
+          Alert.alert('Erreur', 'Tous les champs sont obligatoires.');
+        } else {
+          Alert.alert('Succès', 'Formulaire soumis avec succès !');
+        }
+      };
+    
+     
+        <ImageBackground 
+        source={require('../../assets/images/welcome.png')}
+            style={[loginstyle.itemslidersignup]}
+            >  
+
+        <View style={styles.containersecondform}>
+          <Text style={styles.label}>Prénom</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Entrez votre prénom"
+            value={prenom}
+            onChangeText={setPrenom}
+          />
+    
+          <Text style={styles.label}>Numéro de rue</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Entrez votre numéro de rue"
+            keyboardType="numeric"
+            value={numRue}
+            onChangeText={setNumRue}
+          />
+    
+          <Text style={styles.label}>Pays</Text>
+          <Picker
+            selectedValue={pays}
+            onValueChange={(value) => {
+              setPays(value);
+              setVille(''); // Réinitialiser la ville lorsque le pays change
+            }}
+            style={styles.picker}
+          >
+            <Picker.Item label="Sélectionnez votre pays" value="" />
+            {paysOptions.map((p) => (
+              <Picker.Item key={p.value} label={p.label} value={p.value} />
+            ))}
+          </Picker>
+    
+          <Text style={styles.label}>Ville</Text>
+          <Picker
+            selectedValue={ville}
+            onValueChange={setVille}
+            style={styles.picker}
+            enabled={!!pays} // Activer uniquement si un pays est sélectionné
+          >
+            <Picker.Item label="Sélectionnez votre ville" value="" />
+            {pays && villesOptions[pays].map((v) => (
+              <Picker.Item key={v} label={v} value={v} />
+            ))}
+          </Picker>
+    
+          <Text style={styles.label}>Numéro de téléphone</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Entrez votre numéro de téléphone"
+            keyboardType="phone-pad"
+            value={telephone}
+            onChangeText={setTelephone}
+          />
+    
+          <Text style={styles.label}>Date de naissance</Text>
+          <DatePicker
+            style={styles.datePicker}
+            date={dateNaissance}
+            mode="date"
+            placeholder="YYYY-MM-DD"
+            format="YYYY-MM-DD"
+            maxDate="2023-12-31"
+            confirmBtnText="Confirmer"
+            cancelBtnText="Annuler"
+            onDateChange={setDateNaissance}
+          />
+    
+          <Text style={styles.label}>Type de compte</Text>
+          <Picker
+            selectedValue={typeCompte}
+            onValueChange={setTypeCompte}
+            style={styles.picker}
+          >
+            <Picker.Item label="Sélectionnez le type de compte" value="" />
+            {typesCompte.map((t) => (
+              <Picker.Item key={t.value} label={t.label} value={t.value} />
+            ))}
+          </Picker>
+    
+
+          <View style={loginstyle.footersignup}>
+                                <TouchableOpacity 
+                                    disabled={is_loading ? true : false}
+                                    style={loginstyle.btnsignup} 
+                                    onPress={this._authSignup}>
+                                {
+                                    is_loading ?
+                                        <View style={loginstyle.loaderbtn}>
+                                            <ActivityIndicator size="small" color="#fff" />
+                                        </View>
+                                    :
+                                        <Text style={[styles.textBold, loginstyle.textbtnsubmit]}>Suivant</Text>
+                                }
+                                </TouchableOpacity>
+                            </View>
+
+    
+          <Button title="Soumettre" onPress={handleValidation} color="#841584" />
+        </View>
+      
+      </ImageBackground>
+    };
+
+    
+      
+
+    export default Formulaire
+    \
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class ProfileIndex extends PureComponent {
+    constructor(props) {
+      super(props);
+      this.state = {
+        notificationsEnabled: true,
+        backgroundPlayEnabled: false,
+        autoPlayEnabled: true,
+        darkModeEnabled: false,
+      };
+    }
+  
+    componentDidMount(){
+        this._fechtData();
+    } 
+  
+    _fechtData = async () => {
+        await switchHeaderAction(true);  
+    } 
+
+    _navigateToBookDetail = () => {
+        const {navigation} = this.props;
+        store.dispatch({type:ROOT_NAVIGATION, value:navigation});
+        navigation.navigate('BookDetail');
+    }
+
+    render() {
+      return (
+        <View style={styles.container}>
+          <View style={styles.profileSection}>
+            <FontAwesomeIcon icon={faUser} size={30} />
+            <TouchableOpacity style={styles.profileButton}>
+              <Text style={styles.profileButtonText}>Modifier mon profil</Text>
+            </TouchableOpacity>
+          </View>
+  
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Compte</Text>
+            <TouchableOpacity style={styles.option}>
+              <Text>full name</Text>
+              <FontAwesomeIcon icon={faChevronRight} size={16} />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.option}>
+              <Text>See more</Text>
+              <FontAwesomeIcon icon={faChevronRight} size={16} />
+            </TouchableOpacity>
+          </View>
+  
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Paramètres</Text>
+            <TouchableOpacity style={styles.option}>
+              <Text>Language</Text>
+              <Text style={styles.optionValue}>Français</Text>
+              <FontAwesomeIcon icon={faChevronRight} size={16} />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.option}>
+              <Text>Notifications</Text>
+              <Switch value={this.state.notificationsEnabled} onValueChange={() => this.setState({ notificationsEnabled: !this.state.notificationsEnabled })} />
+            </TouchableOpacity>
+            {/* Autres options avec Switch */}
+          </View>
+  
+          {/* Autres sections similaires */}
+        </View>
+      );
+    }
+  }
+  
+
+
+
+
+
+
+
+
+class ProfileIndex extends PureComponent {
+        constructor(props) {
+          super(props);
+          this.state = {
+            notificationsEnabled: false,
+            backgroundPlayEnabled: false,
+            autoPlayEnabled: false,
+            darkModeEnabled: false,
+          };
+        }
+      
+        render() {
+          return (
+            <View style={styles.container}>
+              <View style={styles.header}>
+                <Ionicons name="person-circle" size={32} color="#000" />
+                <Text style={styles.headerTitle}>Modifier mon profil</Text>
+              </View>
+      
+              <View style={styles.section}>
+                <Text style={styles.sectionTitle}>Compte</Text>
+                <TouchableOpacity style={styles.listItem}>
+                  <Ionicons name="person" size={24} color="#000" />
+                  <Text style={styles.listItemText}>full name</Text>
+                  <Ionicons name="chevron-forward" size={24} color="#000" />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.listItem}>
+                  <Ionicons name="eye" size={24} color="#000" />
+                  <Text style={styles.listItemText}>See more</Text>
+                  <Ionicons name="chevron-forward" size={24} color="#000" />
+                </TouchableOpacity>
+              </View>
+      
+              {/* ... autres sections similaires pour Paramètres, Paiements, Supports ... */}
+      
+              <View style={styles.section}>
+                <Text style={styles.sectionTitle}>Paramètres</Text>
+                <View style={styles.listItem}>
+                  <Ionicons name="language" size={24} color="#000" />
+                  <Text style={styles.listItemText}>Langue</Text>
+                  <Text style={styles.listItemText}>Français</Text>
+                  <Ionicons name="chevron-forward" size={24} color="#000" />
+                </View>
+                <View style={styles.listItem}>
+                  <Ionicons name="notifications" size={24} color="#000" />
+                  <Text style={styles.listItemText}>Notifications</Text>
+                  <Switch
+                    value={this.state.notificationsEnabled}
+                    onValueChange={(value) => this.setState({ notificationsEnabled: value })}
+                  />
+                </View>
+                {/* ... autres éléments de liste avec des interrupteurs ... */}
+              </View>
+            </View>
+          );
+        }
+      }
+      
+
+  const mapDispatchToProps = (dispatch) => {
+    return {
+        ...bindActionCreators({
+            switchHeaderAction,
+        }, dispatch),
+    }
+};
+
+const mapStateToProps = (state) => {
+    return {
+        user_infos:state.auth.user_infos,
+        is_loading : state.loader.is_loading
+    }
+}
+  
+
+
+
+
+
+
+{ 
+   state = {
+      notificationsEnabled: true,
+      backgroundPlayEnabled: false,
+      autoplayEnabled: true,
+      darkModeEnabled: false,
+    };
+  
+    toggleSwitch = (name) => {
+      this.setState(prevState => ({
+        [name]: !prevState[name]
+      }));
+    };
+  
+    render() {
+      return (
+        <View style={styles.container}>
+          <View style={styles.profileSection}>
+            <FontAwesomeIcon icon={faUser} size={30} />
+            <Text style={styles.sectionTitle}>Modifier mon profil</Text>
+            <TouchableOpacity style={styles.option}>
+              <Text>full name</Text>
+              <FontAwesomeIcon icon={faChevronRight} />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.option}>
+              <Text>See more</Text>
+              <FontAwesomeIcon icon={faChevronRight} />
+            </TouchableOpacity>
+          </View>
+  
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Paramètres</Text>
+            <TouchableOpacity style={styles.option}>
+              <Text>Language</Text>
+              <Text>Français</Text>
+              <FontAwesomeIcon icon={faChevronRight} />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.option}>
+              <Text>Notifications</Text>
+              <FontAwesomeIcon icon={faChevronRight} />
+            </TouchableOpacity>
+            <View style={styles.switchRow}>
+              <Text>Jouer en arrière plan</Text>
+              <Switch
+                value={this.state.backgroundPlayEnabled}
+                onValueChange={() => this.toggleSwitch('backgroundPlayEnabled')}
+              />
+            </View>
+            {/* Autres options avec switch de la même manière */}
+          </View>
+  
+          {/* Autres sections similaires pour Payments, Supports, etc. */}
+        </View>
+      );
+    }
+  }
+
+const mapDispatchToProps = (dispatch) => {
+return {
+  ...bindActionCreators({
+      switchHeaderAction,
+  }, dispatch),
+}
+};
+
+const mapStateToProps = (state) => {
+return {
+  user_infos:state.auth.user_infos,
+  is_loading : state.loader.is_loading
+}
+}
+
+
+
+
+ <View style={readstyle.container}>
+            <View style={readstyle.header}>
+              <Text style={readstyle.title}>En cours de lecture</Text>
+            </View>
+            <View style={readstyle.bookCover}>
+              {/* Ici, vous pouvez remplacer cette vue par votre image de couverture */}
+              <View style={{ backgroundColor: 'gray', height: 200, width: 150 }} />
+            </View>
+            <View style={readstyle.playerControls}>
+              <Text style={readstyle.currentTime}>00:00</Text>
+              <View style={readstyle.playPauseButton}>
+                {/* Bouton de lecture/pause */}
+              </View>
+              <Text style={readstyle.totalTime}>60:00</Text>
+            </View>
+          </View>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 20,
+      },
+      logo: {
+        width: 50,
+        height: 50,
+        marginRight: 10,
+      },
+      title: {
+        fontSize: 20,
+        fontWeight: 'bold',
+      },
+      bookCover: {
+        marginBottom: 20,
+      },
+      playerControls: {
+        flexDirection: 'row',
+        alignItems: 'center',
+      },
+      currentTime: {
+        marginRight: 20,
+      },
+      totalTime: {
+        marginLeft: 20,
+      },
+      playPauseButton: {
+        // Styles pour le bouton de lecture/pause
+      },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//ScrollView
+
+
+
+
+
+
+
+                        <View style={styles.cadre}>
+                            <View style={supportchatstyle.container3}>
+                                <TouchableOpacity>
+                                    <Text style={supportchatstyle.Text1}>ghfhr</Text>
+                               </TouchableOpacity>
+                            </View>
+                        </View>
+
+                     //ScrollView
+
+
+
+
+
+
+
+
+
+ <View style={styles.container}>
+        <FlatList
+          data={this.state.messages}
+          renderItem={({ item }) => this.renderMessage(item)}
+          keyExtractor={(item, index) => index.toString()}
+        />
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.input}
+            value={this.state.newMessage}
+            onChangeText={(text) => this.setState({ newMessage: text })}
+          />
+          {/* Bouton d'envoi */}
+        </View>
+      </View>
+
+
+
+
+
+
+
+
+
+      //ReadPage
+
+      <View style={readstyle.container}>
+        <Text style={readstyle.title}>En cours de lecture</Text>
+        <Image source={require('../../assets/images/biblio.jpg')}  style={readstyle.bookCover}  />
+        <View style={readstyle.playerControls}>
+          <Text style={readstyle.currentTime}>00:00</Text>
+          <View style={readstyle.playButton}>
+            {/* Bouton de lecture/pause */}
+          </View>
+          <Text style={readstyle.duration}>60:00</Text>
+          {/* Autres contrôles de lecture (précédent, suivant, etc.) */}
+        </View>
+      </View>
+
+      //ReadPage
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#F5FCFF',
+      },
+      title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 20,
+      },
+      bookCover: {
+        width: 200,
+        height: 300,
+        marginBottom: 20,
+      },
+      playerControls: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+      },
+      currentTime: {
+        fontSize: 16,
+      },
+      duration: {
+        fontSize: 16,
+      },
+      playButton: {
+        // Styles pour le bouton de lecture
+      },
+
+
+
+
+
+
+
+
+import ImagePicker from 'react-native-image-picker';
+
+
+componentDidMount() {
+        // Simuler une progression
+        const intervalId = setInterval(() => {
+          if (this.state.progress < 1) {
+            this.setState(prevState => ({ progress: prevState.progress + 0.05 }));
+          } else {
+            clearInterval(intervalId);
+          }
+        }, 100);
+      }

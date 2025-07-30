@@ -1,0 +1,177 @@
+// ./routes/StackNavigator.js
+import React, { Component } from "react";
+import { bindActionCreators } from 'redux';
+import {connect} from 'react-redux';
+import { createStackNavigator } from "@react-navigation/stack";
+import {Image, Text, TouchableOpacity} from "react-native";
+import loginPage from "../../components/Auth/LoginPage";
+import { switchHeaderAction } from "../../reducers/actions";
+import { loginstyle } from "../../assets/styles/login";
+import { styles } from "../../assets/styles";
+import activationPage from "../../components/Auth/activationPage";
+import AntDesign  from 'react-native-vector-icons/AntDesign';
+import SignupForm1 from "../../components/Auth/SignupForm1";
+import Preload from "../../components/Auth/Preload";
+import SignupForm2 from "../../components/Auth/SignupForm2";
+
+const Stack = createStackNavigator();
+
+class StackAuth extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+        }
+    }
+
+    _backHome = () => {
+        const {root_navigation} = this.props; 
+        root_navigation.goBack();
+    } 
+
+    _backToForm1 = () => {
+        const {navigation} = this.props; 
+        navigation.navigate('SignUpForm1');
+    }
+
+    _filterSearch = (text) => {
+    
+    }
+
+    ToggleSearchBar = () => {
+        const {root_navigation} = this.props; 
+        console.log('yesssssssssssss')
+    }
+
+    render () {
+        const {page_title} = this.props;
+        return ( 
+            <Stack.Navigator>
+                <Stack.Screen 
+                    name=" " 
+                    component={loginPage}           
+                    options={{
+                        headerShown:false, 
+                        headerTitle: props => <Image style={loginstyle.logoauth} source={require('../../assets/images/logo.png')}/>,
+                        headerTitleAlign:'center',
+                        headerStyle : loginstyle.headertitlestyle
+                    }}
+                />
+
+                <Stack.Screen 
+                    name="SignUpForm1"  
+                    component={SignupForm1} 
+                    options={{
+                        headerShown:true, 
+                        headerTitle : () => {
+                            return (
+                                <Text 
+                                    numberOfLines={1}
+                                    style={[styles.textBold, loginstyle.titlepagesignup]}>{page_title}</Text>
+                            )
+                        },
+                        headerLeft: () => {
+                            return (
+                                <TouchableOpacity 
+                                    style={styles.btnbackscreen}
+                                    onPress={this._backHome}>
+                                    <Image style={loginstyle.backstyle} source={require('../../assets/images/back.png')} />
+                                </TouchableOpacity>
+                            )
+                        },
+                    }}
+                />
+
+
+                <Stack.Screen
+                    name="SignupForm2"
+                    component={SignupForm2}
+                    options={{
+                        headerShown: true,
+                        headerTitle: () => {
+                            return (
+                                <Text
+                                    numberOfLines={1}
+                                    style={[styles.textBold, loginstyle.titlepagesignup]}>{page_title}</Text>
+                            )
+                        },
+                        headerLeft: () => {
+                            return (
+                                <TouchableOpacity
+                                    onPress={this._backToForm1}
+                                    style={styles._backHome}>
+                                    <Image style={loginstyle.backstyle} source={require('../../assets/images/back.png')} />
+                                </TouchableOpacity>
+                            )
+                        },
+                    }}
+
+                />
+
+             <Stack.Screen
+                name="Login" 
+                component={loginPage} 
+                options={{
+                    headerShown:true,
+                    headerTitle : () => {
+                        return(
+                            <Text
+                            numberOfLines={1}
+                            style={[styles.textBold, loginstyle.titlepagePreload]}>{page_title}</Text>
+                        )
+                    },
+                    headerLeft: () => {
+                        return (
+                            <TouchableOpacity
+                            style={styles._backHome}>
+                            </TouchableOpacity>
+                        )
+                    },
+                }}
+                
+                />
+
+
+                <Stack.Screen 
+                    name="Activation"  
+                    component={activationPage} 
+                    options={{
+                        headerShown:true, 
+                        headerTitle : () => {
+                            return (
+                                <Text 
+                                    numberOfLines={1}
+                                    style={[styles.textBold, loginstyle.titlesignup]}>{page_title}</Text>
+                            )
+                        },
+                        headerLeft: () => {
+                            return (
+                                <TouchableOpacity 
+                                    style={styles.btnbackscreen}
+                                    onPress={this._backHome}>
+                                    <AntDesign name="left" style={styles.angleleft}/>
+                                </TouchableOpacity>
+                            )
+                        },
+                    }}
+                />
+
+            </Stack.Navigator>
+        );
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        dispatch,
+            ...bindActionCreators({switchHeaderAction}, dispatch),
+        }
+};
+ 
+const mapStateToProps = (state) => {
+    return {
+        page_title:state.navigation.page_title,
+        root_navigation:state.navigation.root_navigation
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps, null)(StackAuth);

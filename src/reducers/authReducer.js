@@ -10,7 +10,7 @@ import {
 
 
 const initialState = {
-    is_authenticated : false,
+    is_authenticated : true,
     user_infos : {},
     user_token : '',
     auth_error_message:'',

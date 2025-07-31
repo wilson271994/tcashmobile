@@ -2,12 +2,10 @@ import {StyleSheet, Dimensions} from 'react-native';
 import { color } from 'react-native-elements/dist/helpers';
 const {width, height} = Dimensions.get('window');
 
-export const servicestyle = StyleSheet.create({
+export const bookstyle = StyleSheet.create({
     container:{
         backgroundColor:'#f5f5f5',
-        marginTop:5,
-        flex: 1
-
+        marginTop:5
     },
     container2: {
         backgroundColor: '#F5F5F5',
@@ -21,79 +19,9 @@ export const servicestyle = StyleSheet.create({
         padding:10,
         width:'100%'
     },
-    searchcontainer:{
-        flexDirection:'row',
-        width:'100%',
-    },
-     scrollContainer: {
-        paddingBottom: 10,
-    },
-     headeritemleft:{
-        width:'25%'
-    },
-    headeritemmidle:{
-        width:'60%',
-        right:10,
-        top: 10
-    },
-    inputSearch:{
-        height: 40,
-        width: '95%',
-        borderColor: '#b1b1b1', 
-        borderRadius: 30,
-        justifyContent: 'center',
-        alignItems: 'center',
-        position: 'relative',
-        backgroundColor: '#fff',
-        borderWidth: 1,
-        marginTop:10,
-        flexDirection:'row',
-    },
-    SearchBar:{
-        color:'#fff',
-        width:'80%',
-    },
-    text1:{
-        color:'#000',
-        width:'80%',
-        fontWeight: 'bold',
-        left: 85,
-        fontSize: 25,
-        top: -10
-    },
-    searchIcons: {
-        fontSize:20,
-        color:'#000'
-    }, 
-    headeritemright:{
-        width:'25%'
-    },
-     notification:{
-        width:20,
-        height:30,
-        position: 'absolute',
-        right:5,
-        marginTop:15
-    },
-    panier1:{
-        width:25,
-        height:25,
-        position: 'absolute',
-        right:45,
-        marginTop:20
-    },
-     counter1:{
-        left:240,
-        top:20
-    },
-    index:{
-        color:"#ECB817",
-        fontWeight: 'bold'
-    },
     logo2: {
-        width:70,
-        height:70,
-        top: 7
+        width:60,
+        height:60,
         
     },
     notification:{
@@ -105,6 +33,9 @@ export const servicestyle = StyleSheet.create({
     },
     headeritemright:{
         width:'83.9%'
+    },
+    scrollContainer: {
+        padding: 20,
     },
     bookContainer:{
         marginTop: 10,
@@ -159,8 +90,7 @@ export const servicestyle = StyleSheet.create({
         height:'auto',
         borderWidth:1,
         borderColor:'#eee',
-        borderRadius:10,
-        justifyContent: 'flex-end',
+        borderRadius:10
     },
     infobookcontainer:{
         padding:10,
@@ -190,7 +120,7 @@ export const servicestyle = StyleSheet.create({
     btndetail:{
         padding:5,
         width:'90%',
-        backgroundColor:'#6dcabb',
+        backgroundColor:'#2e27a5',
         margin:10,
         borderRadius:10,
         flexDirection:'row',
@@ -204,13 +134,12 @@ export const servicestyle = StyleSheet.create({
         flexDirection:'row',
         justifyContent:'center'
     },
-    backstyle:{
-        width:20,
-        height:20,
+    icondetail:{
+        fontSize:16,
+        color:'#fff',
         marginTop:5,
         marginRight:10,
     },
-
     iconoption:{
         fontSize:20,
         color:'#666',
@@ -223,22 +152,23 @@ export const servicestyle = StyleSheet.create({
         textAlign:'center',
         paddingTop:5
     },
-    textbtndetail2:{
-        color:'#fff',
-        fontSize:14,
-        textAlign:'center',
-        paddingTop:5
-    },
-    textbtndetail3:{
-        color:'#fff',
-        fontSize:14,
-        textAlign:'center',
-        paddingTop:5
-    },
     textbtnoption:{
         color:'#666',
         fontSize:16,
         textAlign:'center',
+    },
+    iconstatblog:{
+        fontSize:16,
+        color:'#eee',
+        marginBottom:10
+    },
+    statbook:{
+        position:'absolute',
+        top:10,
+        right:10,
+        backgroundColor:'rgba(0,0,0,0.5)',
+        padding:10,
+        borderRadius:10
     },
     textstatblog:{
         fontSize:16,
@@ -248,6 +178,11 @@ export const servicestyle = StyleSheet.create({
     },
 
     //Product Item List
+    footerbook:{
+        padding:5,
+        borderTopWidth:0.5,
+        borderTopColor:'#eee'
+    },
     blocitemfooter:{
         flexDirection:'row',
         marginBottom:-5 
@@ -265,6 +200,12 @@ export const servicestyle = StyleSheet.create({
     },
     covercontainer:{
     },
+    textprice:{
+        fontSize:18,
+        color:'#ECB817',
+        textAlign:'left'
+    },
+
     //core book banner
     containerbanner:{
         height:180,
@@ -284,18 +225,7 @@ export const servicestyle = StyleSheet.create({
     container3: {
         backgroundColor: '#FFF',
         marginTop:15,
-        width: 'auto',
-
-
-
-         flex: 1, // <--- C'est la propriété magique ici !
-        backgroundColor: 'white', // La couleur de fond blanche
-        borderTopLeftRadius: 30, // Arrondi pour le haut si nécessaire
-        borderTopRightRadius: 30,
-        paddingTop: 20, // Espace interne
-        marginTop: 10, 
-        height: height
-       
+        width: 'auto'
     },
     promoContainer: {
         marginTop: 30,
@@ -307,24 +237,6 @@ export const servicestyle = StyleSheet.create({
     promoImage: {
         width: '100%',
         height: 150,
-    },
-     orange: {
-        width: 30,
-        height: 20,
-        right:15,
-        top:5
-    },
-     mtn: {
-        width: 30,
-        height: 20,
-        right:15,
-        top:5
-    },
-     visa: {
-        width: 30,
-        height: 20,
-        right:15,
-        top:5
     },
     Title: {
         fontSize: 26,
@@ -355,35 +267,7 @@ export const servicestyle = StyleSheet.create({
         backgroundColor:'#2e27a5',
         margin:10,
         top:520,
-        paddingBottom:10,
-        borderRadius:10,
-        flexDirection:'row',
-        justifyContent:'center',
-        position: 'absolute'
-    },
-    btn2:{
-        padding:5,
-        width:'70%',
-        height:40,
-        left:35,
-        backgroundColor:'#2e27a5',
-        margin: 20,
-        top:550,
-        paddingBottom:10,
-        borderRadius:10,
-        flexDirection:'row',
-        justifyContent:'center',
-        position: 'absolute'
-    },
-     btn3:{
-        padding:5,
-        width:'70%',
-        height:40,
-        left:35,
-        backgroundColor:'#2e27a5',
-        margin: 20,
-        top:469,
-        paddingBottom:10,
+       paddingBottom:10,
         borderRadius:10,
         flexDirection:'row',
         justifyContent:'center',

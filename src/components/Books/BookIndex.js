@@ -14,56 +14,54 @@ import { IS_AUTH_ERROR, PAGE_TITLE, ROOT_NAVIGATION } from '../../reducers/actio
 import FontAwesome6  from 'react-native-vector-icons/FontAwesome6';
 import MaterialCommunityIcons  from 'react-native-vector-icons/MaterialCommunityIcons.js';
 import {switchHeaderAction} from '../../reducers/actions/index.js';
-import { servicestyle } from '../../assets/styles/service.js';
+import Search from '../../screens/Search.js';
+import { bookstyle } from '../../assets/styles/books.js';
 import BookBanner from './BookBanner.js';
 import { styles } from '../../assets/styles/index.js';
 import cover from '../../assets/images/biblio.jpg';
-
+import { searchstyle } from '../../assets/styles/search.js';
+import { homestyle } from '../../assets/styles/home.js';
 import { store } from '../../reducers/store.js';
 
-const service_list = [
+const book_list = [
     {
         'id'    : 1,
-        'name' : 'Recharge',
+        'name' : 'Favorit book one',
         'label' : 'favorit',
         'cover' : cover
     },
     {
         'id'    : 2,
-        'name' : 'Retrait',
+        'name' : 'Favorit book two',
+        'label' : 'favorit',
         'cover' : cover
     },
     {
         'id'    : 3,
-        'name' : 'Consulter le solde',
+        'name' : 'Favorit book three',
         'label' : 'favorit',
         'cover' : cover
     },
     {
         'id'    : 4,
-        'name' : 'Tranfert',
+        'name' : 'Favorit book three',
         'label' : 'favorit',
         'cover' : cover
     },
     {
         'id'    : 5,
-        'name' : 'Créer une carte virtuelle',
+        'name' : 'Favorit book three',
         'label' : 'favorit',
         'cover' : cover
     },
 ]
 
-class ServiceIndex extends PureComponent {
+class BookIndex extends PureComponent {
     constructor(props){
         super(props); 
-        this.state = {
-          searchText : 
-            ' ',
-        }
+        state = {}
     };
-   handleChangeText = (text) => {
-        this.setState({ searchText: text });
-    };
+  
     componentDidMount(){
         this._fechtData();
     } 
@@ -71,6 +69,7 @@ class ServiceIndex extends PureComponent {
     _fechtData = async () => {
         await switchHeaderAction(true);  
     } 
+
     _navigateToBookDetail = () => {
         const {navigation} = this.props;
         store.dispatch({type:ROOT_NAVIGATION, value:navigation});
@@ -81,27 +80,43 @@ class ServiceIndex extends PureComponent {
     _renderItem = (item) => {
         const {user_infos} = this.props;  
         return (
-            <View style={servicestyle.booklistpage}>
+            <View style={bookstyle.booklistpage}>
                 <TouchableOpacity 
-                    onPress={this._navigateToBookDetail.bind(this, item)}
-                    style={servicestyle.covercontainer}>
+                     onPress={this._navigateToBookDetail.bind(this, item)}
+                    style={bookstyle.covercontainer}>
                     <Image 
-                        style={servicestyle.coverbook}
+                        style={bookstyle.coverbook}
                         source={item.cover}
                     />
+                    
+                    <View style={bookstyle.statbook}>
+                        <View style={bookstyle.itemblogstat}>
+                            <Icon name="thumbs-up-outline" style={bookstyle.iconstatblog} />
+                            <Icon name="heart-outline" style={bookstyle.iconstatblog} />
+                            <Icon name="share-social" style={bookstyle.iconstatblog} />                                  
+                        </View>
+                    </View>
                 </TouchableOpacity>
-                <View style={servicestyle.infobookcontainer}>
+                <View style={bookstyle.infobookcontainer}>
                     <Text 
                         numberOfLines={1}
-                        style={[servicestyle.bookname, styles.textBold]} >
+                        style={[bookstyle.bookname, styles.textBold]} >
                             {item.name}
                     </Text>
+
+                    <View style={bookstyle.footerbook}>
+                        <Text 
+                            numberOfLines={1} 
+                            style={[styles.textBold, bookstyle.textprice]}>
+                                2000 XAF
+                        </Text>
+                    </View>
                 </View>
                 <TouchableOpacity 
                     onPress={this._navigateToBookDetail.bind(this, item)}
-                    style={servicestyle.btndetail}> 
-                    <Image style={servicestyle.backstyle} source={require('../../assets/images/back.png')} />
-                    <Text style={[servicestyle.textbtndetail, styles.textBold]}>{item.name} </Text>
+                    style={bookstyle.btndetail}> 
+                    <MaterialCommunityIcons name='basket-fill' style={bookstyle.icondetail}/>
+                    <Text style={[bookstyle.textbtndetail, styles.textBold]}>Commander </Text>
                 </TouchableOpacity>
             </View>
         )
@@ -110,77 +125,60 @@ class ServiceIndex extends PureComponent {
     render(){
         const {navigation, is_loading} = this.props; 
         return(
-            <SafeAreaView style={servicestyle.container2}>
-              <View style={servicestyle.header}>
-                    <View style={servicestyle.headeritemleft}>
-                        <Image
-                            source={require('../../assets/images/logo.png')} // Remplacez par le chemin de votre image
-                            style={servicestyle.logo2}
-                        />
-                    </View>
-
-                    <View style={[servicestyle.searchcontainer, servicestyle.headeritemmidle]}>
-                        <View style={servicestyle.inputSearch}>
-                            <TextInput
-                                style={servicestyle.SearchBar}
-                                placeholderTextColor='#b1b1b1'
-                                onChangeText={this.handleChangeText}
-                                value={this.state.searchText}
-                                placeholder='Recherche...'
-                            />
-                            <Icon name='search' style={servicestyle.searchIcons} />
-                        </View>
-                    </View>
-            
-                
-                    <View style={servicestyle.headeritemright}>
-                        <TouchableOpacity>
+            <SafeAreaView style={bookstyle.container2}>
+                <View style={searchstyle.container}>
+                    <View style={searchstyle.header}>
                             <Image
-                                source={require('../../assets/images/notification.png')} // Remplacez par le chemin de votre image
-                                style={servicestyle.notification}
+                                source={require('../../assets/images/logo.png')} // Remplacez par le chemin de votre image
+                                style={homestyle.logo2}
                             />
-                        </TouchableOpacity>
-
-                       
+                             
+                        <View style={homestyle.headeritemright}>
                         <TouchableOpacity>
-                                 <Image
-                                    source={require('../../assets/images/panier.png')} // Remplacez par le chemin de votre image
-                                    style={servicestyle.panier1}
-                                /> 
+                                <Image
+                                    source={require('../../assets/images/notification.png')} // Remplacez par le chemin de votre image
+                                    style={homestyle.notification}
+                                />
                             </TouchableOpacity>
 
-                            <View style={servicestyle.counter1}>
-                                <Text style={servicestyle.index}>0</Text>
-                            </View>
                             
+
+                            <TouchableOpacity>
+                                 <Image
+                                    source={require('../../assets/images/panier.png')} // Remplacez par le chemin de votre image
+                                    style={homestyle.panier}
+                                />
+                            </TouchableOpacity>
+
+                            <View style={homestyle.counter}>
+                                <Text style={homestyle.index}>0</Text>
+                            </View>
+
+                        </View>
                     </View>
-
                 </View>
-
-                <Text style={servicestyle.text1}>Services Financiers</Text>
-
                 <SectionGrid
                     ListHeaderComponent={ 
                         <BookBanner />
                     }
-                    style={[styles.card, servicestyle.gridcontainer]}
+                    style={[styles.card, bookstyle.gridcontainer]}
                     spacing={15}
-                    sections={[{data: service_list}]}
+                    sections={[{data: book_list}]}
                     renderItem={({ item, index }) => (this._renderItem(item, index))}   
                     refreshing={is_loading}     
                     //onEndReached={this._fetchMoreProduct}
                 />
 
                 {
-                    service_list.length === 0 && is_loading === false ?
-                        <View style={servicestyle.emptypage}>
-                            <Text style={[styles.text, servicestyle.textempty]}>Aucun livre disponible dans cette rubrique!</Text>
+                    book_list.length === 0 && is_loading === false ?
+                        <View style={bookstyle.emptypage}>
+                            <Text style={[styles.text, bookstyle.textempty]}>Aucun livre disponible dans cette rubrique!</Text>
                         </View>
                     :null
                 }
                 {
-                    service_list.length === 0 || is_loading ?
-                        <View style={servicestyle.loadershopping}>
+                    book_list.length === 0 || is_loading ?
+                        <View style={bookstyle.loadershopping}>
                             <ActivityIndicator size='large' color='#2e27a5' />
                         </View>
                     :null
@@ -210,4 +208,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-  export default connect(mapStateToProps, mapDispatchToProps, null)(ServiceIndex);
+  export default connect(mapStateToProps, mapDispatchToProps, null)(BookIndex);

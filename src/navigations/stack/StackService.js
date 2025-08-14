@@ -10,7 +10,7 @@ import IconFA  from 'react-native-vector-icons/FontAwesome';
 import { switchHeaderAction } from "../../reducers/actions";
 import HTMLView from 'react-native-htmlview'; 
 import { htmlstyles } from '../../assets/styles/htmlviewstyle';
-import BookDetail from "../../components/Books/ServiceDetails";
+import BookDetail from "../../components/Service/ServiceDetails";
 import service from "../../screens/service";
 
 const Stack = createStackNavigator();
@@ -61,7 +61,7 @@ class StackBook extends Component {
                                 <View style={styles.backText}>
                                 <Text 
                                     numberOfLines={1}
-                                    style={[styles.textBold, styles.textHeader]}>Détails</Text>
+                                    style={[styles.textBold, styles.textHeader]}></Text>
                             </View>
                             )
                         },

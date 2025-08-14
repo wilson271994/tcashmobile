@@ -14,6 +14,8 @@ import HTMLView from 'react-native-htmlview';
 import Toast from 'react-native-toast-message';
 import Support from '../../components/Profile/Support'
 import SupportChat from "../../components/Profile/SupportChat";
+import FaqIndex from "../../components/Profile/FaqIndex";
+import HelpIndex from "../../components/Profile/HelpIndex";
 
 const Stack = createStackNavigator();
 
@@ -50,6 +52,61 @@ class StackProfil extends Component {
                 />
 
 
+
+                <Stack.Screen 
+                    name="FaqIndex" 
+                    component={FaqIndex} 
+                    options={{
+                        headerShown:true,
+                        headerTitle : () => {
+                            return (
+                                <View style={styles.backText}>
+                                    <Text 
+                                        numberOfLines={1}
+                                        style={[styles.textBold, styles.textHeader]}></Text>
+                                </View>
+                            )
+                        },
+                        headerLeft: () => {
+                            return (
+                                <TouchableOpacity 
+                                    style={styles.btnbackscreen}
+                                    onPress={this._backProfil}>
+                                    <Image style={styles.backbtn} source={require('../../assets/images/back.png')} />
+                                </TouchableOpacity>
+                            )
+                        },
+                    }}
+                />
+
+
+
+                <Stack.Screen 
+                    name="HelpIndex" 
+                    component={HelpIndex} 
+                    options={{
+                        headerShown:true,
+                        headerTitle : () => {
+                            return (
+                                <View style={styles.backText}>
+                                    <Text 
+                                        numberOfLines={1}
+                                        style={[styles.textBold, styles.textHeader]}>Aide</Text>
+                                </View>
+                            )
+                        },
+                        headerLeft: () => {
+                            return (
+                                <TouchableOpacity 
+                                    style={styles.btnbackscreen}
+                                    onPress={this._backProfil}>
+                                    <Image style={styles.backbtn} source={require('../../assets/images/back.png')} />
+                                </TouchableOpacity>
+                            )
+                        },
+                    }}
+                />
+
                 <Stack.Screen 
                     name="Support" 
                     component={Support} 
@@ -60,7 +117,7 @@ class StackProfil extends Component {
                                 <View style={styles.backText}>
                                     <Text 
                                         numberOfLines={1}
-                                        style={[styles.textBold, styles.textHeader]}>Support</Text>
+                                        style={[styles.textBold, styles.textHeader]}></Text>
                                 </View>
                             )
                         },
@@ -88,7 +145,7 @@ class StackProfil extends Component {
                                 <View style={styles.backText}>
                                     <Text 
                                         numberOfLines={1}
-                                        style={[styles.textBold, styles.textHeader]}>SupportChat</Text>
+                                        style={[styles.textBold, styles.textHeader]}></Text>
                                 </View>
                             )
                         },

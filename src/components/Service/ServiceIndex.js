@@ -10,7 +10,7 @@ import FontAwesome  from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons  from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome5  from 'react-native-vector-icons/FontAwesome5';
 import AntDesign  from 'react-native-vector-icons/AntDesign';
-import { IS_AUTH_ERROR, PAGE_TITLE, ROOT_NAVIGATION } from '../../reducers/actions/types';
+import { IS_AUTH_ERROR, PAGE_TITLE, ROOT_NAVIGATION } from '../../reducers/actions/types.js';
 import FontAwesome6  from 'react-native-vector-icons/FontAwesome6';
 import MaterialCommunityIcons  from 'react-native-vector-icons/MaterialCommunityIcons.js';
 import {switchHeaderAction} from '../../reducers/actions/index.js';
@@ -114,7 +114,7 @@ class ServiceIndex extends PureComponent {
               <View style={servicestyle.header}>
                     <View style={servicestyle.headeritemleft}>
                         <Image
-                            source={require('../../assets/images/logo.png')} // Remplacez par le chemin de votre image
+                            source={require('../../assets/images/logo.png')} 
                             style={servicestyle.logo2}
                         />
                     </View>
@@ -123,7 +123,7 @@ class ServiceIndex extends PureComponent {
                         <View style={servicestyle.inputSearch}>
                             <TextInput
                                 style={servicestyle.SearchBar}
-                                placeholderTextColor='#b1b1b1'
+                                placeholderTextColor='#000'
                                 onChangeText={this.handleChangeText}
                                 value={this.state.searchText}
                                 placeholder='Recherche...'
@@ -136,7 +136,7 @@ class ServiceIndex extends PureComponent {
                     <View style={servicestyle.headeritemright}>
                         <TouchableOpacity>
                             <Image
-                                source={require('../../assets/images/notification.png')} // Remplacez par le chemin de votre image
+                                source={require('../../assets/images/notification.png')}
                                 style={servicestyle.notification}
                             />
                         </TouchableOpacity>
@@ -144,7 +144,7 @@ class ServiceIndex extends PureComponent {
                        
                         <TouchableOpacity>
                                  <Image
-                                    source={require('../../assets/images/panier.png')} // Remplacez par le chemin de votre image
+                                    source={require('../../assets/images/panier.png')} 
                                     style={servicestyle.panier1}
                                 /> 
                             </TouchableOpacity>

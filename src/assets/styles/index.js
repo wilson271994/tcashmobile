@@ -22,7 +22,9 @@ export const styles = StyleSheet.create({
     },
     textHeader:{
         fontWeight: 'bold',
-        fontSize: 18
+        fontSize: 38,
+        top: -10,
+        right: 50
     },
     textItalic:{
         fontFamily:'BaarSophiaItalic',
@@ -402,6 +404,6 @@ export const styles = StyleSheet.create({
     backbtn:{
         width:40,
         height:40
-    }
+    },
 
 });

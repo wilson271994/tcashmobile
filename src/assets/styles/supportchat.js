@@ -3,71 +3,80 @@ import { color } from 'react-native-elements/dist/helpers';
 const {width, height} = Dimensions.get('window');
 
 export const supportchatstyle = StyleSheet.create({
-    container:{
-        backgroundColor:'#fff',
-    },
-    container2: {
-        backgroundColor: '#F5F5F5',
-    },
-    container3:{
-        backgroundColor:'#fff',
-        borderRadius:30,
-        height: 60,
-        width: '80%',
-      
-    },
-    scrollContainer: {
-        padding: 20,
-    },
-    inputSearch:{
-        height: 40,
-        width: '80%',
-        borderColor: '#ECB817', 
-        borderRadius: 30,
-        justifyContent: 'center',
-        alignItems: 'center',
-        position: 'absolute',
-        backgroundColor: '#1B497D',
-        borderWidth: 1,
-        marginTop:558,
-        flexDirection:'row',
-    },
-    SearchBar:{
-        color:'#fff',
-        width:'70%',
-    },
-    icons:{
-        position: 'absolute',
-        left:20,
-        top:11,
-        zIndex:999,
-       
-
-      },
-      image:{
-        position: 'absolute',
-        left:270,
-        top:10,
-        zIndex:999,
-      },
-    btnsubmit:{
-        borderRadius:15,
-        backgroundColor:'#ECB817' ,
-        borderColor:'#fff',
-        borderWidth:1,
-        paddingTop:10,
-        paddingBottom:10,
-        paddingLeft:20,
-        paddingRight:20,
-        width:60,
-        height:45,
-        position: 'absolute',
-        left:325,
-        top:553,
-    },
-    btnsubmit1:{
-       
-        backgroundColor:'#ECB817' ,
-     
-    },
+    safeArea: {
+    flex: 1,
+    backgroundColor: '#E0E0E0',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 15,
+    backgroundColor: 'white',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  headerImage: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginRight: 10,
+  },
+  headerInfo: {
+    flex: 1,
+  },
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  headerSubtitle: {
+    fontSize: 14,
+    color: '#666',
+  },
+  chatContainer: {
+    padding: 10,
+  },
+  bubble: {
+    borderRadius: 15,
+    padding: 15,
+    marginBottom: 10,
+    maxWidth: '80%',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 2,
+  },
+  bubbleLeft: {
+    backgroundColor: 'white',
+    alignSelf: 'flex-start',
+  },
+  bubbleText: {
+    fontSize: 16,
+    color: '#333',
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+    backgroundColor: 'white',
+    borderTopWidth: 1,
+    borderTopColor: '#ccc',
+  },
+  textInput: {
+    flex: 1,
+    height: 40,
+    backgroundColor: '#f0f0f0',
+    borderRadius: 20,
+    paddingHorizontal: 15,
+    marginRight: 10,
+  },
+  iconButton: {
+    padding: 5,
+  },
+  icon: {
+    width: 24,
+    height: 24,
+    tintColor: '#999',
+  },
 })

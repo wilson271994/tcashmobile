@@ -1,4 +1,5 @@
 import {StyleSheet, Dimensions} from 'react-native';
+import { Text } from 'react-native-elements';
 import { color } from 'react-native-elements/dist/helpers';
 const {width, height} = Dimensions.get('window');
 
@@ -41,10 +42,10 @@ export const loginstyle = StyleSheet.create({
     itemslider:{
         flex: 1,
         alignItems: 'center',
-        
         justifyContent: 'space-around',
         paddingBottom: 150,
         width: '100%',
+        height: height,
        
     },
     itemslidersignup:{
@@ -135,6 +136,7 @@ export const loginstyle = StyleSheet.create({
     },
     containerSignup:{
         flex:1,
+        
         
     },
     containerPreload:{
@@ -234,20 +236,46 @@ export const loginstyle = StyleSheet.create({
         textAlign:'center'
     },
     titlesignup:{
-        fontSize:20,
+        fontSize:30,
         color:'#fff',
         marginTop:10,
         textAlign:'center',
         paddingTop:10,
-        marginBottom:2
-    },
-    entetelogin:{
-        fontSize:16,
-        color:'#000',
         marginBottom:2,
+        fontWeight: '900'
+    },
+    title:{
+        fontSize:15,
+        color:'#fff',
+        marginTop:10,
+        textAlign:'center',
+        paddingTop:10,
+        marginBottom:2,
+        top: -15
+    },
+    Text:{
+        fontSize: 30,
+        color:'#FFF',
         marginTop:20,
         lineHeight:30,
-        top:10
+        top: -10,
+        fontWeight: 'bold',
+        left: 25
+    },
+    Text1:{
+        fontSize: 15,
+        color:'#FFF',
+        marginTop:20,
+        lineHeight:30,
+        top: -35,
+        left: 60
+    },
+    Text2:{
+        color: '#6DCABB',
+        fontWeight: 'bold',
+        top: 60,
+        textAlign: 'center',
+        fontSize: 17
     },
    subtitlelogin:{
         fontSize:16,
@@ -274,9 +302,13 @@ export const loginstyle = StyleSheet.create({
         fontSize:18,
         borderWidth:5,
         borderColor:'#3e8f81ff',
-        color:'#fff',
+        color:'#000000ff',
         backgroundColor:'#fff',
         paddingBottom:8,
+        width:'115%',
+        right: 20,
+        borderRadius: 10,
+        paddingLeft: 10
     },
     inputtextsignup:{
         backgroundColor: '#fff',
@@ -285,8 +317,14 @@ export const loginstyle = StyleSheet.create({
         borderColor:'#3e8f81ff',
         color:'#fff',
         paddingTop:5,
-        width:'140%',
-        right: 50
+        width:'100%',
+        right: 8,
+        borderRadius: 10,
+        paddingLeft: 10
+    },
+    bloccriterierspass:{
+        marginTop: 10,
+        margin: 20
     },
      inputtextsignup1:{
         backgroundColor: '#fff',
@@ -295,13 +333,17 @@ export const loginstyle = StyleSheet.create({
         borderColor:'#3e8f81ff',
         color:'#fff',
         paddingTop:5,
-        width:'85%',
-        left:20
+        width:'100%',
+        left: -5,
+        borderRadius: 10,
+        paddingLeft: 10
     },
     footerlogin:{
         justifyContent:'center',
         marginTop:20,
-        marginBottom:20
+        marginBottom:20,
+        width:'115%',
+        right: 15
     },
     btnsubmit:{
         borderRadius:10,
@@ -310,8 +352,8 @@ export const loginstyle = StyleSheet.create({
         borderWidth:1,
         paddingTop:10,
         paddingBottom:10,
-        paddingLeft:20,
-        paddingRight:20,
+        paddingLeft:10,
+        paddingRight:10,
         width:'100%',
     },
     textbtnsubmit:{
@@ -319,8 +361,14 @@ export const loginstyle = StyleSheet.create({
         color:'#fff',
         textAlign:'center',
         paddingTop:5,
-        fontWeight: 'bold'
-        
+        fontWeight: 'bold',  
+    },
+    textbtnsubmit2:{
+        fontSize:20,
+        color:'#fff',
+        textAlign:'center',
+        paddingTop:5,
+        fontWeight: 'bold',
     },
     lostpassbox:{
         flexDirection:'row',
@@ -345,10 +393,10 @@ export const loginstyle = StyleSheet.create({
         right:20
     },
     iconhidepasssiginup:{
-        color:'#000',
+        color:'#b1b1b1',
         fontSize:25,
         marginTop:-35,
-        right:30
+        right:10
     },
     iconmenup:{
         width:80,
@@ -453,7 +501,7 @@ export const loginstyle = StyleSheet.create({
 
     //signup
     containersignup:{
-        marginTop:10
+        marginTop: 20
     },
     containercondition:{
         flexDirection:'row',
@@ -491,6 +539,10 @@ export const loginstyle = StyleSheet.create({
     dropdown: {
         borderColor: '#3e8f81ff',
         borderWidth: 0.5,
+        backgroundColor: '#fff',
+        borderWidth:3,
+        borderColor:'#3e8f81ff',
+        
         borderRadius: 8,
         paddingHorizontal: 8,
         height:50,
@@ -505,7 +557,6 @@ export const loginstyle = StyleSheet.create({
         fontSize: 16,
         color:'#fff',
         textAlign:'center',
-        backgroundColor:'#ECB818'
     },
     itemTextStyle:{
         fontSize:16,
@@ -523,10 +574,10 @@ export const loginstyle = StyleSheet.create({
     dropdownicon:{
         marginLeft: 8,
         fontSize:25,
-        color:'#fff'
+        color:'#b1b1b1',
     },
     containeritemdrop:{
-        backgroundColor:'#ECB818',
+        backgroundColor:'#B1B1B1B',
         borderColor:'#fff',
         borderRadius:10,
     },
@@ -549,11 +600,21 @@ export const loginstyle = StyleSheet.create({
         borderWidth:4,
         paddingTop:10,
         paddingBottom:10,
-        marginLeft:20,
-        marginRight:20,
-        borderRadius: 20,
-       
+        marginLeft:10,
+        marginRight:10,
+        borderRadius: 10,
+        width:'95%',
+        textAlign: 'center',
+        position: 'absolute',
+        bottom: 0
     },
+    code:{
+        height: 80,
+        width: 80,
+        top: 80,
+        left: 100,
+    },
+
     //preload 
     btnspreload:{
         borderRadius:30,
@@ -639,6 +700,24 @@ export const loginstyle = StyleSheet.create({
         fontSize:25,
         marginLeft:5
     },
+    image:{
+        height: 90,
+        width: 90,
+        top: -2,
+        left: 100
+    },
+     image1:{
+        height: 70,
+        width: 70,
+        top: 12,
+        left: 145
+    },
+    image1:{
+        height: 70,
+        width: 70,
+        top: 12,
+        left: 155
+    },
     footersignup:{
         justifyContent:'center',
         marginTop:20,
@@ -657,7 +736,7 @@ export const loginstyle = StyleSheet.create({
         marginLeft:50,
     },
     blocinupt:{
-        marginTop:15,
+        marginTop:35,
     },
     blocinupt2:{
         marginTop:35,
@@ -667,8 +746,12 @@ export const loginstyle = StyleSheet.create({
         width:20,
         height:20
     },
-
-
+    iconhidepass:{
+        top: -35,
+        left: 20,
+        fontSize: 30
+    },
+    
     //secondeform
 
         containersecondform: {
@@ -718,7 +801,15 @@ export const loginstyle = StyleSheet.create({
     backstyle:{
         width:40,
         height:40
+    },
+    backstyle1:{
+        width:40,
+        height:40,
+        position: 'absolute',
+        top: 20,
+        left: 10
     }
+
 
 
 });

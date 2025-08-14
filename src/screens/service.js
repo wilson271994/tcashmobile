@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import { SafeAreaView, Platform, Text } from 'react-native';
 import { styles } from '../assets/styles/index.js';
 import {switchHeaderAction} from '../reducers/actions';
-import ServiceIndex from '../components/Books/ServiceIndex.js';
+import ServiceIndex from '../components/Service/ServiceIndex.js';
 
 class Books extends PureComponent {
     constructor(props){

@@ -70,7 +70,7 @@ class LoginPage extends Component {
 
     _authSignup = () => {
         const {navigation} = this.props;
-        store.dispatch({type:PAGE_TITLE, value:'Créer votre Compte'})
+        store.dispatch({type:PAGE_TITLE, value:''})
         store.dispatch({type:ROOT_NAVIGATION, value:navigation})
         navigation.navigate('SignUpForm1');
     }
@@ -93,34 +93,33 @@ class LoginPage extends Component {
                  backgroundColor="#1B497D"
                 />
                 <ImageBackground 
-               
+
+                    source={require('../../assets/images/background.jpg')}
                     style={[loginstyle.itemslider]} 
                     >
                     <View style={[loginstyle.loginbox]}>
                     
-                
+                        <Image source={require('../../assets/images/t_cash.png')} style={loginstyle.image} />
+                        <Text style={[styles.textBold, loginstyle.Text]}>Connectez-vous ici</Text>
+                        <Text style={[styles.textBold, loginstyle.Text1]}>Bon retour tu m'as manqué</Text>
                         
-                        <Text style={[styles.textBold, loginstyle.entetelogin]}>Votre email</Text>
                         <View style={loginstyle.blocinupt}>
                         
-                            <FontAwesome name='user' style={loginstyle.iconloginuser}/>
                             <TextInput
                                 style={[loginstyle.inputtextlogin, styles.text]}
                                 autoCapitalize="none" 
                                 autoCorrect={false}
-                                placeholderTextColor='#fff'
+                                placeholderTextColor='#B1B1B1'
                                 placeholder='Entrez votre email'
                                 onChangeText={(val) => {this.setState({username:val})}}
                                 editable={is_loading ? false : true}
                             />
                             
                         </View>
-                        <Text style={[styles.textBold, loginstyle.entetelogin]}>Mot de passe</Text>
                         <View style={loginstyle.blocinupt}>
-                            <FontAwesome name='lock' style={loginstyle.iconloginuser}/>
                             <TextInput
                                 style={[loginstyle.inputtextlogin, styles.text]}
-                                placeholderTextColor='#fff'
+                                placeholderTextColor='#B1B1B1'
                                 placeholder='Entrez votre Mot de passe'
                                 secureTextEntry={!this.state.passwordVisible}
                                 onChangeText={(val) => {this.setState({password:val})}}
@@ -131,8 +130,8 @@ class LoginPage extends Component {
                                     disabled={is_loading ? true : false}
                                     onPress={this._togglePassVisible}>
                                     <Entypo 
-                                        name={this.state.passwordVisible ? 'eye-with-line' : 'eye'} 
-                                        style={loginstyle.iconhidepass}/>
+                                    name={this.state.passwordVisible ? 'eye-with-line' : 'eye'} 
+                                    style={loginstyle.iconhidepass}/>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -143,7 +142,7 @@ class LoginPage extends Component {
                                 <Text style={[styles.text, loginstyle.forgetpassfooter]}>Mot de passe oublier ?</Text>
                             </TouchableOpacity>
                             <TouchableOpacity 
-                                onPress={this._authSignup}
+                                onPress={this._authSignup.bind(this)}
                                 disabled={is_loading ? true : false}
                                 style={loginstyle.signupfooter}>
                                 <Text style={[styles.text, loginstyle.signupfootertext]}>Inscription</Text>
@@ -161,12 +160,16 @@ class LoginPage extends Component {
                                         <ActivityIndicator size="small" color="#fff" />
                                     </View>
                                 :
-                                    <Text style={[styles.textBold, loginstyle.textbtnsubmit]}>Connexion</Text>
+                                <Text style={[styles.textBold, loginstyle.textbtnsubmit]}>Connexion</Text>
                             }
                             </TouchableOpacity>
                         </View>
 
-                       
+                        <Text style={[styles.textBold, loginstyle.Text2]}>ou connectez-vous avec</Text>
+                        <TouchableOpacity>
+                            <Image source={require('../../assets/images/qrcode.png')} style={loginstyle.code} />
+                        </TouchableOpacity>
+
                     </View>
                 </ImageBackground>
 

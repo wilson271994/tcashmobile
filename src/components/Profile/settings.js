@@ -33,7 +33,7 @@ class ProfileIndex extends PureComponent {
         '',
     };
 
-};
+  };
 
   state = {
     notificationsEnabled: true,
@@ -52,27 +52,35 @@ class ProfileIndex extends PureComponent {
     const {navigation} = this.props; 
     store.dispatch({type:ROOT_NAVIGATION, value:navigation});
     navigation.navigate('Support');
-}
+  }
+ _navigateToFaq = () => {
+    const {navigation} = this.props; 
+    store.dispatch({type:ROOT_NAVIGATION, value:navigation});
+    navigation.navigate('FaqIndex');
+  }
 
 
-_closeAlert = () => {
-  this.setState({
-      is_alert:false,
-      is_loading:false
+  _closeAlert = () => {
+    this.setState({
+        is_alert:false,
+        is_loading:false
   });
   store.dispatch({type:IS_AUTH_ERROR, value:false});
-}
+  }
 
-_fechtData = async () => {
-  await switchHeaderAction(true);  
+  _fechtData = async () => {
+    await switchHeaderAction(true);  
+  } 
 
+ _openModalTicketCreation = () => {
+        this.setState({isVisibleTckCrModal:true});
+    }
 
-} 
-
-
+    
   render() {
     const {is_alert, alert_title, alert_subtitle, is_loading} = this.state;
     const {navigation} = this.props; 
+    const {isVisibleTckCrModal} = this.state;
     return (
       <SafeAreaView style={profilstyle.container2}>
         <View style={[profilstyle.container2]}>
@@ -164,24 +172,19 @@ _fechtData = async () => {
               <Text style={profilstyle.sectionTitle}>Supports</Text>
               <View style={profilstyle.containerSettings}> 
                 <TouchableOpacity style={styles.option} 
-
-                  onPress={this._navigateToSupport.bind(this)}>
+                
+                  //onPress={this._navigateToSupport.bind(this)}
+                  onPress={this._navigateToFaq.bind(this)}>
                   
                   <View style={profilstyle. searchcontainer}> 
             
                     <Image source={require('../../assets/images/info.png')} style={profilstyle.icons4} />
-                      <Text style={profilstyle.notif4}>Supports</Text> 
+                      <Text style={profilstyle.notif4}>FAQs</Text> 
                   
                   </View>
                   </TouchableOpacity>
 
-                  <TouchableOpacity style={styles.option}>
-                  <View style={profilstyle. searchcontainer}>
-                    <Image source={require('../../assets/images/sav.png')} style={profilstyle.icons4} />
-                      <Text style={profilstyle.notif4}>FAQs</Text> 
                   
-                  </View>              
-                  </TouchableOpacity>
 
                   <TouchableOpacity style={styles.option}>
                   <View style={profilstyle. searchcontainer}>

@@ -51,6 +51,7 @@ class StackHome extends Component {
             <Stack.Navigator>
                 <Stack.Screen 
                     name=" " 
+                
                     component={Home} 
                     options={{
                         headerShown:false 
@@ -67,7 +68,7 @@ class StackHome extends Component {
                             <View style={styles.backText}>
                                 <Text 
                                     numberOfLines={1}
-                                    style={[styles.textBold, styles.textHeader]}>Payements</Text>
+                                    style={[styles.textBold, styles.textHeader]}></Text>
                             </View>
                         )
                     },

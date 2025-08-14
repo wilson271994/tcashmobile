@@ -10,7 +10,7 @@ import IconFA  from 'react-native-vector-icons/FontAwesome';
 import { switchHeaderAction } from "../../reducers/actions";
 import HTMLView from 'react-native-htmlview'; 
 import { htmlstyles } from '../../assets/styles/htmlviewstyle';
-import BookDetail from "../../components/Books/ServiceDetails";
+import BookDetail from "../../components/Service/ServiceDetails";
 import File from "../../screens/File";
 const Stack = createStackNavigator();
 

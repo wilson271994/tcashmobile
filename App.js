@@ -20,7 +20,7 @@ export default App = () => {
     return (
         <Provider store={store}> 
             <NavigationContainer>
-                <StatusBar backgroundColor="#6dcabb" />
+                <StatusBar backgroundColor='#6DCABB' />
                 <BottomNavigator />
                 <Toast
                     position='top'

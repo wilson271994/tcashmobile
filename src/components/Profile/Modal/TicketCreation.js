@@ -57,6 +57,7 @@ class CreateJob extends PureComponent {
             is_alert:false,
             alert_title:'',
             alert_subtitle:'',
+            isVisibleTckCrModal : false
         }
     };
 

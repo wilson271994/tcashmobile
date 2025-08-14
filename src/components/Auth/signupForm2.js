@@ -9,6 +9,8 @@ import Foundation  from 'react-native-vector-icons/Foundation';
 import Entypo  from 'react-native-vector-icons/Entypo';
 import FontAwesome  from 'react-native-vector-icons/FontAwesome';
 import { store } from '../../reducers/store';
+import { IS_AUTH_ERROR, PAGE_TITLE, ROOT_NAVIGATION } from '../../reducers/actions/types.js';
+
 import { loginstyle } from '../../assets/styles/login';
 import { Dropdown, SelectCountry } from 'react-native-element-dropdown';
 import AwesomeAlert from 'react-native-awesome-alerts';
@@ -18,9 +20,6 @@ import DatePicker from 'react-native-datepicker';
 import { IS_AUTHENTICATED } from '../../reducers/actions/types';
 
 
-
-
-
 const handleValidation = () => {
     if (!prenom || !numRue || !pays || !ville || !telephone  || !typeCompte) {
       Alert.alert('Erreur', 'Tous les champs sont obligatoires.');
@@ -28,8 +27,6 @@ const handleValidation = () => {
       Alert.alert('Succès', 'Formulaire soumis avec succès !');
     }
 };
-
-
 const countryselection = [ 
 
     { label: 'Cameroun', value:'2'},
@@ -49,7 +46,10 @@ const countryselection = [
     {label:'États-Unis', value:'2'},
   
 ];
-
+const datagender = [ 
+    { label: 'Masculin', value: '0' },
+    { label: 'Féminin', value: '1' },
+];
 const cityselection = [ 
 
     { label: 'Paris', value:'2'},
@@ -102,7 +102,7 @@ const cityselection = [
 
 
 
-class signupForm2 extends PureComponent {
+class signUpForm2 extends PureComponent {
     constructor(props){
         super(props);
         this.state = {
@@ -157,7 +157,11 @@ class signupForm2 extends PureComponent {
         }
         return true;
     }
-
+    _navigateToForm1 = () => {
+        const {navigation} = this.props;
+        store.dispatch({type:ROOT_NAVIGATION, value:navigation});
+        navigation.navigate("SignUpForm1");
+    }
     _passwordValidation = () => {
         const {password1, password2} = this.state;
         if (password1 != password2) {
@@ -191,13 +195,14 @@ class signupForm2 extends PureComponent {
 
     _authSignup = async () => {
         const {is_loading, root_navigation} = this.props;
-        const {country, city,  password1, password2, street} = this.state;
+        const {country, city,  password1, password2, street, gender} = this.state;
         if(
             country !== '' &&
             city !== '' &&
             password1 !== '' &&
-                password2 !== '' &&
+            password2 !== '' &&
             street !== '' &&
+            gender !== '' &&
             this._passwordValidation() &&
                 this._cityValidation() &&
                 this._countryValidation() &&
@@ -270,86 +275,44 @@ class signupForm2 extends PureComponent {
         const {is_loading} = this.props;
         const {password1Visible, password2Visible, acceptCondition, confidFocus, gender, is_alert, alert_title, alert_subtitle} = this.state;
         return(
-            <View style={[styles.card, loginstyle.containerSignup]}>
-                <ScrollView 
+            <ScrollView 
                     ref={(ref) => {this.scrollListReftop = ref}}>
                     <ImageBackground 
-                    source={require('../../assets/images/welcome.png')}
+                    source={require('../../assets/images/background.jpg')}
                         style={[loginstyle.itemslidersignup]}
                         >  
                         <View style={loginstyle.containersignup}>
-                            <Text style={[styles.textBold, loginstyle.titlesignup, {color:'#000'}]}>Rejoignez-nous maintenant!</Text>
+                            <TouchableOpacity 
+                                onPress={this._navigateToForm1}>                       
+                                <Image style={loginstyle.backstyle1} source={require('../../assets/images/back.png')} />
+                            </TouchableOpacity>
+                            <Image source={require('../../assets/images/t_cash.png')} style={loginstyle.image1} />
+                            <Text style={[styles.textBold, loginstyle.titlesignup]}>Créer un Compte</Text>
+                            <Text style={[styles.textBold, loginstyle.title]}>Créez votre compte T-cash et profitez</Text>
 
 
                           
-
-                            <Text style={[styles.textBold, loginstyle.entetesigup]}>Votre rue</Text>
-                            <View style={loginstyle.blocinupt2}>
-                            <FontAwesome name='map' style={loginstyle.iconsignupuser}/>
-                                <TextInput
-                                    style={[loginstyle.inputtextsignup, styles.text]}
-                                    autoCapitalize="none" 
-                                    autoCorrect={false}
-                                    placeholderTextColor='#fff'
-                                    placeholder='Votre rue'
-                                    onChangeText={(val) => {this.setState({email:val})}}
-                                    editable={is_loading ? false : true}
+                            <View style={loginstyle.selectcontainer}>
+                                {this._renderDropdownLabel}
+                                <Dropdown
+                                    style={[loginstyle.dropdown, confidFocus && { borderColor: 'blue' }]}
+                                    placeholderStyle={[loginstyle.placeholderStyle, styles.text]}
+                                    selectedTextStyle={[loginstyle.selectedTextStyle, styles.text]}
+                                    itemTextStyle={[loginstyle.itemTextStyle, styles.text]}
+                                    containerStyle={loginstyle.containeritemdrop}
+                                    iconStyle={loginstyle.iconStyle}
+                                    dropdownPosition='auto'
+                                    data={datagender}
+                                    labelField="label"
+                                    valueField="value"
+                                    placeholder={!confidFocus ? 'Choisir votre sexe...' : '...'}
+                                    value={gender}
+                                    onFocus={() => this.setState({confidFocus:true})}
+                                    onBlur={() => this.setState({confidFocus:false})}
+                                    onChange={item => this.setState({gender:item})}
+                                    renderLeftIcon={() => (<Foundation name='male-female' style={loginstyle.dropdownicon}/>)}
                                 />
                             </View>
-
-
-                          
-
-
-                            <Text style={[styles.textBold, loginstyle.entetesigup]}>Votre Mot de passe</Text>
-                            <View style={loginstyle.blocinupt2}>
-                                <FontAwesome name='lock' style={loginstyle.iconsignupuser}/>
-                                <TextInput
-                                    style={[loginstyle.inputtextsignup, styles.text]}
-                                    placeholderTextColor='#fff'
-                                    placeholder='Mot de passe'
-                                    secureTextEntry={!password2Visible}
-                                    onChangeText={(val) => {this.setState({password1:val})}}
-                                    editable={is_loading ? false : true}
-                                />
-                                <View style={loginstyle.blockhidepass}>
-                                    <TouchableOpacity 
-                                        disabled={is_loading ? true : false}
-                                        onPress={this._togglePass2Visible}>
-                                        <Entypo 
-                                            name={password2Visible ? 'eye-with-line' : 'eye'} 
-                                            style={loginstyle.iconhidepasssiginup}/>
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={loginstyle.bloccriterierspass}>
-                                    <Text style={[styles.text, loginstyle.passwordcritariers]}> - Le mot de passe doit avoir aumoins 6 charactères.</Text>
-                                    <Text style={[styles.text, loginstyle.passwordcritariers]}> - Doit contenir une lettre majuscule.</Text>
-                                    <Text style={[styles.text, loginstyle.passwordcritariers]}> - Doit contenir un nombre ou un charactère spécial.</Text>
-                                </View>
-                            </View>
-
-                            <View style={loginstyle.blocinupt2}>
-                                <FontAwesome name='lock' style={loginstyle.iconsignupuser}/>
-                                <TextInput
-                                    style={[loginstyle.inputtextsignup, styles.text]}
-                                    placeholderTextColor='#fff'
-                                    placeholder='Confirmez Mot de passe'
-                                    secureTextEntry={!password2Visible}
-                                    onChangeText={(val) => {this.setState({password2:val})}}
-                                    editable={is_loading ? false : true}
-                                />
-                                <View style={loginstyle.blockhidepass}>
-                                    <TouchableOpacity 
-                                        disabled={is_loading ? true : false}
-                                        onPress={this._togglePass2Visible}>
-                                        <Entypo 
-                                            name={password2Visible ? 'eye-with-line' : 'eye'} 
-                                            style={loginstyle.iconhidepasssiginup}/>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-
-
 
                             <View style={loginstyle.selectcontainer}>
                                 {this._renderDropdownLabel}
@@ -395,6 +358,62 @@ class signupForm2 extends PureComponent {
                                 />
                             </View>
 
+                            <View style={loginstyle.blocinupt2}>
+                                <TextInput
+                                    style={[loginstyle.inputtextsignup1, styles.text]}
+                                    autoCapitalize="none" 
+                                    autoCorrect={false}
+                                    placeholderTextColor='#B1B1B1'
+                                    placeholder='Votre rue'
+                                    onChangeText={(val) => {this.setState({email:val})}}
+                                    editable={is_loading ? false : true}
+                                />
+                            </View>
+
+                            <View style={loginstyle.blocinupt2}>
+                                <TextInput
+                                    style={[loginstyle.inputtextsignup1, styles.text]}
+                                    placeholderTextColor='#B1B1B1'
+                                    placeholder='Mot de passe'
+                                    secureTextEntry={!password2Visible}
+                                    onChangeText={(val) => {this.setState({password1:val})}}
+                                    editable={is_loading ? false : true}
+                                />
+                                <View style={loginstyle.blockhidepass}>
+                                    <TouchableOpacity 
+                                        disabled={is_loading ? true : false}
+                                        onPress={this._togglePass2Visible}>
+                                        <Entypo 
+                                            name={password2Visible ? 'eye-with-line' : 'eye'} 
+                                            style={loginstyle.iconhidepasssiginup}/>
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={loginstyle.bloccriterierspass}>
+                                    <Text style={[styles.text, loginstyle.passwordcritariers]}> - Le mot de passe doit avoir aumoins 6 charactères.</Text>
+                                    <Text style={[styles.text, loginstyle.passwordcritariers]}> - Doit contenir une lettre majuscule.</Text>
+                                    <Text style={[styles.text, loginstyle.passwordcritariers]}> - Doit contenir un nombre ou un charactère spécial.</Text>
+                                </View>
+                            </View>
+
+                            <View style={loginstyle.blocinupt2}>
+                                <TextInput
+                                    style={[loginstyle.inputtextsignup1, styles.text]}
+                                    placeholderTextColor='#B1B1B1'
+                                    placeholder='Confirmez Mot de passe'
+                                    secureTextEntry={!password2Visible}
+                                    onChangeText={(val) => {this.setState({password2:val})}}
+                                    editable={is_loading ? false : true}
+                                />
+                                <View style={loginstyle.blockhidepass}>
+                                    <TouchableOpacity 
+                                        disabled={is_loading ? true : false}
+                                        onPress={this._togglePass2Visible}>
+                                        <Entypo 
+                                            name={password2Visible ? 'eye-with-line' : 'eye'} 
+                                            style={loginstyle.iconhidepasssiginup}/>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
 
                             <View style={loginstyle.containercondition}>
                                 <TouchableOpacity 
@@ -419,7 +438,7 @@ class signupForm2 extends PureComponent {
                                 </Text>
                             </View>
 
-                            <View style={loginstyle.footersignup}>
+                          
                                 <TouchableOpacity 
                                     disabled={is_loading ? true : false}
                                     style={loginstyle.btnsignup} 
@@ -433,13 +452,10 @@ class signupForm2 extends PureComponent {
                                         <Text style={[styles.textBold, loginstyle.textbtnsubmit]}>Créer maintenant</Text>
                                 }
                                 </TouchableOpacity>       
-                            </View>
-
+                  
                         </View>
                     </ImageBackground>
-                </ScrollView>
-
-                {/* Manage Error Alert */}
+                      {/* Manage Error Alert */}
                 <AwesomeAlert
                     show={false}
                     title={alert_title}
@@ -455,7 +471,9 @@ class signupForm2 extends PureComponent {
                     confirmButtonColor="#060064"
                     onConfirmPressed={this._closeAlert}
                 />
-            </View>
+            </ScrollView>
+
+              
         )
     }
 
@@ -475,4 +493,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps, null)(signupForm2);
+export default connect(mapStateToProps, mapDispatchToProps, null)(signUpForm2);

@@ -5,14 +5,15 @@ import {connect} from 'react-redux';
 import { createStackNavigator } from "@react-navigation/stack";
 import {Image, Text, TouchableOpacity} from "react-native";
 import loginPage from "../../components/Auth/LoginPage";
-import { switchHeaderAction } from "../../reducers/actions";
+import { switchHeaderAction, switchPostFormAction } from "../../reducers/actions";
 import { loginstyle } from "../../assets/styles/login";
 import { styles } from "../../assets/styles";
 import activationPage from "../../components/Auth/activationPage";
 import AntDesign  from 'react-native-vector-icons/AntDesign';
-import SignupForm1 from "../../components/Auth/SignupForm1";
+import SignUpForm1 from "../../components/Auth/SignUpForm1";
 import Preload from "../../components/Auth/Preload";
-import SignupForm2 from "../../components/Auth/SignupForm2";
+import SignUpForm2 from "../../components/Auth/SignUpForm2";
+import { color } from "react-native-elements/dist/helpers";
 
 const Stack = createStackNavigator();
 
@@ -25,6 +26,11 @@ class StackAuth extends Component {
 
     _backHome = () => {
         const {root_navigation} = this.props; 
+        root_navigation.goBack();
+    } 
+    _backProfil = () => {
+        const {root_navigation} = this.props; 
+        switchHeaderAction(true);
         root_navigation.goBack();
     } 
 
@@ -59,14 +65,14 @@ class StackAuth extends Component {
 
                 <Stack.Screen 
                     name="SignUpForm1"  
-                    component={SignupForm1} 
+                    component={SignUpForm1} 
                     options={{
-                        headerShown:true, 
+                        headerShown:false, 
                         headerTitle : () => {
                             return (
                                 <Text 
-                                    numberOfLines={1}
-                                    style={[styles.textBold, loginstyle.titlepagesignup]}>{page_title}</Text>
+                                numberOfLines={1}
+                                style={[styles.textBold, loginstyle.titlepagesignup]}>{page_title}</Text>
                             )
                         },
                         headerLeft: () => {
@@ -78,27 +84,28 @@ class StackAuth extends Component {
                                 </TouchableOpacity>
                             )
                         },
+                        
                     }}
                 />
 
 
                 <Stack.Screen
-                    name="SignupForm2"
-                    component={SignupForm2}
+                    name="SignUpForm2"
+                    component={SignUpForm2}
                     options={{
-                        headerShown: true,
+                        headerShown: false,
                         headerTitle: () => {
                             return (
                                 <Text
-                                    numberOfLines={1}
-                                    style={[styles.textBold, loginstyle.titlepagesignup]}>{page_title}</Text>
+                                numberOfLines={1}
+                                style={[styles.textBold, loginstyle.titlepagesignup]}>{page_title}</Text>
                             )
                         },
                         headerLeft: () => {
                             return (
                                 <TouchableOpacity
-                                    onPress={this._backToForm1}
-                                    style={styles._backHome}>
+                                    onPress={this. _backProfil}
+                                    style={styles.btnbackscreen}>
                                     <Image style={loginstyle.backstyle} source={require('../../assets/images/back.png')} />
                                 </TouchableOpacity>
                             )
@@ -163,7 +170,7 @@ class StackAuth extends Component {
 const mapDispatchToProps = (dispatch) => {
     return {
         dispatch,
-            ...bindActionCreators({switchHeaderAction}, dispatch),
+            ...bindActionCreators({switchHeaderAction, switchPostFormAction}, dispatch),
         }
 };
  

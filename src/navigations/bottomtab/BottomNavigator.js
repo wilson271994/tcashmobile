@@ -74,6 +74,7 @@ class BottomTabNavigator extends Component{
                             indicatorStyle: {
                                 backgroundColor: 'red', 
                             },
+                            
                         }}
                     >
                     {

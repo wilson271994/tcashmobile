@@ -120,7 +120,7 @@ _fechtData = async () => {
                           
                 </View>
 
-                      <View style={profilstyle. searchcontainer}>
+                      <View style={profilstyle.searchcontainer}>
                           <TouchableOpacity style={styles.option}>
                           <Image source={require('../../assets/images/notification.png')} style={profilstyle.icons1} />
                             <Text style={profilstyle.notif}>Notifications</Text> 
@@ -171,14 +171,14 @@ _fechtData = async () => {
 
               <Text style={profilstyle.sectionTitle}>Payements</Text>
               <View style={profilstyle.containerSettings}> 
-                <View style={profilstyle. searchcontainer}>
+                <View style={profilstyle.searchcontainer}>
                   <TouchableOpacity style={styles.option}>
                   <Image source={require('../../assets/images/visacard.png')} style={profilstyle.icons1} />
                     <Text style={profilstyle.notif}>Ajouter une carte</Text> 
                   </TouchableOpacity>
                 </View>
 
-                <View style={profilstyle. searchcontainer}>
+                <View style={profilstyle.searchcontainer}>
                   <TouchableOpacity style={styles.option}>
                     <Image source={require('../../assets/images/wallet.png')} style={profilstyle.icons1} />
                     <Text style={profilstyle.notif}>Autres moyens</Text> 
@@ -189,31 +189,22 @@ _fechtData = async () => {
 
               <Text style={profilstyle.sectionTitle}>Supports</Text>
               <View style={profilstyle.containerSettings}> 
-              <TouchableOpacity style={styles.option} 
+                <TouchableOpacity style={styles.option} 
+                  onPress={this._navigateToSupport.bind(this)}>
+                  
+                  <View style={profilstyle.searchcontainer}> 
+            
+                    <Image source={require('../../assets/images/info.png')} style={profilstyle.icons4} />
+                      <Text style={profilstyle.notif4}>FAQs</Text> 
+                  
+                  </View>
+                  </TouchableOpacity>
 
-              onPress={this._navigateToSupport.bind(this)}>
-                
-                <View style={profilstyle. searchcontainer}> 
-           
-                  <Image source={require('../../assets/images/info.png')} style={profilstyle.icons4} />
-                    <Text style={profilstyle.notif4}>Supports</Text> 
-                 
-                </View>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.option}>
-                <View style={profilstyle. searchcontainer}>
-                  <Image source={require('../../assets/images/sav.png')} style={profilstyle.icons4} />
-                    <Text style={profilstyle.notif4}>FAQs</Text> 
-                 
-                </View>              
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.option}>
-                <View style={profilstyle. searchcontainer}>
-                  <Image source={require('../../assets/images/referral.png')} style={profilstyle.icons4} />
-                    <Text style={profilstyle.notif4}>A propos de nous</Text> 
-                </View>              
+                  <TouchableOpacity style={styles.option}>
+                  <View style={profilstyle.searchcontainer}>
+                    <Image source={require('../../assets/images/referral.png')} style={profilstyle.icons4} />
+                      <Text style={profilstyle.notif4}>A propos de nous</Text> 
+                  </View>              
                 </TouchableOpacity>
 
               </View>

@@ -50,7 +50,7 @@ export const servicestyle = StyleSheet.create({
         flexDirection:'row',
     },
     SearchBar:{
-        color:'#fff',
+        color:'#000',
         width:'80%',
     },
     text1:{
@@ -389,4 +389,109 @@ export const servicestyle = StyleSheet.create({
         justifyContent:'center',
         position: 'absolute'
     },
+
+
+        //TRANSACTIONS
+
+    Container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        },
+        Header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: 15,
+        backgroundColor: '#fff',
+        borderBottomWidth: 1,
+        borderBottomColor: '#f0f0f0',
+        },
+        headerTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        textTransform: 'lowercase',
+        },
+        headerButton: {
+        color: '#00BFA5',
+        fontSize: 14,
+        },
+        contentContainer: {
+        padding: 20,
+        },
+        adContainer: {
+        flexDirection: 'row',
+        backgroundColor: '#000',
+        borderRadius: 10,
+        overflow: 'hidden',
+        marginBottom: 20,
+        height: 120, // Hauteur fixe pour l'image
+        },
+        adImage: {
+        width: '50%',
+        height: '100%',
+        resizeMode: 'cover',
+        },
+        adTextContainer: {
+        flex: 1,
+        padding: 15,
+        justifyContent: 'center',
+        },
+        adTitle: {
+        color: '#fff',
+        fontSize: 20,
+        fontWeight: 'bold',
+        },
+        adPrice: {
+        color: '#fff',
+        fontSize: 16,
+        },
+        section: {
+        marginBottom: 20,
+        },
+        sectionTitle: {
+        color: '#757575',
+        marginBottom: 10,
+        },
+        optionItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        backgroundColor: '#ECEFF1',
+        borderRadius: 10,
+        padding: 15,
+        marginBottom: 10,
+        },
+        optionLeft: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        },
+        optionIconContainer: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        backgroundColor: '#E0F7FA',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 15,
+        },
+        optionTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        },
+        mobileLogos: {
+        flexDirection: 'row',
+        marginTop: 5,
+        },
+        Logo: {
+        width: 30,
+        height: 30,
+        marginRight: 5,
+        resizeMode: 'contain',
+        },
 });
+
+
+
+
+
+

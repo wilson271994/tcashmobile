@@ -4,28 +4,27 @@ const {width, height} = Dimensions.get('window');
 
 export const homestyle = StyleSheet.create({
 
-    container2: {
-
-        backgroundColor: '#6dcabb',
-
-      
+    container: {
+        flex: 0,
+        backgroundColor: '#6DCABB', 
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     scrollContainer: {
         padding: 20,
-        flex: 1,
     },
-     container:{
-          flexDirection: 'column',
-          flex: 1,
+     container2:{
+        flexDirection: 'column',
+        backgroundColor: '#6dcabb'
     },
-    Conatiner:{
+    Container:{
         width: 20,
         height: 20,
         justifyContent: 'center',
         alignItems: 'center',
     },
      scrollContainer: {
-        
+        backgroundColor: '6dcabb',
         flex: 0,
     },
      backgroundCircle: {
@@ -34,8 +33,18 @@ export const homestyle = StyleSheet.create({
         borderRadius: 60,
         backgroundColor: '#66998f',
         position: 'absolute', 
-        left: 233,
-        top: 2
+        left: 257,
+        top: 28
+    },
+    backgroundCircle6: {
+        width: 65, 
+        height: 65, 
+        borderRadius: 60,
+        backgroundColor: '#FFF',
+        position: 'absolute', 
+        left: 6,
+        top: -26,
+        elevation: 20
     },
      image1:{
         width: 45,
@@ -74,8 +83,8 @@ export const homestyle = StyleSheet.create({
         borderRadius: 60,
         backgroundColor: '#66998f',
         position: 'absolute', 
-        left: 168,
-        top: -37
+        left: 192,
+        top: -11
     },
      backgroundCircle3: {
         width: 45, 
@@ -110,10 +119,10 @@ export const homestyle = StyleSheet.create({
        
     },
     header:{
-        flexDirection:'row',
-        padding:10,
-        
-        width:'100%'
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 15,
     },
     bookContainer:{
         position:'relative',
@@ -219,7 +228,6 @@ export const homestyle = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',  
-        backgroundColor: '#f0f0f0',
         padding: 10,
       },
      
@@ -272,31 +280,31 @@ export const homestyle = StyleSheet.create({
         top: 4
     },
    UserText:{
-    color: '#000',
+    color: '#fff',
     fontWeight: 'bold',
     top: -15,
-    left: -20
+    left: 15
    },
     verifiedtext:{
-    color: '#000',
+    color: '#fff',
     fontFamily: 'Montserrat',
     top: -27,
-    left: -2,
+    left: 46,
     fontSize: 15,
    },
     notification:{
-        width:20,
+        width:30,
         height:30,
         position: 'absolute',
-        left: 240,
-        top: -15,
+        left: 260,
+        top: 10,
 
     },
     verified:{
         height: 15,
         width: 15,
-        top: -6,
-        left: -20   
+        top: -8,
+        left: 25   
     },
     counter:{
         left:289,
@@ -311,8 +319,8 @@ export const homestyle = StyleSheet.create({
         width:30,
         height:30,
         position: 'absolute',
-        left: 170,
-        top: -34
+        left: 195,
+        top: -7
     },
     panier1:{
         width:25,
@@ -323,7 +331,9 @@ export const homestyle = StyleSheet.create({
     },
     index:{
         color:"red",
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        top: 25,
+        left: 25
     },
     headeritemright:{
         width:'83.9%',

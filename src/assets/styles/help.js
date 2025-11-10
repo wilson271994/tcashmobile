@@ -9,7 +9,6 @@ export const helpstyle = StyleSheet.create({
         backgroundColor:'#efefef'
     },
     scrollContainer:{
-        
         textAlign: 'center',
         backgroundColor: '#fff',
         width: 350,

@@ -12,7 +12,7 @@ import Entypo  from 'react-native-vector-icons/Entypo';
 import AntDesign  from 'react-native-vector-icons/AntDesign';
 import Home from "../../screens/Home";
 import { switchHeaderAction } from "../../reducers/actions";
-import PaieIndex from "../../components/Payements/PaieIndex";
+import TransactionDetail from "../../components/Transaction/TransactionDetail";
 
 const Stack = createStackNavigator();
 
@@ -51,37 +51,18 @@ class StackHome extends Component {
             <Stack.Navigator>
                 <Stack.Screen 
                     name=" " 
-                
                     component={Home} 
                     options={{
                         headerShown:false 
                     }} 
                 />
 
-                          <Stack.Screen 
-                name="PaieIndex" 
-                component={PaieIndex} 
-                options={{
-                    headerShown:true,
-                    headerTitle : () => {
-                        return (
-                            <View style={styles.backText}>
-                                <Text 
-                                    numberOfLines={1}
-                                    style={[styles.textBold, styles.textHeader]}></Text>
-                            </View>
-                        )
-                    },
-                    headerLeft: () => {
-                        return (
-                            <TouchableOpacity 
-                                style={styles.btnbackscreen}
-                                onPress={this._backHome}>
-                                <Image style={styles.backbtn} source={require('../../assets/images/back.png')} />
-                            </TouchableOpacity>
-                        )
-                    },
-                }}
+                <Stack.Screen 
+                    name="TransactionDetail" 
+                    component={TransactionDetail} 
+                    options={{
+                        headerShown:false,
+                    }}
             />
 
             </Stack.Navigator>

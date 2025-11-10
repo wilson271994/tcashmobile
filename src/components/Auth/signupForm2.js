@@ -22,9 +22,9 @@ import { IS_AUTHENTICATED } from '../../reducers/actions/types';
 
 const handleValidation = () => {
     if (!prenom || !numRue || !pays || !ville || !telephone  || !typeCompte) {
-      Alert.alert('Erreur', 'Tous les champs sont obligatoires.');
+        Alert.alert('Erreur', 'Tous les champs sont obligatoires.');
     } else {
-      Alert.alert('Succès', 'Formulaire soumis avec succès !');
+        Alert.alert('Succès', 'Formulaire soumis avec succès !');
     }
 };
 const countryselection = [ 
@@ -97,10 +97,6 @@ const cityselection = [
     { label: 'Bruxelles', value: '16'},
 
 ];
-
-
-
-
 
 class signUpForm2 extends PureComponent {
     constructor(props){
@@ -188,9 +184,8 @@ class signUpForm2 extends PureComponent {
     }
 
     _navigateToPreloadPage = () => {
-        const {navigation} = this.props;
+        const {navigation} = this.props; 
         navigation.navigate('Preload');
-        store.dispatch({type: IS_AUTHENTICATED, action: true});
     }
 
     _authSignup = async () => {
@@ -222,8 +217,6 @@ class signUpForm2 extends PureComponent {
                 navigation:root_navigation,
                 
             }
-
-            
             //LoginAction(data);
             SignupAction(data);
             this.scrollListReftop.scrollToEnd({animated : true});
@@ -273,189 +266,191 @@ class signUpForm2 extends PureComponent {
 
     render(){
         const {is_loading} = this.props;
-        const {password1Visible, password2Visible, acceptCondition, confidFocus, gender, is_alert, alert_title, alert_subtitle} = this.state;
+        const {
+            password1Visible, 
+            password2Visible, 
+            acceptCondition, 
+            confidFocus, 
+            gender, 
+            country,
+            city,
+            is_alert, 
+            alert_title, 
+            alert_subtitle
+        } = this.state;
         return(
-            <ScrollView 
-                    ref={(ref) => {this.scrollListReftop = ref}}>
-                    <ImageBackground 
-                    source={require('../../assets/images/background.jpg')}
-                        style={[loginstyle.itemslidersignup]}
-                        >  
-                        <View style={loginstyle.containersignup}>
-                            <TouchableOpacity 
-                                onPress={this._navigateToForm1}>                       
-                                <Image style={loginstyle.backstyle1} source={require('../../assets/images/back.png')} />
-                            </TouchableOpacity>
-                            <Image source={require('../../assets/images/t_cash.png')} style={loginstyle.image1} />
-                            <Text style={[styles.textBold, loginstyle.titlesignup]}>Créer un Compte</Text>
-                            <Text style={[styles.textBold, loginstyle.title]}>Créez votre compte T-cash et profitez</Text>
+            <ScrollView ref={(ref) => {this.scrollListReftop = ref}}>
+                <ImageBackground source={require('../../assets/images/background.jpg')} style={[loginstyle.itemslidersignup]}>  
+                    <View style={loginstyle.containersignup}>
+                        <TouchableOpacity 
+                            onPress={this._navigateToForm1}>                       
+                            <Image style={loginstyle.backstyle1} source={require('../../assets/images/back.png')} />
+                        </TouchableOpacity>
+                        <Image source={require('../../assets/images/t_cash.png')} style={loginstyle.image1} />
+                        <Text style={[styles.textBold, loginstyle.titlesignup]}>Créer un Compte</Text>
+                        <Text style={[styles.textBold, loginstyle.title]}>Créez votre compte T-cash et profitez</Text>
 
+                        <View style={loginstyle.selectcontainer}>
+                            {this._renderDropdownLabel}
+                            <Dropdown
+                                style={[loginstyle.dropdown, confidFocus && { borderColor: 'blue' }]}
+                                placeholderStyle={[loginstyle.placeholderStyle, styles.text]}
+                                selectedTextStyle={[loginstyle.selectedTextStyle, styles.text]}
+                                itemTextStyle={[loginstyle.itemTextStyle, styles.text]}
+                                containerStyle={loginstyle.containeritemdrop}
+                                iconStyle={loginstyle.iconStyle}
+                                dropdownPosition='auto'
+                                data={datagender}
+                                labelField="label"
+                                valueField="value"
+                                placeholder={!confidFocus ? 'Choisir votre sexe...' : '...'}
+                                value={gender}
+                                onFocus={() => this.setState({confidFocus:true})}
+                                onBlur={() => this.setState({confidFocus:false})}
+                                onChange={item => this.setState({gender:item})}
+                                renderLeftIcon={() => (<Foundation name='male-female' style={loginstyle.dropdownicon}/>)}
+                            />
+                        </View>
 
-                          
-                            <View style={loginstyle.selectcontainer}>
-                                {this._renderDropdownLabel}
-                                <Dropdown
-                                    style={[loginstyle.dropdown, confidFocus && { borderColor: 'blue' }]}
-                                    placeholderStyle={[loginstyle.placeholderStyle, styles.text]}
-                                    selectedTextStyle={[loginstyle.selectedTextStyle, styles.text]}
-                                    itemTextStyle={[loginstyle.itemTextStyle, styles.text]}
-                                    containerStyle={loginstyle.containeritemdrop}
-                                    iconStyle={loginstyle.iconStyle}
-                                    dropdownPosition='auto'
-                                    data={datagender}
-                                    labelField="label"
-                                    valueField="value"
-                                    placeholder={!confidFocus ? 'Choisir votre sexe...' : '...'}
-                                    value={gender}
-                                    onFocus={() => this.setState({confidFocus:true})}
-                                    onBlur={() => this.setState({confidFocus:false})}
-                                    onChange={item => this.setState({gender:item})}
-                                    renderLeftIcon={() => (<Foundation name='male-female' style={loginstyle.dropdownicon}/>)}
-                                />
-                            </View>
+                        <View style={loginstyle.selectcontainer}>
+                            {this._renderDropdownLabel}
+                            <Dropdown
+                                style={[loginstyle.dropdown, confidFocus && { borderColor: 'blue' }]}
+                                placeholderStyle={[loginstyle.placeholderStyle, styles.text]}
+                                selectedTextStyle={[loginstyle.selectedTextStyle, styles.text]}
+                                itemTextStyle={[loginstyle.itemTextStyle, styles.text]}
+                                containerStyle={loginstyle.containeritemdrop}
+                                iconStyle={loginstyle.iconStyle}
+                                dropdownPosition='auto'
+                                data={countryselection}
+                                labelField="label"
+                                valueField="value"
+                                placeholder={!confidFocus ? 'Choisir votre Pays' : '...'}
+                                value={country}
+                                onFocus={() => this.setState({confidFocus:true})}
+                                onBlur={() => this.setState({confidFocus:false})}
+                                onChange={item => this.setState({country:item})}
+                                renderLeftIcon={() => (<Foundation name='map' style={loginstyle.dropdownicon}/>)}
+                            />
+                        </View>
 
-                            <View style={loginstyle.selectcontainer}>
-                                {this._renderDropdownLabel}
-                                <Dropdown
-                                    style={[loginstyle.dropdown, confidFocus && { borderColor: 'blue' }]}
-                                    placeholderStyle={[loginstyle.placeholderStyle, styles.text]}
-                                    selectedTextStyle={[loginstyle.selectedTextStyle, styles.text]}
-                                    itemTextStyle={[loginstyle.itemTextStyle, styles.text]}
-                                    containerStyle={loginstyle.containeritemdrop}
-                                    iconStyle={loginstyle.iconStyle}
-                                    dropdownPosition='auto'
-                                    data={countryselection}
-                                    labelField="label"
-                                    valueField="value"
-                                    placeholder={!confidFocus ? 'Choisir votre Pays' : '...'}
-                                    value={gender}
-                                    onFocus={() => this.setState({confidFocus:true})}
-                                    onBlur={() => this.setState({confidFocus:false})}
-                                    onChange={item => this.setState({gender:item})}
-                                    renderLeftIcon={() => (<Foundation name='map' style={loginstyle.dropdownicon}/>)}
-                                />
-                            </View>
+                        <View style={loginstyle.selectcontainer}>
+                            {this._renderDropdownLabel}
+                            <Dropdown
+                                style={[loginstyle.dropdown, confidFocus && { borderColor: 'blue' }]}
+                                placeholderStyle={[loginstyle.placeholderStyle, styles.text]}
+                                selectedTextStyle={[loginstyle.selectedTextStyle, styles.text]}
+                                itemTextStyle={[loginstyle.itemTextStyle, styles.text]}
+                                containerStyle={loginstyle.containeritemdrop}
+                                iconStyle={loginstyle.iconStyle}
+                                dropdownPosition='auto'
+                                data={cityselection}
+                                labelField="label"
+                                valueField="value"
+                                placeholder={!confidFocus ? 'Choisir votre Ville' : '...'}
+                                value={city}
+                                onFocus={() => this.setState({confidFocus:true})}
+                                onBlur={() => this.setState({confidFocus:false})}
+                                onChange={item => this.setState({city:item})}
+                                renderLeftIcon={() => (<Foundation name='map' style={loginstyle.dropdownicon}/>)}
+                            />
+                        </View>
 
-                            <View style={loginstyle.selectcontainer}>
-                                {this._renderDropdownLabel}
-                                <Dropdown
-                                    style={[loginstyle.dropdown, confidFocus && { borderColor: 'blue' }]}
-                                    placeholderStyle={[loginstyle.placeholderStyle, styles.text]}
-                                    selectedTextStyle={[loginstyle.selectedTextStyle, styles.text]}
-                                    itemTextStyle={[loginstyle.itemTextStyle, styles.text]}
-                                    containerStyle={loginstyle.containeritemdrop}
-                                    iconStyle={loginstyle.iconStyle}
-                                    dropdownPosition='auto'
-                                    data={cityselection}
-                                    labelField="label"
-                                    valueField="value"
-                                    placeholder={!confidFocus ? 'Choisir votre Ville' : '...'}
-                                    value={gender}
-                                    onFocus={() => this.setState({confidFocus:true})}
-                                    onBlur={() => this.setState({confidFocus:false})}
-                                    onChange={item => this.setState({gender:item})}
-                                    renderLeftIcon={() => (<Foundation name='map' style={loginstyle.dropdownicon}/>)}
-                                />
-                            </View>
+                        <View style={loginstyle.blocinupt2}>
+                            <TextInput
+                                style={[loginstyle.inputtextsignup1, styles.text]}
+                                autoCapitalize="none" 
+                                autoCorrect={false}
+                                placeholderTextColor='#B1B1B1'
+                                placeholder='Votre rue'
+                                onChangeText={(val) => {this.setState({email:val})}}
+                                editable={is_loading ? false : true}
+                            />
+                        </View>
 
-                            <View style={loginstyle.blocinupt2}>
-                                <TextInput
-                                    style={[loginstyle.inputtextsignup1, styles.text]}
-                                    autoCapitalize="none" 
-                                    autoCorrect={false}
-                                    placeholderTextColor='#B1B1B1'
-                                    placeholder='Votre rue'
-                                    onChangeText={(val) => {this.setState({email:val})}}
-                                    editable={is_loading ? false : true}
-                                />
-                            </View>
-
-                            <View style={loginstyle.blocinupt2}>
-                                <TextInput
-                                    style={[loginstyle.inputtextsignup1, styles.text]}
-                                    placeholderTextColor='#B1B1B1'
-                                    placeholder='Mot de passe'
-                                    secureTextEntry={!password2Visible}
-                                    onChangeText={(val) => {this.setState({password1:val})}}
-                                    editable={is_loading ? false : true}
-                                />
-                                <View style={loginstyle.blockhidepass}>
-                                    <TouchableOpacity 
-                                        disabled={is_loading ? true : false}
-                                        onPress={this._togglePass2Visible}>
-                                        <Entypo 
-                                            name={password2Visible ? 'eye-with-line' : 'eye'} 
-                                            style={loginstyle.iconhidepasssiginup}/>
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={loginstyle.bloccriterierspass}>
-                                    <Text style={[styles.text, loginstyle.passwordcritariers]}> - Le mot de passe doit avoir aumoins 6 charactères.</Text>
-                                    <Text style={[styles.text, loginstyle.passwordcritariers]}> - Doit contenir une lettre majuscule.</Text>
-                                    <Text style={[styles.text, loginstyle.passwordcritariers]}> - Doit contenir un nombre ou un charactère spécial.</Text>
-                                </View>
-                            </View>
-
-                            <View style={loginstyle.blocinupt2}>
-                                <TextInput
-                                    style={[loginstyle.inputtextsignup1, styles.text]}
-                                    placeholderTextColor='#B1B1B1'
-                                    placeholder='Confirmez Mot de passe'
-                                    secureTextEntry={!password2Visible}
-                                    onChangeText={(val) => {this.setState({password2:val})}}
-                                    editable={is_loading ? false : true}
-                                />
-                                <View style={loginstyle.blockhidepass}>
-                                    <TouchableOpacity 
-                                        disabled={is_loading ? true : false}
-                                        onPress={this._togglePass2Visible}>
-                                        <Entypo 
-                                            name={password2Visible ? 'eye-with-line' : 'eye'} 
-                                            style={loginstyle.iconhidepasssiginup}/>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-
-                            <View style={loginstyle.containercondition}>
-                                <TouchableOpacity 
-                                    style={loginstyle.checkbtn}
-                                    onPress={this._onChangeAcceptCondition}>
-                                    {
-                                        acceptCondition ?
-                                            <FontAwesome name='check' style={loginstyle.checkicon}/>
-                                        :
-                                            <Text></Text>
-                                    }
-                                </TouchableOpacity>
-                                <Text style={[styles.text, loginstyle.conditiontext]}>
-                                    En créant votre compte, vous acceptez les 
-                                    <TouchableOpacity onPress={this._redirectPolicy.bind(this, 'https://japapmessenger.com/terms/terms')}>
-                                        <Text style={[styles.text, loginstyle.conditionlink]}> conditions </Text>
-                                    </TouchableOpacity>
-                                    d'utilisations et de
-                                    <TouchableOpacity onPress={this._redirectPolicy.bind(this, 'https://japapmessenger.com/terms/privacy-policy')}>
-                                        <Text style={[styles.text, loginstyle.conditionlink]}> confidentialités </Text>
-                                    </TouchableOpacity>
-                                </Text>
-                            </View>
-
-                          
+                        <View style={loginstyle.blocinupt2}>
+                            <TextInput
+                                style={[loginstyle.inputtextsignup1, styles.text]}
+                                placeholderTextColor='#B1B1B1'
+                                placeholder='Mot de passe'
+                                secureTextEntry={!password2Visible}
+                                onChangeText={(val) => {this.setState({password1:val})}}
+                                editable={is_loading ? false : true}
+                            />
+                            <View style={loginstyle.blockhidepass}>
                                 <TouchableOpacity 
                                     disabled={is_loading ? true : false}
-                                    style={loginstyle.btnsignup} 
-                                    onPress={this._navigateToPreloadPage}>
-                                {
-                                    is_loading ?
-                                        <View style={loginstyle.loaderbtn}>
-                                            <ActivityIndicator size="small" color="#fff" />
-                                        </View>  
-                                    :
-                                        <Text style={[styles.textBold, loginstyle.textbtnsubmit]}>Créer maintenant</Text>
-                                }
-                                </TouchableOpacity>       
-                  
+                                    onPress={this._togglePass2Visible}>
+                                    <Entypo 
+                                        name={password2Visible ? 'eye-with-line' : 'eye'} 
+                                        style={loginstyle.iconhidepasssiginup}/>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={loginstyle.bloccriterierspass}>
+                                <Text style={[styles.text, loginstyle.passwordcritariers]}> - Le mot de passe doit avoir aumoins 6 charactères.</Text>
+                                <Text style={[styles.text, loginstyle.passwordcritariers]}> - Doit contenir une lettre majuscule.</Text>
+                                <Text style={[styles.text, loginstyle.passwordcritariers]}> - Doit contenir un nombre ou un charactère spécial.</Text>
+                            </View>
                         </View>
-                    </ImageBackground>
-                      {/* Manage Error Alert */}
+
+                        <View style={loginstyle.blocinupt2}>
+                            <TextInput
+                                style={[loginstyle.inputtextsignup1, styles.text]}
+                                placeholderTextColor='#B1B1B1'
+                                placeholder='Confirmez Mot de passe'
+                                secureTextEntry={!password2Visible}
+                                onChangeText={(val) => {this.setState({password2:val})}}
+                                editable={is_loading ? false : true}
+                            />
+                            <View style={loginstyle.blockhidepass}>
+                                <TouchableOpacity 
+                                    disabled={is_loading ? true : false}
+                                    onPress={this._togglePass2Visible}>
+                                    <Entypo 
+                                        name={password2Visible ? 'eye-with-line' : 'eye'} 
+                                        style={loginstyle.iconhidepasssiginup}/>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+
+                        <View style={loginstyle.containercondition}>
+                            <TouchableOpacity 
+                                style={loginstyle.checkbtn}
+                                onPress={this._onChangeAcceptCondition}>
+                                {
+                                    acceptCondition ?
+                                        <FontAwesome name='check' style={loginstyle.checkicon}/>
+                                    :
+                                        <Text></Text>
+                                }
+                            </TouchableOpacity>
+                                
+                                                            
+                            <Text style={[styles.text, loginstyle.conditiontext]}>
+                                En créant votre compte, vous acceptez les 
+                                <TouchableOpacity onPress={this._redirectPolicy.bind(this, 'https://japapmessenger.com/terms/terms')}>
+                                    <Text style={[styles.text, loginstyle.conditionlink]}> conditions </Text>
+                                </TouchableOpacity>
+                            </Text>
+                        </View>
+
+                        <TouchableOpacity 
+                            disabled={is_loading ? true : false}
+                            style={loginstyle.btnsignup} 
+                            onPress={this._navigateToPreloadPage}>
+                            {
+                                is_loading ?
+                                    <View style={loginstyle.loaderbtn}>
+                                        <ActivityIndicator size="small" color="#fff" />
+                                    </View>  
+                                :
+                                    <Text style={[styles.textBold, loginstyle.textbtnsubmit]}>Créer maintenant</Text>
+                            }
+                        </TouchableOpacity>       
+                    </View>
+                </ImageBackground>
+                
+                {/* Manage Error Alert */}
                 <AwesomeAlert
                     show={false}
                     title={alert_title}
@@ -472,8 +467,6 @@ class signUpForm2 extends PureComponent {
                     onConfirmPressed={this._closeAlert}
                 />
             </ScrollView>
-
-              
         )
     }
 

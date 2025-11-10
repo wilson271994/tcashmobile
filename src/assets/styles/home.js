@@ -3,422 +3,202 @@ import { color } from 'react-native-elements/dist/helpers';
 const {width, height} = Dimensions.get('window');
 
 export const homestyle = StyleSheet.create({
-
-    container: {
-        flex: 0,
-        backgroundColor: '#6DCABB', 
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    scrollContainer: {
-        padding: 20,
-    },
-     container2:{
-        flexDirection: 'column',
-        backgroundColor: '#6dcabb'
-    },
-    Container:{
-        width: 20,
-        height: 20,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-     scrollContainer: {
-        backgroundColor: '6dcabb',
-        flex: 0,
-    },
-     backgroundCircle: {
-        width: 35, 
-        height: 35, 
-        borderRadius: 60,
-        backgroundColor: '#66998f',
-        position: 'absolute', 
-        left: 257,
-        top: 28
-    },
-    backgroundCircle6: {
-        width: 65, 
-        height: 65, 
-        borderRadius: 60,
-        backgroundColor: '#FFF',
-        position: 'absolute', 
-        left: 6,
-        top: -26,
-        elevation: 20
-    },
-     image1:{
-        width: 45,
-        height: 45,
-        left: 20,
-        top: 10
-     },
-     text:{
-        fontWeight: 'bold',
-        color: 'black',
-        left: 70,
-        top: -40   
-    },
-    text2:{
-        fontWeight: 'bold',
-        color: 'grey',
-        left: 78,
-        top: -40   
-    },
-     text3:{
-        fontWeight: 'bold',
-        color: 'grey',
-        left: 270,
-        top: -80   
-    },
-     text4:{
-        fontWeight: 'bold',
-        color: 'grey',
-        left: 270,
-        top: -80,
-        fontSize: 12  
-    },
-     backgroundCircle2: {
-        width: 35, 
-        height: 35, 
-        borderRadius: 60,
-        backgroundColor: '#66998f',
-        position: 'absolute', 
-        left: 192,
-        top: -11
-    },
-     backgroundCircle3: {
-        width: 45, 
-        height: 45, 
-        borderRadius: 60,
-        backgroundColor: '#66998f',
-        position: 'absolute', 
-        left: 211,
-        top: -11,
-        elevation: 20
-    },
-     backgroundCircle4: {
-        width: 45, 
-        height: 45, 
-        borderRadius: 60,
-        backgroundColor: '#66998f',
-        position: 'absolute', 
-        left: 102,
-        top: 20,
-        elevation: 20
-       
-    },
-    backgroundCircle5: {
-        width: 50, 
-        height: 50, 
-        borderRadius: 60,
-        backgroundColor: '#66998f',
-        position: 'absolute', 
-        left: 18,
-        top: 10,
-        elevation: 10
-       
-    },
     header:{
         flexDirection: 'row',
-        justifyContent: 'space-between',
         alignItems: 'center',
         padding: 15,
+        marginTop:40
     },
-    bookContainer:{
-        position:'relative',
-        top: 10
+    container_pp:{
+        width:'20%'
     },
-    
-    header: {
-        alignItems: 'center',
-        backgroundColor: '#fff',
+    pp_user: {
+        width:65,
+        height:65,
+        left: 6,
+        top: 4,
+        backgroundColor:'#fff',
+        borderRadius:50
     },
-    logo: {
-        
-        width: 150,
-        height: 50,
-        resizeMode: 'contain',
-
+    containerusername:{
+        width:'50%',
+        marginTop:10
     },
-    quote: {
-        marginTop: 10,
-        fontSize: 16,
-        color: '#333',
-        textAlign: 'center',
+    containernotif:{
+        width:'15%'
     },
-    astronaut: {
-        width: 120,
-        height: 120,
-        marginTop: 20,
+    comtainersupport:{
+        width:'15%'
     },
-    swipeButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#4A90E2',
-        borderRadius: 25,
-        padding: 15,
-        marginVertical: 20,
-    },
-    swipeText: {
+    UserText:{
         color: '#fff',
-        fontSize: 16,
-        marginRight: 10,
+        marginLeft:10
     },
-    promoContainer: {
+    verifiedtext:{
+        color: '#fff',
+        fontSize: 15,
+    },
+    conatinerverifystatus:{
+        flexDirection:'row',
+        marginTop:5
+    },
+    verified:{
+        height: 20,
+        width: 20,
+        marginTop:2,
+        marginRight:5,
+        marginLeft:10
+    },
+    notificationlogo:{
+        width:30,
+        height:30
+    },
+    supportlogo:{
+        width:30,
+        height:30
+    },
+
+    //home wallet balance
+    walletContainer: {
         marginTop: 10,
         borderRadius: 10,
         overflow: 'hidden',
-        width: '100%',
-        height: 170,
+        width: '95%',
+        height: 100,
         backgroundColor: '#5eb3a5',
         elevation: 50,
-        borderWidth: 2,
+        borderWidth: 1,
         borderTopColor: 'rgba(109, 202, 187, 1.0)', // Blanc semi-transparent
         borderLeftColor: 'rgba(109, 202, 187, 1.0)',
         borderBottomColor: 'rgba(0, 0, 0, 0.4)', // Noir semi-transparent
         borderRightColor: 'rgba(109, 202, 187, 1.0)',
-        borderTopLeftRadius: 20,
-        borderTopEndRadius: 20,
-        borderBottomEndRadius: 20,
-        borderBottomLeftRadius: 20
-      },
-      TransactionsContainer: {
-        flex: 1, // <--- C'est la propriété magique ici !
-        backgroundColor: 'white', // La couleur de fond blanche
-        borderTopLeftRadius: 30, // Arrondi pour le haut si nécessaire
-        borderTopRightRadius: 30,
-        paddingTop: 20, // Espace interne
-        marginTop: 10, 
-       
-
-      },
-        depositeText:{
-            color:'white',
-            fontWeight:'bold',
-            top: 28,
-            left: 95,
-            fontSize: 15,
-
-      },
-        transfertText:{
-            color:'white',
-            fontWeight:'bold',
-            top: 7,
-            left: 210,
-            fontSize: 15,
-
-      },
-        viewText:{
-        color:'#6dcabb',
-        fontWeight: 'bold',
+        borderRadius:10,
+        marginLeft:5,
+        flexDirection:'row'
+    },
+    walletamountcontainer:{
+        width:'60%',
+        marginTop:15
+    },
+    walletTitleText: {
+        position: 'absolute',
+        color: '#fff',
         fontSize: 20,
-        left: 275,
-        top:-10
+    },
+    walletAmount: {
+        color: '#fff',
+        fontSize: 30,
+        marginTop:30
+    },
+    containerlogotcash:{
+        width:'20%',
+    },
+    tcashlogo:{
+        width:30,
+        height:30,
+        marginLeft:15,
+        marginTop:10
+    },
+    containerwalleteye:{
+        width:'20%',
+    },
+    walleteye:{
+        width:20,
+        height:20,
+        shadowColor: '#000',
+        marginLeft:30,
+        marginTop:10
+    },
 
-      },
-      headText:{
-        color:'#6dcabb',
-        fontWeight: 'bold',
-        fontSize: 20,
-        left: 20,
-        top:18
-      },
-    header: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',  
-        padding: 10,
-      },
-     
-      image:{
-        width: 165,
-        height: 100, 
-        resizeMode:'cover',
+    //Principal Service style
+    containerprincipalservice:{
+        borderBottomColor:'#eee',
+        borderBottomWidth:1,
+        marginLeft:20,
+        marginRight:30,
+        height:150,
+        padding:20,
+        flexDirection:'row',
+        alignItems:'center',
+        justifyContent:'center',
+    },
+    walletservicebtn:{
+        width:'45%',
+        height:100,
+        alignItems:'center',
+        justifyContent:'center',
         borderRadius:20,
+        backgroundColor:'#d0f4ef',
+        marginRight:10,
+        marginLeft:10
     },
-    eye:{
-        left:310,
-        width:30,
-        top: 10,
-        height: 30,
-        shadowColor: '#000'
+    depositeText:{
+        color:'#666',
+        fontSize: 13,
+        marginTop:5
     },
-     tcash:{
-        left:15,
-        width:30,
-        top: -10,
-        height: 30,
-        shadowColor: '#000'
+    imageservicehome:{
+        width:60,
+        height:60
     },
-     plus:{
-       
-        width:30,
-        top: 28,
-        height: 30,
-        left: 110
+    transfertText:{
+        color:'white',
+        fontSize: 15,
 
     },
-     transfert:{
-        width:25,
-        top: -1,
-        height: 25,
-        left: 220,
-    },
-    containerbook:{
-        flex: 1,
-         justifyContent: 'center', 
-         alignItems: 'center',
-         marginTop: 10,
-         borderRadius: 10,
-         overflow: 'hidden',
-    },
-    logo2: {
-        width:65,
-        height:65,
-        left: 6,
-        top: 4
-    },
-   UserText:{
-    color: '#fff',
-    fontWeight: 'bold',
-    top: -15,
-    left: 15
-   },
-    verifiedtext:{
-    color: '#fff',
-    fontFamily: 'Montserrat',
-    top: -27,
-    left: 46,
-    fontSize: 15,
-   },
-    notification:{
-        width:30,
-        height:30,
-        position: 'absolute',
-        left: 260,
-        top: 10,
 
+    //Manage recent transaction style
+    containerHistoryTransation: {
+        flex:1
     },
-    verified:{
-        height: 15,
-        width: 15,
-        top: -8,
-        left: 25   
+    transactionItemContainer: {
+        padding:20,
     },
-    counter:{
-        left:289,
-        top: -22,
-        left: 258
+    headertitletrans:{
+        color:'#666',
+        fontSize: 18,
+        marginBottom:20
     },
-    counter1:{
-        left:240,
-        top:20
+    historytransitem:{
+        flexDirection:'row'
     },
-    support:{
-        width:30,
-        height:30,
-        position: 'absolute',
-        left: 195,
-        top: -7
+    histcovercontainer:{
+        width:'20%'
     },
-    panier1:{
-        width:25,
-        height:25,
-        position: 'absolute',
-        right:45,
-        marginTop:20
+    historycontent:{
+        width:'60%'
     },
-    index:{
-        color:"red",
-        fontWeight: 'bold',
-        top: 25,
-        left: 25
+    historystatus:{
+        width:'20%'
     },
-    headeritemright:{
-        width:'83.9%',
+    historycover:{
+        width:50,
+        height:50,
+        backgroundColor:'#fff',
+        borderRadius:10,
     },
-    filter:{
-        width:30,
-        height:30,
-        position: 'relative',
-        right:70,
+    histransamount:{
+        color:'#5eb3a5',
+        marginTop:5
     },
-    title : {
-        position: 'absolute',
-        top: 20,
-        left: 20,
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: 'bold',
+    histtransauthor:{
+        fontSize:13,
+        marginTop:5
     },
-   
-    promoText: {
-        position: 'absolute',
-        left: 20,
-        color: '#fff',
-        fontSize: 20,
-        fontWeight: 'bold',
-        left: 100,
-        top: 40
+    histtransstatussuccess:{
+        color:'#52954dff',
     },
-    SearchBar: {
-        height: 35,
-        width: 180,
-        borderColor: '#ECB817', 
-        borderRadius: 15,
-        justifyContent: 'center',
-        alignItems: 'center',
-        position: 'relative',
-        right: 35,
-        backgroundColor: '#1B497D',
-        borderWidth: 1
+    histtransstatusfail:{
+        color:'#964242ff',
     },
-    promoDiscount: {
-        position: 'absolute',
-        top: 70,
-        left: 20,
-        color: '#fff',
-        fontSize: 34,
-        left: 65,
-        fontWeight: 'bold',
+    histtranstime:{
+        marginTop:5
     },
-    bottomNav: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        paddingVertical: 10,
-        backgroundColor: '#fff',
-        borderTopWidth: 1,
-        borderTopColor: '#eee',
-    },
-
-    downicon: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        paddingVertical: 10,
-        backgroundColor: '#fff',
-        borderTopWidth: 1,
-        borderTopColor: '#eee',
-    },
-    iconsIndex1: {
-        flexDirection: 'row',
-        width:150,
-        top:20,
-        justifyContent: 'space-around',
-        paddingVertical: 30,
-        backgroundColor: '#fff',
-        borderTopWidth: 1,
-        borderTopColor: '#eee',
-        zIndex:999,
-    },
-
-
-    // fin
-
-
-    containerhome:{
-        flex: 1,
-        backgroundColor: '#F5F5F5',
+    separatoritemhist:{
+        borderWidth:0.5,
+        borderColor:'#eee',
+        marginBottom:10,
+        marginTop:10
     },
 
 });

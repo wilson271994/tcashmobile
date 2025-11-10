@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react';
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
-import {View, Text,TouchableOpacity, Image, TextInput, StyleSheet, Modal, SafeAreaView, Button, ActivityIndicator, ImageBackground, ScrollView, Linking, TouchableHighlight, Platform} from 'react-native';
+import {View, Text,TouchableOpacity, Image, SafeAreaView, ScrollView, ImageBackground} from 'react-native';
 import  {homestyle}  from '../../assets/styles/home.js';
 import Moment from 'moment';
 import { store } from '../../reducers/store';
@@ -9,261 +9,222 @@ import 'moment/locale/fr';
 import { IS_AUTH_ERROR, PAGE_TITLE, ROOT_NAVIGATION } from '../../reducers/actions/types';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {switchHeaderAction} from '../../reducers/actions/index.js';
-import { searchstyle } from '../../assets/styles/search.js';
+import { styles } from '../../assets/styles/index.js';
 
 class HomeIndex extends PureComponent {
     constructor(props){
         super(props); 
         state = {}
     };
-  
+
     componentDidMount(){
         this._fechtData();
     } 
-  
+
     _fechtData = async () => {
         await switchHeaderAction(true);  
     } 
-   
-    _navigateToBookDetail = () => {
+
+    _navigateTotransactionDetail = () => {
         const {navigation} = this.props;
         store.dispatch({type:ROOT_NAVIGATION, value:navigation});
-        navigation.navigate('BookDetail');
-    }
-
-    _navigateToPaieIndex = () => {
-        const {navigation} = this.props; 
-        store.dispatch({type:ROOT_NAVIGATION, value:navigation});
-        navigation.navigate('PaieIndex');
+        navigation.navigate('TransactionDetail');
     }
 
     render(){
         const {navigation} = this.props; 
-           return(
-            <SafeAreaView style={homestyle.container}>
+        return(
+            <ImageBackground style={styles.backgroundapp} 
+                source={require('../../assets/images/background.jpg')}>
                 <ScrollView contentContainerStyle={homestyle.scrollContainer}>
-
-                    <View style={homestyle.container2}>
+                        {/* Header home page */}
                         <View style={homestyle.header}>
-                            <View style={homestyle.Container2}>
-                                <View style={homestyle.backgroundCircle6}>
-                                </View>
-                            </View>
-                            <TouchableOpacity>
+                            <TouchableOpacity style={homestyle.container_pp}>
                                 <Image
-                                    source={require('../../assets/images/account.png')}
-                                    style={homestyle.logo2}
+                                    source={require('../../assets/images/default_pp.png')}
+                                    style={homestyle.pp_user}
                                 />
-                            </TouchableOpacity>    
+                            </TouchableOpacity>   
 
-                            <View style={homestyle.headeritemright}>
-                                <View style={homestyle.Container}>
-                                    <View style={homestyle.backgroundCircle}>
-                                    </View>
-                                </View>
-                                <TouchableOpacity>
+                            <View style={homestyle.containerusername}>
+                                <Text style={[styles.textBold, homestyle.UserText]}>Wilson NDONGO</Text>
+                                <View style={homestyle.conatinerverifystatus}>
                                     <Image
-                                        source={require('../../assets/images/notification.png')}
-                                        style={homestyle.notification}
+                                        source={require('../../assets/images/verified.png')}
+                                        style={homestyle.verified}
                                     />
-                                </TouchableOpacity>
-
-                                <View style={homestyle.counter}>
-                                    <Text style={homestyle.index}>1</Text>
+                                    <Text style={homestyle.verifiedtext}>verifié</Text>
                                 </View>
-                                <View style={homestyle.Container2}>
-                                    <View style={homestyle.backgroundCircle2}>
-                                    </View>
-                                </View>
+                            </View> 
 
-                                <TouchableOpacity>
-                                    <Image
-                                        source={require('../../assets/images/support.png')}
-                                        style={homestyle.support}
-                                    />
-                                </TouchableOpacity>
-
-                                
-                                <Text style={homestyle.UserText}>Utilisateur T_cash</Text>
+                            <TouchableOpacity style={homestyle.comtainersupport}>
                                 <Image
-                                    source={require('../../assets/images/verified.png')}
-                                    style={homestyle.verified}
+                                    source={require('../../assets/images/support.png')}
+                                    style={homestyle.supportlogo}
                                 />
-                                <Text style={homestyle.verifiedtext}>verifié</Text>
-                            
-                            
-                            </View>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={homestyle.containernotif}>
+                                <Image
+                                    source={require('../../assets/images/notification.png')}
+                                    style={homestyle.notificationlogo}
+                                />
+                            </TouchableOpacity>
                         </View>
-                    </View>
-                    {/* Partie supérieure */}
                     
-                        {/* Bannière de promotion */}
-                        
-
-                        {/* Bannière de promotion */}
-                    
-                        <View style={homestyle.promoContainer}>
-                        
-                            <Image
-                                source={require('../../assets/images/eye.png')}
-                                style={homestyle.eye}
-                            />
-                            
-                            <Text style={homestyle.promoText}>T_cash Balance</Text>
-                            <Text style={homestyle.promoDiscount}>32 132.2 FCFA</Text>
+                        {/* Wallet balance */}
+                        <View style={homestyle.walletContainer}>
+                            <View style={homestyle.containerlogotcash}>
                                 <Image
                                     source={require('../../assets/images/t_cash.png')}
-                                    style={homestyle.tcash}
+                                    style={homestyle.tcashlogo}
                                 />
-                        </View>
-                    
-                        {/* Liste des nouveaux livres */}
-
-                        <View style={homestyle.container2}>
-
-                            <View style={homestyle.backgroundCircle4}>
-
                             </View>
+                            <View style={homestyle.walletamountcontainer}>
+                                <Text style={[styles.text, homestyle.walletTitleText]}>Mon Solde</Text>
+                                <Text style={[styles.textBold, homestyle.walletAmount]}>32 132.2 FCFA</Text>
+                            </View>
+                            <TouchableOpacity style={homestyle.containerwalleteye}>
+                                <Image
+                                    source={require('../../assets/images/eye.png')}
+                                    style={homestyle.walleteye}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                        
+                        {/* Principal services */}
+                        <View style={homestyle.containerprincipalservice}>
+                            <TouchableOpacity style={[styles.card, homestyle.walletservicebtn]}>
+                                <Image
+                                    source={require('../../assets/images/deposit.png')}
+                                    style={homestyle.imageservicehome}
+                                />     
+                                <Text style={[styles.textBold, homestyle.depositeText]}>Recharge</Text>
+                            </TouchableOpacity> 
 
+                            <TouchableOpacity style={[styles.card, homestyle.walletservicebtn]}>
+                                <Image
+                                    source={require('../../assets/images/transfer.png')}
+                                    style={homestyle.imageservicehome}
+                                />                     
+                                <Text style={[styles.textBold, homestyle.depositeText]}>Transfert</Text>   
+                            </TouchableOpacity>
                         </View>
 
-
-                        <TouchableOpacity>
-                            <Image
-                                source={require('../../assets/images/plus.png')}
-                                style={homestyle.plus}
-                            />                        
-                        </TouchableOpacity>
-
-                            <View style={homestyle.container2}>
-                                <View style={homestyle.backgroundCircle3}>
-                                </View>
-                            </View>
-
-                        <TouchableOpacity>
-                            <Image
-                                source={require('../../assets/images/transfert.png')}
-                                style={homestyle.transfert}
-                            />                       
-                    </TouchableOpacity>
-
-                        <Text style={homestyle.depositeText}>Deposite</Text>
-
-                        <Text style={homestyle.transfertText}>transfer</Text>
-
-                        <ScrollView contentContainerStyle={homestyle.scrollContainer}>
-                            
-                            <View style={homestyle.TransactionsContainer}>
-                                <Text style={homestyle.headText}>Transactions</Text>
-                                <Text style={homestyle.viewText}>View all</Text>
-                                <View style={homestyle.container2}>
-                                    <View style={homestyle.backgroundCircle5}>
-                                    </View>
-                                </View>
+                        {/* Recent transaction history */}
+                        <ScrollView contentContainerStyle={homestyle.containerHistoryTransation}>
+                            <View style={homestyle.transactionItemContainer}>
+                                <Text style={[styles.textBold, homestyle.headertitletrans]}>Transactions recentes</Text>
+                                
                                 <TouchableOpacity 
-                                
-                                    onPress={this. _navigateToPaieIndex.bind(this)}
+                                    onPress={this. _navigateTotransactionDetail.bind(this)}
+                                    style={homestyle.historytransitem}>
+                                    <View style={homestyle.histcovercontainer}>
+                                        <Image
+                                            source={require('../../assets/images/tcash_mtn.png')}
+                                            style={homestyle.historycover} />
+                                    </View>
+                                    <View style={homestyle.historycontent}>
+                                        <Text style={[styles.textBold, homestyle.histtranstype]}>T_cash Deposite</Text>
+                                        <Text style={[styles.textItalicBold, homestyle.histransamount]}>+11 000 FCFA</Text>
+                                        <Text style={[styles.text, homestyle.histtransauthor]}>Auteur : Valery Yanick</Text>
+                                    </View>
+                                    <View style={homestyle.historystatus}>
+                                        <Text style={[styles.textItalicBold, homestyle.histtransstatussuccess]}>Réussie</Text>
+                                        <Text 
+                                            numberOfLines={1}
+                                            style={[styles.text, homestyle.histtranstime]}>Il y a 12 hours ago</Text>
+                                    </View>
+                                </TouchableOpacity>
+                                <View style={homestyle.separatoritemhist} />
 
-                                >
-                                    <View>
+                                <TouchableOpacity 
+                                    onPress={this. _navigateTotransactionDetail.bind(this)}
+                                    style={homestyle.historytransitem}>
+                                    <View style={homestyle.histcovercontainer}>
                                         <Image
-                                            source={require('../../assets/images/account.png')}
-                                            style={homestyle.image1} />
-                                            <Text style={homestyle.text}>T_cash Deposite</Text>
-                                            <Text style={homestyle.text2}>Valery Yanick</Text>
-                                            <Text style={homestyle.text3}>+11 000 FCFA</Text>
-                                            <Text style={homestyle.text4}>12 hours ago</Text>
+                                            source={require('../../assets/images/tcash_tcash.png')}
+                                            style={homestyle.historycover} />
+                                    </View>
+                                    <View style={homestyle.historycontent}>
+                                        <Text style={[styles.textBold, homestyle.histtranstype]}>T_cash Deposite</Text>
+                                        <Text style={[styles.textItalicBold, homestyle.histransamount]}>+11 000 FCFA</Text>
+                                        <Text style={[styles.text, homestyle.histtransauthor]}>Auteur : Valery Yanick</Text>
+                                    </View>
+                                    <View style={homestyle.historystatus}>
+                                        <Text style={[styles.textItalicBold, homestyle.histtransstatussuccess]}>Réussie</Text>
+                                        <Text 
+                                            numberOfLines={1}
+                                            style={[styles.text, homestyle.histtranstime]}>Il y a 12 hours ago</Text>
                                     </View>
                                 </TouchableOpacity>
+                                <View style={homestyle.separatoritemhist} />
 
-                                <View style={homestyle.Conatiner2}>
-                                        <View style={homestyle.backgroundCircle5}>
-                                    </View>
-                                </View>
-                                <TouchableOpacity
-                                    onPress={this. _navigateToPaieIndex.bind(this)}>
-                                    <View>
+                                <TouchableOpacity 
+                                    onPress={this. _navigateTotransactionDetail.bind(this)}
+                                    style={homestyle.historytransitem}>
+                                    <View style={homestyle.histcovercontainer}>
                                         <Image
-                                            source={require('../../assets/images/account.png')}
-                                            style={homestyle.image1} />
-                                            <Text style={homestyle.text}>T_cash Deposite</Text>
-                                            <Text style={homestyle.text2}>Valery Yanick</Text>
-                                            <Text style={homestyle.text3}>+11 000 FCFA</Text>
-                                            <Text style={homestyle.text4}>12 hours ago</Text>
+                                            source={require('../../assets/images/tcash_om.png')}
+                                            style={homestyle.historycover} />
+                                    </View>
+                                    <View style={homestyle.historycontent}>
+                                        <Text style={[styles.textBold, homestyle.histtranstype]}>T_cash Deposite</Text>
+                                        <Text style={[styles.textItalicBold, homestyle.histransamount]}>+11 000 FCFA</Text>
+                                        <Text style={[styles.text, homestyle.histtransauthor]}>Auteur : Valery Yanick</Text>
+                                    </View>
+                                    <View style={homestyle.historystatus}>
+                                        <Text style={[styles.textItalicBold, homestyle.histtransstatusfail]}>Echec</Text>
+                                        <Text 
+                                            numberOfLines={1}
+                                            style={[styles.text, homestyle.histtranstime]}>Il y a 12 hours ago</Text>
                                     </View>
                                 </TouchableOpacity>
-                                
-                                <View style={homestyle.Conatiner2}>
-                                        <View style={homestyle.backgroundCircle5}>
-                                    </View>
-                                </View>
-                                <TouchableOpacity
-                                    onPress={this. _navigateToPaieIndex.bind(this)}>
-                                    <View>
+                                <View style={homestyle.separatoritemhist} />
+
+                                <TouchableOpacity 
+                                    onPress={this. _navigateTotransactionDetail.bind(this)}
+                                    style={homestyle.historytransitem}>
+                                    <View style={homestyle.histcovercontainer}>
                                         <Image
-                                            source={require('../../assets/images/account.png')}
-                                            style={homestyle.image1} />
-                                            <Text style={homestyle.text}>T_cash Deposite</Text>
-                                            <Text style={homestyle.text2}>Valery Yanick</Text>
-                                            <Text style={homestyle.text3}>+11 000 FCFA</Text>
-                                            <Text style={homestyle.text4}>12 hours ago</Text>
+                                            source={require('../../assets/images/tcash_visa.png')}
+                                            style={homestyle.historycover} />
+                                    </View>
+                                    <View style={homestyle.historycontent}>
+                                        <Text style={[styles.textBold, homestyle.histtranstype]}>T_cash Deposite</Text>
+                                        <Text style={[styles.textItalicBold, homestyle.histransamount]}>+11 000 FCFA</Text>
+                                        <Text style={[styles.text, homestyle.histtransauthor]}>Auteur : Valery Yanick</Text>
+                                    </View>
+                                    <View style={homestyle.historystatus}>
+                                        <Text style={[styles.textItalicBold, homestyle.histtransstatusfail]}>Echec</Text>
+                                        <Text 
+                                            numberOfLines={1}
+                                            style={[styles.text, homestyle.histtranstime]}>Il y a 12 hours ago</Text>
                                     </View>
                                 </TouchableOpacity>
-                                <View style={homestyle.Conatiner2}>
-                                        <View style={homestyle.backgroundCircle5}>
-                                    </View>
-                                </View>
-                                <TouchableOpacity
-                                onPress={this. _navigateToPaieIndex.bind(this)}>
-                                    <View>
-                                        <Image
-                                            source={require('../../assets/images/account.png')}
-                                            style={homestyle.image1} />
-                                            <Text style={homestyle.text}>T_cash Deposite</Text>
-                                            <Text style={homestyle.text2}>Valery Yanick</Text>
-                                            <Text style={homestyle.text3}>+11 000 FCFA</Text>
-                                            <Text style={homestyle.text4}>12 hours ago</Text>
-                                    </View>
-                                </TouchableOpacity>
-                                <View style={homestyle.Conatiner2}>
-                                        <View style={homestyle.backgroundCircle5}>
-                                    </View>
-                                </View>
-                                <TouchableOpacity
-                                    onPress={this. _navigateToPaieIndex.bind(this)}>
-                                    <View>
-                                        <Image
-                                            source={require('../../assets/images/account.png')}
-                                            style={homestyle.image1} />
-                                            <Text style={homestyle.text}>T_cash Deposite</Text>
-                                            <Text style={homestyle.text2}>Valery Yanick</Text>
-                                            <Text style={homestyle.text3}>+11 000 FCFA</Text>
-                                            <Text style={homestyle.text4}>12 hours ago</Text>
-                                    </View>
-                                </TouchableOpacity>
+                                <View style={homestyle.separatoritemhist} />
+
                             </View>
 
                         </ScrollView>
-
                 </ScrollView>
-
-            </SafeAreaView>
+            </ImageBackground>
         )
     }
-  } 
-  
-  const mapDispatchToProps = (dispatch) => {
-      return {
-          ...bindActionCreators({
-              switchHeaderAction
-          }, dispatch),
-      }
-  };
-  
-  const mapStateToProps = (state) => {
-      return {
-          user_infos:state.auth.user_infos,
-      }
-  }
-  
-  export default connect(mapStateToProps, mapDispatchToProps, null)(HomeIndex);
+} 
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        ...bindActionCreators({
+            switchHeaderAction
+        }, dispatch),
+    }
+};
+
+const mapStateToProps = (state) => {
+    return {
+        user_infos:state.auth.user_infos,
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps, null)(HomeIndex);

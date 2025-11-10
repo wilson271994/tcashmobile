@@ -10,47 +10,36 @@ import IconFA  from 'react-native-vector-icons/FontAwesome';
 import { switchHeaderAction } from "../../reducers/actions";
 import HTMLView from 'react-native-htmlview'; 
 import { htmlstyles } from '../../assets/styles/htmlviewstyle';
-import BookDetail from "../../components/Service/ServiceDetails";
-import File from "../../screens/File";
+import File from "../../screens/Transaction";
+import Transaction from "../../screens/Transaction";
+import TransactionDetail from "../../components/Transaction/TransactionDetail";
 const Stack = createStackNavigator();
 
-class StackFile extends Component {
+class StackTransaction extends Component {
     constructor(props){
         super(props);
         this.state = {
         }
     }
-
-    _filterSearch = (text) => {
     
-    }
-
-    ToggleSearchBar = () => {
-        const {navigation} = this.props; 
-        console.log('yesssssssssssss')
-    }
-
-    _backBook = () => {
-        const {root_navigation} = this.props;  
-        switchHeaderAction(true);
-        root_navigation.goBack();
-
-         
-    } 
-     
     render () {
         const {is_loading, page_title} = this.props;
         return ( 
             <Stack.Navigator>
                 <Stack.Screen 
                     name=" " 
-                    component={File} 
+                    component={Transaction} 
                     options={{
                         headerShown:false
                     }}
                 />
-
-                
+                <Stack.Screen 
+                    name="TransactionDetail" 
+                    component={TransactionDetail} 
+                    options={{
+                        headerShown:false
+                    }}
+                />
             </Stack.Navigator>
         );
     }
@@ -71,4 +60,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps, null)(StackFile);
+export default connect(mapStateToProps, mapDispatchToProps, null)(StackTransaction);

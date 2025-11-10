@@ -4,16 +4,15 @@ import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
 import { createStackNavigator } from "@react-navigation/stack";
 import {Image, Text, TouchableOpacity} from "react-native";
-import loginPage from "../../components/Auth/LoginPage";
 import { switchHeaderAction, switchPostFormAction } from "../../reducers/actions";
 import { loginstyle } from "../../assets/styles/login";
 import { styles } from "../../assets/styles";
 import activationPage from "../../components/Auth/activationPage";
 import AntDesign  from 'react-native-vector-icons/AntDesign';
-import SignUpForm1 from "../../components/Auth/SignUpForm1";
+import loginPage from "../../components/Auth/loginPage";
+import signupForm1 from "../../components/Auth/signupForm1";
+import signupForm2 from "../../components/Auth/signupForm2";
 import Preload from "../../components/Auth/Preload";
-import SignUpForm2 from "../../components/Auth/SignUpForm2";
-import { color } from "react-native-elements/dist/helpers";
 
 const Stack = createStackNavigator();
 
@@ -65,7 +64,7 @@ class StackAuth extends Component {
 
                 <Stack.Screen 
                     name="SignUpForm1"  
-                    component={SignUpForm1} 
+                    component={signupForm1} 
                     options={{
                         headerShown:false, 
                         headerTitle : () => {
@@ -88,10 +87,9 @@ class StackAuth extends Component {
                     }}
                 />
 
-
                 <Stack.Screen
                     name="SignUpForm2"
-                    component={SignUpForm2}
+                    component={signupForm2}
                     options={{
                         headerShown: false,
                         headerTitle: () => {
@@ -114,27 +112,52 @@ class StackAuth extends Component {
 
                 />
 
-             <Stack.Screen
-                name="Login" 
-                component={loginPage} 
-                options={{
-                    headerShown:true,
-                    headerTitle : () => {
-                        return(
-                            <Text
-                            numberOfLines={1}
-                            style={[styles.textBold, loginstyle.titlepagePreload]}>{page_title}</Text>
-                        )
-                    },
-                    headerLeft: () => {
-                        return (
-                            <TouchableOpacity
-                            style={styles._backHome}>
-                            </TouchableOpacity>
-                        )
-                    },
-                }}
-                
+                <Stack.Screen
+                    name="Preload"
+                    component={Preload}
+                    options={{
+                        headerShown: false,
+                        headerTitle: () => {
+                            return (
+                                <Text
+                                numberOfLines={1}
+                                style={[styles.textBold, loginstyle.titlepagesignup]}>{page_title}</Text>
+                            )
+                        },
+                        headerLeft: () => {
+                            return (
+                                <TouchableOpacity
+                                    onPress={this. _backProfil}
+                                    style={styles.btnbackscreen}>
+                                    <Image style={loginstyle.backstyle} source={require('../../assets/images/back.png')} />
+                                </TouchableOpacity>
+                            )
+                        },
+                    }}
+
+                />
+
+                <Stack.Screen
+                    name="Login" 
+                    component={loginPage} 
+                    options={{
+                        headerShown:true,
+                        headerTitle : () => {
+                            return(
+                                <Text
+                                numberOfLines={1}
+                                style={[styles.textBold, loginstyle.titlepagePreload]}>{page_title}</Text>
+                            )
+                        },
+                        headerLeft: () => {
+                            return (
+                                <TouchableOpacity
+                                style={styles._backHome}>
+                                </TouchableOpacity>
+                            )
+                        },
+                    }}
+                    
                 />
 
 

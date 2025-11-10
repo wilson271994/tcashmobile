@@ -12,11 +12,11 @@ import { loginstyle } from "../../assets/styles/login";
 import { styles } from "../../assets/styles";
 import StackHome from "../stack/StackHome";
 import StackAuth from "../stack/StackAuth";
-import StackSearch from "../stack/StackSearch";
 import { switchHeaderAction } from "../../reducers/actions";
 import StackService from "../stack/StackService";
 import StackProfil from "../stack/StackProfil";
-import StackFile from "../stack/StackFile";
+import { stackstyle } from "../../assets/styles/stackstyle";
+import StackTransaction from "../stack/StackTransaction";
 
 const Tab = createBottomTabNavigator();
 
@@ -25,10 +25,9 @@ class BottomTabNavigator extends Component{
         super(props);
         this.state = {
             isHome:false,
-            isSearch:false,
-            isProfil:false,
-            isFile:false,
             isService:false,
+            isTransaction:false,
+            isProfil:false,
         }
     }
 
@@ -48,9 +47,8 @@ class BottomTabNavigator extends Component{
         const {is_authenticated, is_loading} = this.props;
         const {
             isHome,
-            isSearch,
-            isFile,
             isService,
+            isTransaction,
             isProfil
         } = this.state;
         return (
@@ -87,10 +85,9 @@ class BottomTabNavigator extends Component{
                                             tabPress: e => {
                                             if(route.name == "Home"){
                                                 this.setState({isHome:true})
-                                                this.setState({isSearch:false})
-                                                this.setState({isProfil:false})
-                                                this.setState({isFile:false})
                                                 this.setState({isService:false})
+                                                this.setState({isTransaction:false})
+                                                this.setState({isProfil:false})
                                                 switchHeaderAction(true)
                                             }
                                         },
@@ -106,24 +103,27 @@ class BottomTabNavigator extends Component{
                                             );
                                         },
                                         tabBarItemStyle:{
-                                            borderBottomWidth:isHome || (!isHome && !isSearch && !isFile && !isProfil && !isService) ? 2 : 0,
-                                            
+                                            borderBottomWidth:isHome || (!isHome && !isService && !isTransaction && !isProfil) ? 2 : 0,
+                                            marginBottom:-23,
+                                            borderBottomColor:'#fff'
                                         },
-                                        tabBarLabel:""
+                                        tabBarLabel:"Accueil",
+                                        tabBarLabelStyle:stackstyle.tabbarlabel,
+                                        marginBottom:-23,
+                                        borderBottomColor:'#fff'
                                     }}
                                 />
 
                                 <Tab.Screen
-                                    name="Directs"
-                                    component={StackSearch}
+                                    name="Service"
+                                    component={StackService} 
                                     listeners={({ route }) => ({
-                                            tabPress: e => {
-                                            if(route.name == "Directs"){
+                                        tabPress: e => { 
+                                            if(route.name == "Service"){
+                                                this.setState({isService:true})
                                                 this.setState({isHome:false})
-                                                this.setState({isSpeciality:false})
+                                                this.setState({isTransaction:false})
                                                 this.setState({isProfil:false})
-                                                this.setState({isBooks:false})
-                                                this.setState({isDirects:true})
                                                 switchHeaderAction(true)
                                             }
                                         },
@@ -139,22 +139,27 @@ class BottomTabNavigator extends Component{
                                             );
                                         },
                                         tabBarItemStyle:{
-                                            borderBottomWidth:isSearch || (!isHome && !isSearch && !isFile && !isProfil && !isService) ? 2 : 0,
-                                            borderBottomColor:'#1a3d99'
+                                            borderBottomWidth:isService ? 2 : 0,
+                                            marginBottom:-23,
+                                            borderBottomColor:'#fff'
                                         },
-                                        tabBarLabel:""
+                                        tabBarLabel:"Services",
+                                        tabBarLabelStyle:stackstyle.tabbarlabel,
+                                        marginBottom:-23,
+                                        borderBottomColor:'#fff'
                                     }}
                                 />
 
                                 <Tab.Screen
-                                    name="Service"
-                                    component={StackService}
+                                    name="Transaction"
+                                    component={StackTransaction}
                                     listeners={({ route }) => ({
-                                            tabPress: e => {
-                                            if(route.name == "Books"){
+                                        tabPress: e => {
+                                            if(route.name == "Transaction"){
+                                                this.setState({isTransaction:true})
                                                 this.setState({isHome:false})
+                                                this.setState({isService:false})
                                                 this.setState({isProfil:false})
-                                                this.setState({isServices:true})
                                                 switchHeaderAction(true)
                                             }
                                         },
@@ -170,10 +175,14 @@ class BottomTabNavigator extends Component{
                                             );
                                         },
                                         tabBarItemStyle:{
-                                            borderBottomWidth:isService || ( !isHome && !isSearch && !isFile && !isProfil && !isService ) ? 2 : 0,
-                                            
+                                            borderBottomWidth:isTransaction ? 2 : 0,
+                                            marginBottom:-23,
+                                            borderBottomColor:'#fff'
                                         },
-                                        tabBarLabel:""
+                                        tabBarLabel:"Transaction",
+                                        tabBarLabelStyle:stackstyle.tabbarlabel,
+                                        marginBottom:-23,
+                                        borderBottomColor:'#fff'
                                     }}
                                 />
 
@@ -182,13 +191,11 @@ class BottomTabNavigator extends Component{
                                     component={StackProfil}
                                     listeners={({ route }) => ({
                                             tabPress: e => {
-                                            if(route.name == "Home"){
+                                            if(route.name == "Profil"){
                                                 this.setState({isProfil:true})
                                                 this.setState({isHome:false})
-                                                this.setState({isSearch:false})
-                                                this.setState({isProfil:false})
-                                                this.setState({isFile:false})
                                                 this.setState({isService:false})
+                                                this.setState({isTransaction:false})
                                                 switchHeaderAction(true)
                                             }
                                         },
@@ -204,10 +211,14 @@ class BottomTabNavigator extends Component{
                                             );
                                         },
                                         tabBarItemStyle:{
-                                            borderBottomWidth:isHome || (!isHome && !isSearch && !isFile && !isProfil && !isService) ? 2 : 0,
-                                            
+                                            borderBottomWidth:isProfil ? 2 : 0,
+                                            marginBottom:-23,
+                                            borderBottomColor:'#fff'    
                                         },
-                                        tabBarLabel:""
+                                        tabBarLabel:"Paramètres",
+                                        tabBarLabelStyle:stackstyle.tabbarlabel,
+                                        marginBottom:-23,
+                                        borderBottomColor:'#fff'
                                     }}
                                 />
 
@@ -237,7 +248,6 @@ class BottomTabNavigator extends Component{
                     }
                 </Tab.Navigator>
             </>
-           
         );
     }
 }

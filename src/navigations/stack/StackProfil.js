@@ -32,8 +32,6 @@ class StackProfil extends Component {
         root_navigation.goBack();
     } 
 
-   
-
     ToggleSearchBar = () => {
         const {root_navigation} = this.props; 
         console.log('yesssssssssssss')
@@ -135,7 +133,7 @@ class StackProfil extends Component {
 
 
 
-               <Stack.Screen 
+                <Stack.Screen 
                     name="SupportChat" 
                     component={SupportChat} 
                     options={{

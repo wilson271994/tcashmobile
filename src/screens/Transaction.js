@@ -4,9 +4,9 @@ import {connect} from 'react-redux';
 import { SafeAreaView, Platform, Text } from 'react-native';
 import { styles } from '../assets/styles/index.js';
 import {switchHeaderAction} from '../reducers/actions/index.js';
-import FileIndex from '../components/File/FileIndex.js';
+import TransactionIndex from '../components/Transaction/TransactionIndex.js';
 
-class File extends PureComponent {
+class Transaction extends PureComponent {
     constructor(props){
         super(props); 
         state = {}
@@ -19,12 +19,12 @@ class File extends PureComponent {
     _fechtData = async () => {
         //await switchHeaderAction(true);  
     } 
- 
+
     render(){
         const {navigation} = this.props; 
         return(
             <SafeAreaView style={styles.container}>
-                <FileIndex navigation={navigation}/>
+                <TransactionIndex navigation={navigation} />
             </SafeAreaView>
         )
     }
@@ -44,4 +44,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps, null)(File);
+export default connect(mapStateToProps, mapDispatchToProps, null)(Transaction);

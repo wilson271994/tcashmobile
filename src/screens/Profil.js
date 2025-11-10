@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import { SafeAreaView, Platform, Text } from 'react-native';
 import { styles } from '../assets/styles/index.js';
 import {switchHeaderAction} from '../reducers/actions';
-import ProfilIndex from '../components/Profile/settings.js';
+import ProfilIndex from '../components/Profile/Settings.js';
 
 class Profil extends PureComponent {
     constructor(props){

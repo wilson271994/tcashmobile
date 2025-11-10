@@ -19,13 +19,13 @@ class Home extends PureComponent {
     _fechtData = async () => {
         await switchHeaderAction(true);  
     } 
- 
+
     render(){
         const {navigation} = this.props; 
         return(
             <SafeAreaView style={styles.container}>
-              <HomeIndex navigation={navigation}/> 
-              </SafeAreaView>
+                <HomeIndex navigation={navigation}/> 
+            </SafeAreaView>
         )
     }
 } 

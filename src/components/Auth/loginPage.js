@@ -7,7 +7,7 @@ import { loginstyle } from '../../assets/styles/login';
 import Entypo  from 'react-native-vector-icons/Entypo';
 import FontAwesome  from 'react-native-vector-icons/FontAwesome';
 import { store } from '../../reducers/store';
-import { IS_AUTH_ERROR, PAGE_TITLE, ROOT_NAVIGATION } from '../../reducers/actions/types';
+import { IS_AUTH_ERROR, IS_AUTHENTICATED, PAGE_TITLE, ROOT_NAVIGATION } from '../../reducers/actions/types';
 import { LoginAction, checkAuthDataAction } from '../../reducers/actions';
 import { ScrollView } from 'react-native';
 import AwesomeAlert from 'react-native-awesome-alerts';
@@ -20,7 +20,7 @@ class LoginPage extends Component {
             username:'',
             password:'',
             passwordVisible:false,
-           is_loading:false,
+            is_loading:false,
             is_alert:false, 
             alert_title:'Erreur dans le formulaire!',
             alert_subtitle:'',
@@ -58,7 +58,8 @@ class LoginPage extends Component {
                 username:username,
                 password:password
             }
-            LoginAction(data);
+            store.dispatch({type:IS_AUTHENTICATED, value:true});
+            //LoginAction(data);
         }else if(username === ''){
             this.setState({is_alert:true});
             this.setState({alert_subtitle:'Veuillez saisir votre adresse email.'})
@@ -89,8 +90,8 @@ class LoginPage extends Component {
         return (
             <ScrollView>  
                 <StatusBar 
-                barStyle="dark-content" 
-                 backgroundColor="#1B497D"
+                    barStyle="dark-content" 
+                    backgroundColor="#1B497D"
                 />
                 <ImageBackground 
 
@@ -165,7 +166,7 @@ class LoginPage extends Component {
                             </TouchableOpacity>
                         </View>
 
-                        <Text style={[styles.textBold, loginstyle.Text2]}>ou connectez-vous avec</Text>
+                        <Text style={[styles.textBold, loginstyle.Text2]}>Scannez pour télécharger</Text>
                         <TouchableOpacity>
                             <Image source={require('../../assets/images/qrcode.png')} style={loginstyle.code} />
                         </TouchableOpacity>

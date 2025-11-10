@@ -54,7 +54,7 @@ class activationPage extends PureComponent {
             <View style={[styles.card, loginstyle.containerActivation]}>
                 <ImageBackground 
                     style={[loginstyle.itemslidersignup]}
-                    source={require('../../assets/images/welcome.png')}> 
+                    source={require('../../assets/images/background.jpg')}> 
                         <ScrollView 
                             ref={(ref) => {this.scrollListReftop = ref}}
                             style={loginstyle.formblocksignup}>

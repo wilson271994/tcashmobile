@@ -23,6 +23,7 @@
     "react-native-animated-progress": "^1.0.2",
     "react-native-asset": "^2.1.1",
     "react-native-awesome-alerts": "^2.0.0",
+    "react-native-date-picker": "^5.0.13",
     "react-native-datepicker": "^1.7.2",
     "react-native-element-dropdown": "^2.12.4",
     "react-native-elements": "^3.4.3",

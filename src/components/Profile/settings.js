@@ -3,28 +3,17 @@ import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
 import {View, Text,TouchableOpacity, Image, TextInput, StyleSheet, Modal, Platform, SafeAreaView, Switch, Button, ActivityIndicator, ImageBackground, ScrollView, Linking, TouchableHighlight} from 'react-native';
 import Moment from 'moment';
-import { SectionGrid } from 'react-native-super-grid';
 import 'moment/locale/fr';
 import Icon from 'react-native-vector-icons/Ionicons';
-import FontAwesome  from 'react-native-vector-icons/FontAwesome';
-import MaterialIcons  from 'react-native-vector-icons/MaterialIcons';
-import FontAwesome5  from 'react-native-vector-icons/FontAwesome5';
-import AntDesign  from 'react-native-vector-icons/AntDesign';
 import { Picker } from '@react-native-picker/picker'; // Pour les listes déroulantes
 import { IS_AUTH_ERROR, PAGE_TITLE, ROOT_NAVIGATION } from '../../reducers/actions/types.js';
-import FontAwesome6  from 'react-native-vector-icons/FontAwesome6';
-import MaterialCommunityIcons  from 'react-native-vector-icons/MaterialCommunityIcons.js';
 import {switchHeaderAction} from '../../reducers/actions/index.js';
-import Search from '../../screens/Search.js';
 import { styles } from '../../assets/styles/index.js';
 import cover from '../../assets/images/biblio.jpg';
 import { profilstyle } from '../../assets/styles/profil.js';
 import { store } from '../../reducers/store.js';
 
-
-
 class ProfileIndex extends PureComponent {
-
   constructor(props){
     super(props); 
     this.state = {

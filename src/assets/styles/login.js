@@ -135,14 +135,17 @@ export const loginstyle = StyleSheet.create({
         fontSize:22
     },
     containerSignup:{
+        flex:1,  
+    },
+
+    preloadBackgound:{
         flex:1,
-        
-        
+        width:'100%'
     },
     containerPreload:{
         flex: 1,
-    alignItems: 'center', 
-    paddingTop: 20
+        alignItems: 'center', 
+        paddingTop: 20
     },
 
     /**form CSS */
@@ -300,7 +303,7 @@ export const loginstyle = StyleSheet.create({
     },
     inputtextlogin:{
         fontSize:18,
-        borderWidth:5,
+        borderWidth:3,
         borderColor:'#3e8f81ff',
         color:'#000000ff',
         backgroundColor:'#fff',
@@ -312,29 +315,42 @@ export const loginstyle = StyleSheet.create({
     },
     inputtextsignup:{
         backgroundColor: '#fff',
-        fontSize:18,
+        fontSize:16,
         borderWidth:3,
         borderColor:'#3e8f81ff',
         color:'#fff',
         paddingTop:5,
         width:'100%',
-        right: 8,
         borderRadius: 10,
         paddingLeft: 10
     },
+    inputdatesignup:{
+        backgroundColor: '#fff',
+        borderWidth:3,
+        borderColor:'#3e8f81ff',
+        paddingTop:5,
+        width:'100%',
+        borderRadius: 10,
+        paddingLeft: 10,
+        height:45
+    },
+    inputdatetextbtn:{
+        fontSize:16,
+        paddingTop:3
+    },
     bloccriterierspass:{
         marginTop: 10,
-        margin: 20
+        marginBottom:10,
+        width:'95%'
     },
-     inputtextsignup1:{
+    inputtextsignup1:{
         backgroundColor: '#fff',
-        fontSize:18,
+        fontSize:16,
         borderWidth:3,
         borderColor:'#3e8f81ff',
         color:'#fff',
-        paddingTop:5,
+        paddingTop:8,
         width:'100%',
-        left: -5,
         borderRadius: 10,
         paddingLeft: 10
     },
@@ -357,11 +373,10 @@ export const loginstyle = StyleSheet.create({
         width:'100%',
     },
     textbtnsubmit:{
-        fontSize:20,
+        fontSize:18,
         color:'#fff',
         textAlign:'center',
-        paddingTop:5,
-        fontWeight: 'bold',  
+        paddingBottom:-5
     },
     textbtnsubmit2:{
         fontSize:20,
@@ -501,7 +516,8 @@ export const loginstyle = StyleSheet.create({
 
     //signup
     containersignup:{
-        marginTop: 20
+        marginTop: 20,
+        width:'90%'
     },
     containercondition:{
         flexDirection:'row',
@@ -519,14 +535,14 @@ export const loginstyle = StyleSheet.create({
     conditiontext:{
         color:'#000',
         fontSize:16,
-        marginLeft:10,
-        marginRight:10,
-        lineHeight:25
+    },
+    conditioncontainer:{
+        flexDirection:"row",
     },
     conditionlink:{
         color:'orange',
         fontSize:16,
-        marginBottom:-8
+        marginBottom:-3,
     },
     checkicon:{
         color:'orange',
@@ -534,20 +550,16 @@ export const loginstyle = StyleSheet.create({
         marginRight: 5,
     },
     selectcontainer:{
-        marginTop:30,
+        marginTop:15,
     },
     dropdown: {
         borderColor: '#3e8f81ff',
-        borderWidth: 0.5,
         backgroundColor: '#fff',
         borderWidth:3,
-        borderColor:'#3e8f81ff',
-        
-        borderRadius: 8,
+        borderRadius: 10,
         paddingHorizontal: 8,
         height:50,
-        marginLeft:15, 
-        marginRight:15
+        width:'100%'
     },
     iconStyle: {
         width: 20,
@@ -555,7 +567,7 @@ export const loginstyle = StyleSheet.create({
     },
     selectedTextStyle: {
         fontSize: 16,
-        color:'#fff',
+        color:'#000',
         textAlign:'center',
     },
     itemTextStyle:{
@@ -566,7 +578,7 @@ export const loginstyle = StyleSheet.create({
     },
     placeholderStyle: {
         fontSize: 16,
-        color:'#000',
+        color:'#b1b1b1',
         textAlign:'center',
         
         
@@ -577,7 +589,7 @@ export const loginstyle = StyleSheet.create({
         color:'#b1b1b1',
     },
     containeritemdrop:{
-        backgroundColor:'#B1B1B1B',
+        backgroundColor:'#fff',
         borderColor:'#fff',
         borderRadius:10,
     },
@@ -598,15 +610,11 @@ export const loginstyle = StyleSheet.create({
         backgroundColor:'#3e8f81ff',
         borderColor:'#3e8f81ff',
         borderWidth:4,
-        paddingTop:10,
-        paddingBottom:10,
-        marginLeft:10,
-        marginRight:10,
+        paddingTop:5,
         borderRadius: 10,
-        width:'95%',
         textAlign: 'center',
-        position: 'absolute',
-        bottom: 0
+        height:45,
+        marginTop:15
     },
     code:{
         height: 80,
@@ -617,96 +625,66 @@ export const loginstyle = StyleSheet.create({
 
     //preload 
     btnspreload:{
-        borderRadius:30,
-        backgroundColor:'#ECB818',
-        borderColor:'#ECB818',
+        borderRadius:10,
+        backgroundColor:'#6dcabb',
+        borderColor:'#6dcabb',
         borderWidth:1,
         position:'relative',
         top:160,
-        right:'0%',
-       
         zIndex:9999,
-        paddingRight:15,
-        paddingLeft:15,
-        paddingBottom:5,
-       
+        height:45,
+        paddingTop:8,
+        width:'90%',
+        marginLeft:20
     },
     preloadlogo:{
-        
-        
-       
         alignItems: 'center', 
-        
-       
-       
     },
-
     preloadheaderlogo:{
-        height          : 100,
-        width           : 100,
-        borderRadius    : 30,        
-        paddingTop: 20,               
-        resizeMode: 'center',
-
-        position:'relative',
-        top:20,
-       
-        zIndex:9999,
-        paddingRight:15,
-        paddingLeft:15,
-        paddingBottom:5,
+        height          : 200,
+        width           : 200,     
     },
-
     preloadheaderimage:{
         height          : 300,
         width           : 300,
         borderRadius    : 30,   
-                 
         resizeMode: 'contain',
-
         position:'relative',
         top:110,
-            
         zIndex:9999,
         paddingRight:15,
         paddingLeft:15,
         paddingBottom:5,
     },
-
+    textpreload:{
+        fontSize:15,
+        top:60,
+        color:'#000',
+        textAlign:'center',
+        paddingTop:5,
+    },
     textpreloadtitle:{
         fontSize:20,
         top:12,
         color:'#000',
         textAlign:'center',
         paddingTop:5,
-        fontFamily: 'arial',
-        
-    },
-
-      textpreload:{
-        fontSize:15,
-        top:60,
-        color:'#000',
-        textAlign:'center',
-        paddingTop:5,
-        fontFamily: 'arial',
-        
     },
     preloadimage:{
-
         alignItems: 'center', 
     },
     iconpreload:{
-        fontSize:25,
+        fontSize:20,
         marginLeft:5
     },
+
     image:{
         height: 90,
         width: 90,
         top: -2,
         left: 100
     },
-     image1:{
+    image1:{
         height: 70,
         width: 70,
         top: 12,
@@ -727,8 +705,6 @@ export const loginstyle = StyleSheet.create({
         flex:1,
         backgroundColor:'#fff',
     },
-    footerpreload:{
-    },
 
     titlepagesignup:{
         fontSize:20,
@@ -739,8 +715,7 @@ export const loginstyle = StyleSheet.create({
         marginTop:35,
     },
     blocinupt2:{
-        marginTop:35,
-        marginLeft:15
+        marginTop:20,
     },
     copyriht:{
         width:20,
@@ -753,50 +728,48 @@ export const loginstyle = StyleSheet.create({
     },
     
     //secondeform
+    containersecondform: {
+        flex: 1,
+        padding: 20,
+        backgroundColor: '#fff',
+    },
+    label: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        marginVertical: 5,
+    },
+    input: {
+        borderWidth: 1,
+        borderColor: '#ccc',
+        padding: 10,
+        borderRadius: 5,
+        marginBottom: 10,
+    },
+    picker: {
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 5,
+        marginBottom: 10,
+    },
+    datePicker: {
+        width: '100%',
+        marginBottom: 10,
+    },
 
-        containersecondform: {
-          flex: 1,
-          padding: 20,
-          backgroundColor: '#fff',
-        },
-        label: {
-          fontSize: 16,
-          fontWeight: 'bold',
-          marginVertical: 5,
-        },
-        input: {
-          borderWidth: 1,
-          borderColor: '#ccc',
-          padding: 10,
-          borderRadius: 5,
-          marginBottom: 10,
-        },
-        picker: {
-          borderWidth: 1,
-          borderColor: '#ccc',
-          borderRadius: 5,
-          marginBottom: 10,
-        },
-        datePicker: {
-          width: '100%',
-          marginBottom: 10,
-        },
-    
 
     //activation
     containerActivation:{
         flex:1
     },
-
     footertitle : {
         color : '#fff',
-        marginTop:15
+        width:'100%',
+        marginTop:10
     },
     builderlink:{
         color:'#fff',
         marginBottom:-4,
         marginLeft:5,
-        textDecorationLine:'underline'
     },
     backstyle:{
         width:40,

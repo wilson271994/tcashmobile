@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
 import { SafeAreaView, Platform, Text } from 'react-native';
 import { styles } from '../assets/styles/index.js';
-import {switchHeaderAction} from '../reducers/actions';
+import {switchHeaderAction} from '../reducers/actions/index.js';
 import ServiceIndex from '../components/Service/ServiceIndex.js';
 
 class Books extends PureComponent {
@@ -13,11 +13,11 @@ class Books extends PureComponent {
     };
 
     componentDidMount(){
-        this._fechtData();
+        this._fechtData(); 
     } 
 
     _fechtData = async () => {
-        //await switchHeaderAction(true);  
+        await switchHeaderAction(true);  
     } 
  
     render(){

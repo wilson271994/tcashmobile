@@ -4,21 +4,27 @@ const {width, height} = Dimensions.get('window');
 
 export const styles = StyleSheet.create({
     container:{
-      
         backgroundColor: '#F5F5F5',
     },
 
-    // debut
+    //global backgroung
+    backgroundapp:{
+        resizeMode: 'cover',
+        justifyContent: 'center',
+        height:800
+    },
 
-  
+    // debut
     backText:{
         position: 'absolute',
         left: 150,
         top: 17
     },
     text:{
-        fontFamily:'BaarSophia',
-        
+        fontFamily:'Ubuntu-n1M0',
+    },
+    textBold:{
+        fontFamily:'UbuntuBold-1YyB',
     },
     textHeader:{
         fontWeight: 'bold',
@@ -27,10 +33,10 @@ export const styles = StyleSheet.create({
         right: 50
     },
     textItalic:{
-        fontFamily:'BaarSophiaItalic',
+        fontFamily:'UbuntuItalic-Bpm8',
     }, 
     textItalicBold:{
-        fontFamily:'BaarSophiaBolditalic',
+        fontFamily:'UbuntuBoldItalic-Rg86',
     },
     toasttitle1:{
         fontSize:25

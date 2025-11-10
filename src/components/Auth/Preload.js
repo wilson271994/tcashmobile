@@ -17,19 +17,11 @@ import { Picker } from '@react-native-picker/picker';
 import DatePicker from 'react-native-datepicker';
 import { IS_AUTHENTICATED } from '../../reducers/actions/types';
 
-const handleValidation = () => {
-    if (!prenom || !numRue || !pays || !ville || !telephone  || !typeCompte) {
-      Alert.alert('Erreur', 'Tous les champs sont obligatoires.');
-    } else {
-      Alert.alert('Succès', 'Formulaire soumis avec succès !');
-    }
-};
-
 class Preload extends PureComponent {
     constructor(props){
         super(props);
         this.state = {
-           
+        
         } 
     };
 
@@ -54,51 +46,37 @@ class Preload extends PureComponent {
         const {is_loading} = this.props;
         const {password1Visible, password2Visible, acceptCondition, confidFocus, gender, is_alert, alert_title, alert_subtitle} = this.state;
         return(
-            
             <View style={[loginstyle.containerPreload]}>
+                <ImageBackground 
+                    style={loginstyle.preloadBackgound}
+                    source={require('../../assets/images/background.jpg')}>
+                    <View style={loginstyle.preloadlogo}>
+                        <Image
+                            source={require('../../assets/images/logo.png')}
+                            style={loginstyle.preloadheaderlogo}
+                        /> 
+                    </View>
 
-                
-                <View style={loginstyle.preloadlogo}>
+                    <View style={loginstyle.preloadlogo}>
+                        <Text style={[styles.textBold, loginstyle.textpreload]}>Bienvenue sur TCASH</Text>
+                    </View>
 
-                <Image
-                source={require('../../assets/images/logo.png')}
-                  style={loginstyle.preloadheaderlogo}
-                />
-                      
-                </View>
-
-                <View style={loginstyle.preloadlogo}>
-
-                 <Text style={[styles.textBold, loginstyle.textpreload]}>A house without a book is like a body without a soul</Text>
-
-                </View>
-
-                <View style={loginstyle.preloadimage}>
-
-                <Image
-                source={require('../../assets/images/preload.png')}
-                  style={loginstyle.preloadheaderimage}
-                />
-                      
-                </View>
-                <View style={loginstyle.footerpreload}>
                     <TouchableOpacity 
                         disabled={is_loading ? true : false}
                         style={loginstyle.btnspreload} 
                         onPress={this._navigateToHome}>
-                    {
-                        is_loading ?
-                            <View style={loginstyle.loaderbtn}>
-                                <ActivityIndicator size="small" color="#fff" />
-                            </View>  
-                        :
-                            <Text style={[styles.textBold, loginstyle.textbtnsubmit]}>
-                                Prise en main <FontAwesome name='angle-right' style={loginstyle.iconpreload} />
-                            </Text>
-                    }
-                    </TouchableOpacity>       
-                </View>
-
+                        {   
+                            is_loading ?
+                                <View style={loginstyle.loaderbtn}>
+                                    <ActivityIndicator size="small" color="#fff" />
+                                </View>
+                            :
+                                <Text style={[styles.textBold, loginstyle.textbtnsubmit]}>
+                                    Commencer <FontAwesome name='angle-right' style={loginstyle.iconpreload} />
+                                </Text>
+                        }
+                    </TouchableOpacity> 
+                </ImageBackground>
             </View>
         )
     }

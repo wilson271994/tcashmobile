@@ -1,14 +1,13 @@
-import React, {PureComponent} from 'react';
+import React, { PureComponent } from 'react';
 import { bindActionCreators } from 'redux';
-import {connect} from 'react-redux';
-import {View, Text, Image, TextInput, Modal,TouchableOpacity, ActivityIndicator, ImageBackground, ScrollView, Linking} from 'react-native';
-import  {styles}  from '../../assets/styles';
-import Moment from 'moment';
-import { IS_AUTH_ERROR, PAGE_TITLE, ROOT_NAVIGATION } from '../../reducers/actions/types.js';
+import { connect } from 'react-redux';
+import { View, Text, Image, TextInput, Modal, TouchableOpacity, ActivityIndicator, ImageBackground, ScrollView, Linking } from 'react-native';
+import { styles } from '../../assets/styles';
+import { IS_LOADING, ROOT_NAVIGATION} from '../../reducers/actions/types.js';
 import 'moment/locale/fr';
-import Foundation  from 'react-native-vector-icons/Foundation';
-import Entypo  from 'react-native-vector-icons/Entypo';
-import FontAwesome  from 'react-native-vector-icons/FontAwesome';
+import Foundation from 'react-native-vector-icons/Foundation';
+import Entypo from 'react-native-vector-icons/Entypo';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { store } from '../../reducers/store';
 import { loginstyle } from '../../assets/styles/login';
 import { Dropdown } from 'react-native-element-dropdown';
@@ -16,56 +15,94 @@ import AwesomeAlert from 'react-native-awesome-alerts';
 import { SignupAction } from '../../reducers/actions';
 import DatePicker from 'react-native-date-picker'
 import moment from 'moment';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class signUpForm1 extends PureComponent {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
-            username:'',
-            email:'',
-            password1:'',
-            password2:'',
-            acceptCondition:false,
-            password1Visible:false,
-            password2Visible:false,
-            confidFocus:false,
-            is_alert:false,
-            alert_title:'',
-            alert_subtitle:'',
-            isFocusDateOfBirth:false,
-            dateofbirth:new Date()
-        } 
+            confidFocus: false,
+            is_alert: false,
+            alert_title: '',
+            alert_subtitle: '',
+            isFocusDateOfBirth: false,
+            username: '',
+            first_name: '',
+            last_name: '',
+            dateofbirth: new Date(),
+            phone:'',
+            email: '',
+        }
     };
 
     componentDidMount(){
-
+        this._RequestPersistDataForm1();
+        store.dispatch({type:IS_LOADING, value:false});
     }
 
-    _togglePass1Visible = () => {  
-        this.setState({password1Visible:!this.state.password1Visible});
-    } 
+    _RequestPersistDataForm1 = async () => {
+        const form1Data = await AsyncStorage.getItem('form1Data');
+        if(form1Data !== undefined){
+            const dataObject = JSON.parse(form1Data);
+            this.setState({
+                first_name   : dataObject.first_name,
+                last_name    : dataObject.last_name,
+                username    : dataObject.username,
+                email       : dataObject.email,
+                phone : dataObject.phone,
+                dateofbirth : dataObject.dateofbirth,
+            })
+        }
+    }
 
-    _togglePass2Visible = () => {  
-        this.setState({password2Visible:!this.state.password2Visible});
-    } 
+    _onChangeUserName = (val) => {
+        if (val !== '') {
+            this.setState({ username : val})
+        }
+    }
+    _onChangeLastName = (val) => {
+        if (val !== '') {
+            this.setState({ last_name : val})
+        }
+    }
 
+    _onChangeFirtsName = (val) => {
+        if (val !== '') {
+            this.setState({ first_name : val})
+        }
+    }
+
+   _onChangeEmail = (val) => {
+        if (val !== '') {
+           this.setState({ email : val})
+        }
+    }
+
+    _onChangePhoneNumber = (val) => {
+        if(val !== ''){
+            this.setState({ phone : val})
+        }
+    }
+
+    _onChangeDateOfBirth = (val) => {
+        if(val !== ''){
+            this.setState({ dateofbirth : val})
+        }
+        
+    }
     _renderDropdownLabel = () => {
         if (this.state.confidValue || this.state.confidFocus) {
             return (
-            <Text style={[poststyle.label, this.state.confidFocus && { color: 'blue' }]}>
-                Dropdown label
-            </Text>
+                <Text style={[styles.label, this.state.confidFocus && { color: 'blue' }]}>
+                    Dropdown label
+                </Text>
             );
         }
         return null;
     };
 
-    _onChangeAcceptCondition = () => {
-        this.setState({acceptCondition:!this.state.acceptCondition});
-    }
-
     _emailValidation = () => {
-        const {email} = this.state;
+        const { email } = this.state;
         let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
         if (reg.test(email) === false) {
             return false;
@@ -73,28 +110,13 @@ class signUpForm1 extends PureComponent {
         return true;
     }
     _navigateToLogin = () => {
-        const {navigation} = this.props;
-        store.dispatch({type:ROOT_NAVIGATION, value:navigation});
+        const { navigation } = this.props;
+        store.dispatch({ type: ROOT_NAVIGATION, value: navigation });
         navigation.navigate(" ");
-    }
-    _passwordValidation = () => {
-        const {password1, password2} = this.state;
-        if (password1 != password2) {
-            return false;
-        }
-        return true;
-    }
-
-    _acceptConditionValidation = () => {
-        const {acceptCondition} = this.state;
-        if (acceptCondition) {
-            return true;
-        }
-        return false;
     }
 
     _usernameValidation = () => {
-        const {username} = this.state;
+        const { username } = this.state;
         let reg = /^[a-zA-Z0-9.\_$@*!]{3,30}$/;
         if (reg.test(username) === false) {
             return false;
@@ -103,96 +125,61 @@ class signUpForm1 extends PureComponent {
     }
 
 
-    _navigateToForm2 = () => {
-        const {navigation} = this.props;
-        navigation.navigate('SignUpForm2');
+    _navigateToForm2 = async () => {
+        const { navigation } = this.props;
+        const { username, first_name, last_name, email, phone, dateofbirth} = this.state;
+        if (
+            username !== '' &&
+            first_name !== '' &&
+            last_name !== '' &&
+            email !== '' &&
+            phone !== '' &&
+            dateofbirth !== ''
+        )  { 
+            const form1Data = JSON.stringify({ 
+                first_name   : first_name,
+                last_name    : last_name,
+                username    : username,
+                email       : email,
+                phone : phone,
+                dateofbirth : dateofbirth
+            })
+            await AsyncStorage.setItem('form1Data', form1Data),
+            store.dispatch({ type: ROOT_NAVIGATION, value: navigation })
+            navigation.navigate('SignUpForm2');
+        }
     }
 
-    _authSignup = async () => {
-        const {is_loading, root_navigation} = this.props;
-        const {username, firstname,name,phonenumber, dateofbirth,  account, email} = this.state;
-        if(username !== '' && 
-            firstname !== '' && 
-            phonenumber !== '' &&
-            name !== '' &&
-            account!== '' &&
-            dateofbirth !== '' &&
-                email !== '' &&
-                this._emailValidation() &&
-                this._usernameValidation() &&
-                this._acceptConditionValidation() &&
-                this._phonenumberValidation() &&
-                this._accountdValidation() &&
-                this._firstnameValidation() &&
-                this._nameValidation() 
-
-        ){
-            const data = {
-                username:username,
-                phonenumber:phonenumber,
-                name:name,
-                firstname:firstname,
-                email:email,
-                device_type:'phone',
-                navigation:root_navigation,
-            }
-            //LoginAction(data);
-            SignupAction(data);
-            this.scrollListReftop.scrollToEnd({animated : true});
-        }
-        // }else if(username === ''){
-        //     this.setState({is_alert:true});
-        //     this.setState({alert_subtitle:'Erreur de donnée!'})
-        //     this.setState({alert_subtitle:'Veuillez saisir votre nom d\'utilisateur.'})
-        // }else if(!this._usernameValidation()){
-        //     this.setState({is_alert:true});
-        //     this.setState({alert_subtitle:'Erreur de donnée!'})
-        //     this.setState({alert_subtitle:'Nom d\'utilisateur invalid. Le nom d\'utilisateur ne doit pas contenir d\'espace ni de tirai.'})
-        // }else if(password1 === ''){
-        //     this.setState({is_alert:true});
-        //     this.setState({alert_subtitle:'Erreur de donnée!'})
-        //     this.setState({alert_subtitle:'Veuillez saisir votre mot de passe.'})
-        // }else if(password2 === ''){
-        //     this.setState({is_alert:true});
-        //     this.setState({alert_subtitle:'Erreur de donnée!'})
-        //     this.setState({alert_subtitle:'Veuillez confirmer votre mot de passe.'})
-        // }else if(!this._passwordValidation()){
-        //     this.setState({is_alert:true});
-        //     this.setState({alert_subtitle:'Erreur de donnée!'})
-        //     this.setState({alert_subtitle:'Les mots de passe sont différents.'})
-        // }else if(email === ''){
-        //     this.setState({is_alert:true});
-        //     this.setState({alert_subtitle:'Erreur de donnée!'})
-        //     this.setState({alert_subtitle:'Veuillez saisir votre adresse email.'})
-        // }else if(!this._emailValidation()){
-        //     this.setState({is_alert:true});
-        //     this.setState({alert_subtitle:'Erreur de donnée!'})
-        //     this.setState({alert_subtitle:'Votre adresse email est incorrect.'})
-        // }else if(!this._acceptConditionValidation()){
-        //     this.setState({is_alert:true});
-        //     this.setState({alert_subtitle:'Erreur de donnée!'})
-        //     this.setState({alert_subtitle:'Veuillez lire et accepter les conditions d\'utilisation et la police de confidentialité.'})
-        // }
-    } 
-
     _closeAlert = () => {
-        this.setState({is_alert:false});
+        this.setState({ is_alert: false });
     }
 
     _redirectPolicy = (url) => {
         Linking.openURL(url);
     }
 
-    render(){
-        const {is_loading} = this.props;
-        const {password1Visible, password2Visible, acceptCondition, confidFocus, is_alert, alert_title, alert_subtitle, isFocusDateOfBirth, dateofbirth} = this.state;
-        return(
-            <ScrollView 
-                ref={(ref) => {this.scrollListReftop = ref}}>
-                <ImageBackground source={require('../../assets/images/background.jpg')} style={[loginstyle.itemslidersignup]}>  
+    render() {
+        const { is_loading, date_of_birth } = this.props;
+        const { 
+            confidFocus, 
+            is_alert, 
+            alert_title, 
+            alert_subtitle, 
+            isFocusDateOfBirth, 
+            phone,
+            first_name,
+            last_name,
+            username,
+            email,
+            dateofbirth
+        } = this.state;
+        return (
+            <ScrollView
+                ref={(ref) => { this.scrollListReftop = ref }}>
+                <ImageBackground source={require('../../assets/images/background.jpg')} style={[loginstyle.itemslidersignup]}>
                     <View style={loginstyle.containersignup}>
-                        <TouchableOpacity 
-                            onPress={this._navigateToLogin}>                       
+                        <TouchableOpacity
+                            onPress={this._navigateToLogin}>
                             <Image style={loginstyle.backstyle1} source={require('../../assets/images/back.png')} />
                         </TouchableOpacity>
 
@@ -203,48 +190,52 @@ class signUpForm1 extends PureComponent {
                         <View style={loginstyle.blocinupt2}>
                             <TextInput
                                 style={[loginstyle.inputtextsignup, styles.text]}
-                                autoCapitalize="none" 
+                                autoCapitalize="none"
                                 autoCorrect={false}
                                 placeholderTextColor='#B1B1B1'
                                 placeholder='Nom utilisateur'
-                                onChangeText={(val) => {this.setState({username:val})}}
+                                onChangeText={(val) => { this._onChangeUserName(val) }}
                                 editable={is_loading ? false : true}
+                                value={username !== undefined && username !== '' ? username : ''}  
                             />
                         </View>
 
                         <View style={loginstyle.blocinupt2}>
                             <TextInput
                                 style={[loginstyle.inputtextsignup, styles.text]}
-                                autoCapitalize="none" 
+                                autoCapitalize="none"
                                 autoCorrect={false}
                                 placeholderTextColor='#B1B1B1'
                                 placeholder='Votre nom'
-                                onChangeText={(val) => {this.setState({username:val})}}
+                                onChangeText={(val) => { this._onChangeFirtsName(val) }}
                                 editable={is_loading ? false : true}
+                                value={first_name !== undefined && first_name !== '' ? first_name : ''} 
                             />
                         </View>
 
                         <View style={loginstyle.blocinupt2}>
                             <TextInput
                                 style={[loginstyle.inputtextsignup, styles.text]}
-                                autoCapitalize="none" 
+                                autoCapitalize="none"
                                 autoCorrect={false}
                                 placeholderTextColor='#B1B1B1'
                                 placeholder='Votre prénom'
-                                onChangeText={(val) => {this.setState({username:val})}}
+                                onChangeText={(val) => { this._onChangeLastName(val) }}
                                 editable={is_loading ? false : true}
+                                value={last_name !== undefined && last_name !== '' ? last_name : ''} 
                             />
                         </View>
 
                         <View style={loginstyle.blocinupt2}>
                             <TextInput
                                 style={[loginstyle.inputtextsignup, styles.text]}
-                                autoCapitalize="none" 
+                                autoCapitalize="none"
                                 autoCorrect={false}
                                 placeholderTextColor='#B1B1B1'
                                 placeholder='Adresse Email'
-                                onChangeText={(val) => {this.setState({email:val})}}
+                                onChangeText={(val) => { this._onChangeEmail(val) }}
                                 editable={is_loading ? false : true}
+                                value={email !== undefined && email !== '' ? email : ''} 
                             />
                         </View>
 
@@ -253,45 +244,52 @@ class signUpForm1 extends PureComponent {
                                 style={[loginstyle.inputtextsignup, styles.text]}
                                 placeholderTextColor='#B1B1B1'
                                 placeholder='Votre numéro de téléphone'
+                                onChangeText={(val) => { this._onChangePhoneNumber(val) }}
+                                editable={is_loading ? false : true}
+                                value={phone !== undefined && phone !== '' ? phone : ''} 
                             />
                         </View>
 
                         <View style={loginstyle.blocinupt2}>
-                            <TouchableOpacity 
-                                onPress={() => this.setState({isFocusDateOfBirth:true})}
+                            <TouchableOpacity
+                                onPress={() => this.setState({ isFocusDateOfBirth: true })}
                                 style={loginstyle.inputdatesignup}>
-                                <Text style={[styles.text, loginstyle.inputdatetextbtn, {color : dateofbirth.toString() != new Date()  ? '#000' : '#b1b1b1'}]}>{dateofbirth.toString() != new Date() ? dateofbirth.toLocaleDateString() : 'Votre date de naissance'}</Text>
+                                <Text style={[styles.text, loginstyle.inputdatetextbtn, { 
+                                    color: dateofbirth !== undefined && new Date(dateofbirth).toString() !== new Date() ? '#000' : '#b1b1b1' }]}>
+                                        {dateofbirth !== undefined && new Date(dateofbirth).toString() !== new Date() ? new Date(dateofbirth).toLocaleDateString() : 'Votre date de naissance'}</Text>
                             </TouchableOpacity>
                             <DatePicker
                                 modal
                                 mode='date'
+                                placeholder='DD-MM-YYYY'
+                                format='DD-MM-YYYY'
                                 title={'Date de naissance'}
                                 locale='fr'
                                 open={isFocusDateOfBirth}
-                                date={dateofbirth}
-                                onConfirm={(date) => {
-                                    this.setState({isFocusDateOfBirth:false})
-                                    this.setState({dateofbirth:date})
+                                date={new Date(dateofbirth)}
+                                onConfirm={(val) => {
+                                    this.setState({ isFocusDateOfBirth: false })
+                                    this._onChangeDateOfBirth(val)
                                 }}
                                 onCancel={() => {
-                                    this.setState({isFocusDateOfBirth:false})
+                                    this.setState({ isFocusDateOfBirth: false })
                                 }}
                             />
                         </View>
 
-                        <TouchableOpacity 
+                        <TouchableOpacity
                             disabled={is_loading ? true : false}
-                            style={loginstyle.btnsignup} 
+                            style={loginstyle.btnsignup}
                             onPress={this._navigateToForm2}>
-                        {
-                            is_loading ?
-                                <View style={loginstyle.loaderbtn}>
-                                    <ActivityIndicator size="small" color="#fff" />
-                                </View>
-                            :
-                                <Text style={[styles.textBold, loginstyle.textbtnsubmit]}>Suivant 1/2</Text>
-                        }
-                        </TouchableOpacity>    
+                            {
+                                is_loading ?
+                                    <View style={loginstyle.loaderbtn}>
+                                        <ActivityIndicator size="small" color="#fff" />
+                                    </View>
+                                    :
+                                    <Text style={[styles.textBold, loginstyle.textbtnsubmit]}>Suivant 1/3</Text>
+                            }
+                        </TouchableOpacity>
 
                     </View>
                 </ImageBackground>
@@ -315,7 +313,7 @@ class signUpForm1 extends PureComponent {
             </ScrollView>
         )
     }
-} 
+}
 
 const mapDispatchToProps = (dispatch) => {
     return {
@@ -325,8 +323,9 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
     return {
-        is_loading:state.loader.is_loading,
-        root_navigation:state.navigation.root_navigation
+        state,
+        is_loading: state.loader.is_loading,
+        root_navigation: state.navigation.root_navigation,
     }
 }
 

@@ -6,7 +6,7 @@ import { styles } from '../assets/styles/index.js';
 import {switchHeaderAction} from '../reducers/actions/index.js';
 import ServiceIndex from '../components/Service/ServiceIndex.js';
 
-class Books extends PureComponent {
+class Service extends PureComponent {
     constructor(props){
         super(props); 
         state = {}
@@ -44,4 +44,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps, null)(Books);
+export default connect(mapStateToProps, mapDispatchToProps, null)(Service);

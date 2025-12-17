@@ -31,3 +31,19 @@ export const ALERT_CONFIRM = 'ALERT_CONFIRM';
 export const ALERT_CANCEL = 'ALERT_CANCEL';
 export const COUNT_NEW_NOTIFICATION = 'COUNT_NEW_NOTIFICATION';
 export const COUNT_NEW_MESSAGE = 'COUNT_NEW_MESSAGE';
+
+// SIGN UP VARIABLES
+export const USER_NAME          = 'USER_NAME';
+export const EMAIL              = 'EMAIL';
+export const PASSWORD_1         = 'PASSWORD_1';
+export const PASSWORD_2         = 'PASSWORD_2';
+export const FIRST_NAME         = 'FIRST_NAME';
+export const STREET             = 'STREET';
+export const PHONE_NUMBER       = 'PHONE_NUMBER';
+export const ACCEPT_CONDITION   = 'ACCEPT_CONDITION';
+export const GENDER             = 'GENDER';
+export const COUNTRY            = 'COUNTRY';
+export const CITY               = 'CITY';
+export const ACCOUNT            = 'ACCOUNT';
+export const DATE_OF_BIRTH      = 'DATE_OF_BIRTH';
+export const LAST_NAME          = 'LAST_NAME';

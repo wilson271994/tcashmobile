@@ -7,12 +7,12 @@ import {Image, Text, TouchableOpacity} from "react-native";
 import { switchHeaderAction, switchPostFormAction } from "../../reducers/actions";
 import { loginstyle } from "../../assets/styles/login";
 import { styles } from "../../assets/styles";
-import activationPage from "../../components/Auth/activationPage";
 import AntDesign  from 'react-native-vector-icons/AntDesign';
 import loginPage from "../../components/Auth/loginPage";
 import signupForm1 from "../../components/Auth/signupForm1";
 import signupForm2 from "../../components/Auth/signupForm2";
 import Preload from "../../components/Auth/Preload";
+import activationPage from "../../components/Auth/activationPage";
 
 const Stack = createStackNavigator();
 
@@ -137,35 +137,12 @@ class StackAuth extends Component {
 
                 />
 
-                <Stack.Screen
-                    name="Login" 
-                    component={loginPage} 
-                    options={{
-                        headerShown:true,
-                        headerTitle : () => {
-                            return(
-                                <Text
-                                numberOfLines={1}
-                                style={[styles.textBold, loginstyle.titlepagePreload]}>{page_title}</Text>
-                            )
-                        },
-                        headerLeft: () => {
-                            return (
-                                <TouchableOpacity
-                                style={styles._backHome}>
-                                </TouchableOpacity>
-                            )
-                        },
-                    }}
-                    
-                />
-
 
                 <Stack.Screen 
                     name="Activation"  
                     component={activationPage} 
                     options={{
-                        headerShown:true, 
+                        headerShown:false, 
                         headerTitle : () => {
                             return (
                                 <Text 

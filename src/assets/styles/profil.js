@@ -12,12 +12,8 @@ export const profilstyle = StyleSheet.create({
     },
     containerSettings:{
         backgroundColor:'#fff',
-        borderRadius:30,
+        borderRadius:15,
         top: 20,
-        margin:10
-
-
-
     },
 
     containerName:{
@@ -27,9 +23,12 @@ export const profilstyle = StyleSheet.create({
         top: 25
 
     },
-  
-
-    
+    logoutContainer:{
+        marginBottom : 50,
+        justifyContent: 'center',
+        textAlign: 'center',
+        transform: [{ translateY: 45}]
+    },
     image:{
         width: 100, 
         height: 100,
@@ -48,8 +47,8 @@ export const profilstyle = StyleSheet.create({
         position: 'relative',
         left:19,
         top:14,
-       height:22,
-       width:22
+        height:22,
+        width:22
       },
     icons:{
         position: 'relative',
@@ -113,6 +112,11 @@ export const profilstyle = StyleSheet.create({
        color: '#000',
        width: '100%',
        left:55,
+    },
+    out:{      
+        color: '#ff0000ff',
+        alignSelf: 'center',
+        fontSize: 16
     },
     notif2:{      
        color: '#000',

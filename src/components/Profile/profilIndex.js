@@ -15,7 +15,6 @@ import { IS_AUTH_ERROR, PAGE_TITLE, ROOT_NAVIGATION } from '../../reducers/actio
 import FontAwesome6  from 'react-native-vector-icons/FontAwesome6';
 import MaterialCommunityIcons  from 'react-native-vector-icons/MaterialCommunityIcons.js';
 import {switchHeaderAction} from '../../reducers/actions/index.js';
-import Search from '../../screens/Search.js';
 import { styles } from '../../assets/styles/index.js';
 import cover from '../../assets/images/biblio.jpg';
 import { profilstyle } from '../../assets/styles/profil.js';

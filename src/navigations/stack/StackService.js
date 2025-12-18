@@ -6,7 +6,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import {Image, TextInput, TouchableOpacity, View, Text} from "react-native";
 import {styles} from "../../assets/styles";
 import { switchHeaderAction } from "../../reducers/actions";
-import service from "../../screens/Service";
+import service from "../../screens/service";
 
 const Stack = createStackNavigator();
 

@@ -4,8 +4,7 @@ import {connect} from 'react-redux';
 import { SafeAreaView, Platform, Text } from 'react-native';
 import { styles } from '../assets/styles/index.js';
 import {switchHeaderAction} from '../reducers/actions';
-import ProfilIndex from '../components/Profile/Settings.js';
-
+import Settings from '../components/Profile/settings.js';
 class Profil extends PureComponent {
     constructor(props){
         super(props); 
@@ -24,7 +23,7 @@ class Profil extends PureComponent {
         const {navigation} = this.props; 
         return(
             <SafeAreaView style={styles.container}>
-               <ProfilIndex navigation={navigation} />
+               <Settings navigation={navigation} />
             </SafeAreaView>
         )
     }

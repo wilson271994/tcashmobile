@@ -31,6 +31,18 @@ class HomeIndex extends PureComponent {
         navigation.navigate('TransactionDetail');
     }
 
+ _navigateTotransfert = () => {
+        const {navigation} = this.props;
+        store.dispatch({type:ROOT_NAVIGATION, value:navigation});
+        navigation.navigate('Transfert');
+    }
+
+    _navigateToRecharge = () => {
+        const {navigation} = this.props;
+        store.dispatch({type:ROOT_NAVIGATION, value:navigation});
+        navigation.navigate('Recharge');
+    }
+
     render(){
         const {navigation} = this.props; 
         return(
@@ -94,7 +106,9 @@ class HomeIndex extends PureComponent {
                         
                         {/* Principal services */}
                         <View style={homestyle.containerprincipalservice}>
-                            <TouchableOpacity style={[styles.card, homestyle.walletservicebtn]}>
+                            <TouchableOpacity 
+                            onPress={this._navigateToRecharge}
+                            style={[styles.card, homestyle.walletservicebtn]}>
                                 <Image
                                     source={require('../../assets/images/deposit.png')}
                                     style={homestyle.imageservicehome}
@@ -102,7 +116,9 @@ class HomeIndex extends PureComponent {
                                 <Text style={[styles.textBold, homestyle.depositeText]}>Recharge</Text>
                             </TouchableOpacity> 
 
-                            <TouchableOpacity style={[styles.card, homestyle.walletservicebtn]}>
+                            <TouchableOpacity 
+                            onPress={this._navigateTotransfert}
+                            style={[styles.card, homestyle.walletservicebtn]}>
                                 <Image
                                     source={require('../../assets/images/transfer.png')}
                                     style={homestyle.imageservicehome}

@@ -292,7 +292,7 @@ export const loginstyle = StyleSheet.create({
         alignSelf: 'center',
     },
     inputtextlogin: {
-        fontSize: 18,
+        fontSize: 16,
         borderWidth: 3,
         borderColor: '#3e8f81ff',
         color: '#000000ff',
@@ -445,8 +445,8 @@ export const loginstyle = StyleSheet.create({
     text2:
     {
         color: 'white',
-        fontSize: 15,
-        top: 25
+        fontSize: 18,
+        top: 15
     },
     text3:
     {
@@ -705,7 +705,7 @@ export const loginstyle = StyleSheet.create({
         marginLeft: 50,
     },
     blocinupt: {
-        marginTop: 35,
+        marginBottom:20
     },
     blocinupt2: {
         marginTop: 20,
@@ -828,4 +828,18 @@ export const loginstyle = StyleSheet.create({
         fontSize: 14,
         textAlign: 'center',
     },
+
+    //update
+    entetelogin:{
+        marginLeft:-10,
+        marginBottom:10,
+        fontSize:17
+    },
+    containerfooter:{
+        
+    },
+    builderlink:{
+        width:'100%',
+        marginTop:10,
+    }
 });

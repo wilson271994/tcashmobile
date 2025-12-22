@@ -20,8 +20,6 @@ import cover from '../../assets/images/biblio.jpg';
 import { profilstyle } from '../../assets/styles/profil.js';
 import { store } from '../../reducers/store.js';
 
-
-
 class ProfileIndex extends PureComponent {
 
   constructor(props){
@@ -32,7 +30,7 @@ class ProfileIndex extends PureComponent {
         '',
     };
 
-};
+  };
 
   state = {
     notificationsEnabled: true,
@@ -51,22 +49,21 @@ class ProfileIndex extends PureComponent {
     const {navigation} = this.props; 
     store.dispatch({type:ROOT_NAVIGATION, value:navigation});
     navigation.navigate('Support');
-}
+  }
+
+  _closeAlert = () => {
+    this.setState({
+        is_alert:false,
+        is_loading:false
+    });
+    store.dispatch({type:IS_AUTH_ERROR, value:false});
+  }
+
+  _fechtData = async () => {
+    await switchHeaderAction(true);  
 
 
-_closeAlert = () => {
-  this.setState({
-      is_alert:false,
-      is_loading:false
-  });
-  store.dispatch({type:IS_AUTH_ERROR, value:false});
-}
-
-_fechtData = async () => {
-  await switchHeaderAction(true);  
-
-
-} 
+  } 
 
 
   render() {
@@ -128,7 +125,7 @@ _fechtData = async () => {
 
                       <TouchableOpacity style={styles.option}>
                         <View style={[profilstyle.searchcontainer]}>
-                         <Image source={require('../../assets/images/Headset.png')} style={profilstyle.icons} />
+                          <Image source={require('../../assets/images/Headset.png')} style={profilstyle.icons} />
                           <Text style={profilstyle.notif3}>Jouer en arrière plan</Text>
                           <Switch
                             value={this.state.backgroundPlayEnabled}
@@ -138,7 +135,7 @@ _fechtData = async () => {
                       </TouchableOpacity>
 
                           {/* Autres options avec switch de la même manière */}
-                     
+                    
                         {/* Autres sections similaires pour Payments, Supports, etc. */}
 
                       
@@ -213,7 +210,7 @@ _fechtData = async () => {
       </SafeAreaView>
 
 
-     
+    
     );
   }
 }

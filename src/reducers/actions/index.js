@@ -9,6 +9,7 @@ import {
     IS_AUTH_ERROR,
     IS_HEADER, IS_LOADING,
     IS_NETWORK,
+    LAST_TRANSACTION,
     USER_INFOS,
     USER_TOKEN,
 } from './types';
@@ -49,50 +50,48 @@ export const checkAuthDataAction = async () => {
  */
 export const LoginAction = (postdata) => {
     store.dispatch({ type: IS_LOADING, value: true });
-    axiosClient.post(`${BASE_URL}api-auth/auth`, postdata)
-        .then(async (res) => {
-            const result = res.data;
-            if (result.status === 200) {
-                await store.dispatch({ type: USER_TOKEN, value: result.token });
-                await store.dispatch({ type: USER_INFOS, value: result.user });
-                await AsyncStorage.setItem('infoUser', USER_INFOS);
-                await store.dispatch({ type: IS_AUTHENTICATED, value: true })
-            } else if (result.status === 500) {
-                store.dispatch({ type: IS_LOADING, value: false })
-                Toast.show({
-                    'type': 'error',
-                    props: {
-                        title: 'Erreur de connexion',
-                        description: result.message,
-                    }
-                });
-            }
-            else {
-                Toast.show({
-                    'type': 'error',
-                    props: {
-                        title: 'Erreur de connexion',
-                        description: 'Une erreur s\'est produite',
-                    }
-                });
-            }
-        })
-        .catch((error) => {
+    axiosClient.post(`${BASE_URL}api/auth`, postdata)
+    .then(async (res) => {
+        const result = res.data.result;
+        if (res.data.status === 200) {
+            await store.dispatch({ type: USER_TOKEN, value: result.token });
+            await store.dispatch({ type: USER_INFOS, value: result.user });
+            await AsyncStorage.setItem('infoUser', USER_INFOS);
+            await store.dispatch({ type: IS_AUTHENTICATED, value: true })
+
+            await store.dispatch({ type: LAST_TRANSACTION, value: result.lasttransactions });
+
+        } else if (res.data.status === 500) {
+            store.dispatch({ type: IS_LOADING, value: false });
+
+            //view the error message
+            store.dispatch({ type: IS_AUTH_ERROR, value: true })
+            store.dispatch({ type: AUTH_ERROR_MESSAGE, value: result.message })
+        } else {
             Toast.show({
-                'type': 'info',
+                'type': 'error',
                 props: {
-                    title: 'Connexion internet!',
-                    description: 'Votre débit internet est instable. Vérifiez votre connectivité et reéssayez',
+                    title: 'Erreur dans le formulaire',
+                    description: 'Une erreur s\'est produite',
                 }
             });
-            store.dispatch({ type: IS_LOADING, value: false });
-        })
-
+        }
+    })
+    .catch((error) => {
+        Toast.show({
+            'type': 'info',
+            props: {
+                title: 'Connexion internet!',
+                description: 'Votre débit internet est instable. Vérifiez votre connectivité et reéssayez',
+            }
+        });
+        store.dispatch({ type: IS_LOADING, value: false });
+    })
 }
 
 export const LogoutActiion = (postdata) => {
     store.dispatch({ type: IS_LOADING, value: true });
-    axiosClient.post(`${BASE_URL}api-auth/logout`, postdata)
+    axiosClient.post(`${BASE_URL}api/logout`, postdata)
         .then(async (res) => {
             const result = res.data;
             if (result.status === 200) {
@@ -140,7 +139,7 @@ export const LogoutActiion = (postdata) => {
 export const SignupAction = (postdata) => {
     const payload = JSON.stringify(postdata)
     store.dispatch({ type: IS_LOADING, value: true})
-    axiosClient.post(`${BASE_URL}api-auth/signup`, payload)
+    axiosClient.post(`${BASE_URL}api/signup`, payload)
     .then(async (res) => {
         const result = res.data;
         console.log(result, 'result')

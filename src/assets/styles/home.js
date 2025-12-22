@@ -200,5 +200,11 @@ export const homestyle = StyleSheet.create({
         marginBottom:10,
         marginTop:10
     },
+    emptytransaction:{
+        padding:20
+    },
+    emptytext:{
+        fontSize:15
+    }
 
 });

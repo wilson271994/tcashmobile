@@ -7,7 +7,7 @@ import { loginstyle } from '../../assets/styles/login';
 import Entypo  from 'react-native-vector-icons/Entypo';
 import FontAwesome  from 'react-native-vector-icons/FontAwesome';
 import { store } from '../../reducers/store';
-import { IS_AUTH_ERROR, PAGE_TITLE, ROOT_NAVIGATION } from '../../reducers/actions/types';
+import { AUTH_ERROR_MESSAGE, IS_AUTH_ERROR, IS_LOADING, PAGE_TITLE, ROOT_NAVIGATION } from '../../reducers/actions/types';
 import { LoginAction, checkAuthDataAction } from '../../reducers/actions';
 import { ScrollView } from 'react-native';
 import AwesomeAlert from 'react-native-awesome-alerts';
@@ -16,23 +16,15 @@ class LoginPage extends Component {
     constructor(props){
         super(props);
         this.state = {
-            is_login:false,
             username:'',
             password:'',
-            passwordVisible:false,
-           is_loading:false,
-            is_alert:false, 
-            alert_title:'Erreur dans le formulaire!',
-            alert_subtitle:'',
+            passwordVisible:false, 
         }
     }
 
     componentDidMount(){
-        checkAuthDataAction();
-    }
-    
-    _openLogin = () => { 
-        this.setState({is_login:!this.state.is_login});
+        checkAuthDataAction(); 
+        store.dispatch({type:IS_LOADING, value:false})
     }
 
     _togglePassVisible = () => {  
@@ -53,18 +45,17 @@ class LoginPage extends Component {
     _authSignin = async () => {
         const {password, username} = this.state;
         if(username !== '' && password !== ''){
-            this.setState({is_loading:true});
             const data = {
                 username:username,
                 password:password
             }
             LoginAction(data);
         }else if(username === ''){
-            this.setState({is_alert:true});
-            this.setState({alert_subtitle:'Veuillez saisir votre adresse email.'})
+            store.dispatch({type:IS_AUTH_ERROR, value:true});
+            store.dispatch({type:AUTH_ERROR_MESSAGE, value:'Veuillez saisir votre adresse email.'});
         }else if(password === ''){
-            this.setState({is_alert:true});
-            this.setState({alert_subtitle:'Veuillez Saisir votre mot de passe.'})
+            store.dispatch({type:IS_AUTH_ERROR, value:true});
+            store.dispatch({type:AUTH_ERROR_MESSAGE, value:'Veuillez Saisir votre mot de passe.'});
         }
     } 
 
@@ -76,16 +67,11 @@ class LoginPage extends Component {
     }
 
     _closeAlert = () => {
-        this.setState({
-            is_alert:false,
-            is_loading:false
-        });
         store.dispatch({type:IS_AUTH_ERROR, value:false});
     }
 
     render(){
-        const {is_auth_error, auth_error_message} = this.props;
-        const {is_alert, alert_title, alert_subtitle, is_loading} = this.state;
+        const {is_loading, is_auth_error, auth_error_message, alert_title, alert_subtitle} = this.props;
         return (
             <ImageBackground
                 source={require('../../assets/images/background.jpg')}>
@@ -98,24 +84,23 @@ class LoginPage extends Component {
 
                             <Image source={require('../../assets/images/t_cash.png')} style={loginstyle.iconmenup} />
                             <Text style={loginstyle.text}>Connectez-vous ici</Text>
-                            <Text style={loginstyle.text2}>Bon retour tu m'as manqué</Text>
+                            <Text style={loginstyle.text2}>Heureux de vous revoir.</Text>
 
                             <View style={[loginstyle.loginbox]}>
-
-                                <Text style={[styles.textBold, loginstyle.entetelogin]}>Votre email</Text>
+                                <Text style={[styles.text, loginstyle.entetelogin]}>Utilisateur ou email</Text>
                                 <View style={loginstyle.blocinupt}>
                                         <TextInput
                                         style={[loginstyle.inputtextlogin, styles.text]}
                                         autoCapitalize="none" 
                                         autoCorrect={false}
                                         placeholderTextColor='#b1b1b1'
-                                        placeholder='Entrez votre email'
+                                        placeholder='Utilisateur ou adresse email'
                                         onChangeText={(val) => {this.setState({username:val})}}
                                         editable={is_loading ? false : true}
                                     />
                                     
                                 </View>
-                                <Text style={[styles.textBold, loginstyle.entetelogin]}>Mot de passe</Text>
+                                <Text style={[styles.text, loginstyle.entetelogin]}>Mot de passe</Text>
                                 <View style={loginstyle.blocinupt}>
                                     <TextInput
                                         style={[loginstyle.inputtextlogin, styles.text]}
@@ -160,16 +145,6 @@ class LoginPage extends Component {
                                             <Text style={[styles.textBold, loginstyle.textbtnsubmit]}>Connexion</Text>
                                     }
                                     </TouchableOpacity>
-                                    <Text style={loginstyle.text3}>ou connectez-vous avec</Text>
-
-                                    <TouchableOpacity>
-                                        <Image source={require('../../assets/images/google.png')} style={loginstyle.iconlow} />
-                                    </TouchableOpacity>
-                                    <TouchableOpacity>
-                                        <Image source={require('../../assets/images/facebook.png')} style={loginstyle.iconlow2} />
-                                    </TouchableOpacity>
-                                    
-
                                 </View>
 
                             </View>
@@ -177,7 +152,7 @@ class LoginPage extends Component {
                     
                     {/* Manage Error Alert */}
                     <AwesomeAlert
-                        show={false}
+                        show={is_auth_error}
                         title={alert_title}
                         titleStyle={[styles.textBold, styles.titlealert]}
                         message={auth_error_message ? auth_error_message : alert_subtitle}
@@ -198,18 +173,19 @@ class LoginPage extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => {
-   return {
-      dispatch,
-      ...bindActionCreators({LoginAction, checkAuthDataAction}, dispatch),
+    return {
+        dispatch,
+        ...bindActionCreators({LoginAction, checkAuthDataAction}, dispatch),
     }
 };
 
 const mapStateToProps = (state) => {
-   return {
-      state,
-      is_auth_error:state.auth.is_auth_error,
-      auth_error_message:state.auth.auth_error_message,
-   }
- }
+    return {
+        state,
+        is_loading:state.loader.is_loading,
+        is_auth_error:state.auth.is_auth_error,
+        auth_error_message:state.auth.auth_error_message,
+    }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps, null)(LoginPage);

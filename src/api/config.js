@@ -3,7 +3,8 @@ import { store } from "../reducers/store";
 
 // export const BASE_URL="https://t-cash.ca/"
 
-export const BASE_URL="http://192.168.1.185:8000/" 
+//link local server
+export const BASE_URL="http://10.0.2.2:8000/" 
 
 const onUploadProgress = (progressEvent) => {
     const { loaded, total } = progressEvent;

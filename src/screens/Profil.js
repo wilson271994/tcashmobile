@@ -23,7 +23,7 @@ class Profil extends PureComponent {
         const {navigation} = this.props; 
         return(
             <SafeAreaView style={styles.container}>
-               <Settings navigation={navigation} />
+                <Settings navigation={navigation} />
             </SafeAreaView>
         )
     }

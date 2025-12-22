@@ -44,7 +44,7 @@ class HomeIndex extends PureComponent {
     }
 
     render(){
-        const {navigation} = this.props; 
+        const {navigation, user_infos} = this.props; 
         return(
             <ImageBackground style={styles.backgroundapp} 
                 source={require('../../assets/images/background.jpg')}>
@@ -59,7 +59,7 @@ class HomeIndex extends PureComponent {
                             </TouchableOpacity>   
 
                             <View style={homestyle.containerusername}>
-                                <Text style={[styles.textBold, homestyle.UserText]}>Wilson NDONGO</Text>
+                                <Text style={[styles.textBold, homestyle.UserText]}>{user_infos.last_name}</Text>
                                 <View style={homestyle.conatinerverifystatus}>
                                     <Image
                                         source={require('../../assets/images/verified.png')}
@@ -94,7 +94,7 @@ class HomeIndex extends PureComponent {
                             </View>
                             <View style={homestyle.walletamountcontainer}>
                                 <Text style={[styles.text, homestyle.walletTitleText]}>Mon Solde</Text>
-                                <Text style={[styles.textBold, homestyle.walletAmount]}>32 132.2 FCFA</Text>
+                                <Text style={[styles.textBold, homestyle.walletAmount]}>{user_infos.wallet} {user_infos.currency}</Text>
                             </View>
                             <TouchableOpacity style={homestyle.containerwalleteye}>
                                 <Image
@@ -131,97 +131,39 @@ class HomeIndex extends PureComponent {
                         <ScrollView contentContainerStyle={homestyle.containerHistoryTransation}>
                             <View style={homestyle.transactionItemContainer}>
                                 <Text style={[styles.textBold, homestyle.headertitletrans]}>Transactions recentes</Text>
-                                
-                                <TouchableOpacity 
-                                    onPress={this. _navigateTotransactionDetail.bind(this)}
-                                    style={homestyle.historytransitem}>
-                                    <View style={homestyle.histcovercontainer}>
-                                        <Image
-                                            source={require('../../assets/images/tcash_mtn.png')}
-                                            style={homestyle.historycover} />
-                                    </View>
-                                    <View style={homestyle.historycontent}>
-                                        <Text style={[styles.textBold, homestyle.histtranstype]}>T_cash Deposite</Text>
-                                        <Text style={[styles.textItalicBold, homestyle.histransamount]}>+11 000 FCFA</Text>
-                                        <Text style={[styles.text, homestyle.histtransauthor]}>Auteur : Valery Yanick</Text>
-                                    </View>
-                                    <View style={homestyle.historystatus}>
-                                        <Text style={[styles.textItalicBold, homestyle.histtransstatussuccess]}>Réussie</Text>
-                                        <Text 
-                                            numberOfLines={1}
-                                            style={[styles.text, homestyle.histtranstime]}>Il y a 12 hours ago</Text>
-                                    </View>
-                                </TouchableOpacity>
-                                <View style={homestyle.separatoritemhist} />
-
-                                <TouchableOpacity 
-                                    onPress={this. _navigateTotransactionDetail.bind(this)}
-                                    style={homestyle.historytransitem}>
-                                    <View style={homestyle.histcovercontainer}>
-                                        <Image
-                                            source={require('../../assets/images/tcash_tcash.png')}
-                                            style={homestyle.historycover} />
-                                    </View>
-                                    <View style={homestyle.historycontent}>
-                                        <Text style={[styles.textBold, homestyle.histtranstype]}>T_cash Deposite</Text>
-                                        <Text style={[styles.textItalicBold, homestyle.histransamount]}>+11 000 FCFA</Text>
-                                        <Text style={[styles.text, homestyle.histtransauthor]}>Auteur : Valery Yanick</Text>
-                                    </View>
-                                    <View style={homestyle.historystatus}>
-                                        <Text style={[styles.textItalicBold, homestyle.histtransstatussuccess]}>Réussie</Text>
-                                        <Text 
-                                            numberOfLines={1}
-                                            style={[styles.text, homestyle.histtranstime]}>Il y a 12 hours ago</Text>
-                                    </View>
-                                </TouchableOpacity>
-                                <View style={homestyle.separatoritemhist} />
-
-                                <TouchableOpacity 
-                                    onPress={this. _navigateTotransactionDetail.bind(this)}
-                                    style={homestyle.historytransitem}>
-                                    <View style={homestyle.histcovercontainer}>
-                                        <Image
-                                            source={require('../../assets/images/tcash_om.png')}
-                                            style={homestyle.historycover} />
-                                    </View>
-                                    <View style={homestyle.historycontent}>
-                                        <Text style={[styles.textBold, homestyle.histtranstype]}>T_cash Deposite</Text>
-                                        <Text style={[styles.textItalicBold, homestyle.histransamount]}>+11 000 FCFA</Text>
-                                        <Text style={[styles.text, homestyle.histtransauthor]}>Auteur : Valery Yanick</Text>
-                                    </View>
-                                    <View style={homestyle.historystatus}>
-                                        <Text style={[styles.textItalicBold, homestyle.histtransstatusfail]}>Echec</Text>
-                                        <Text 
-                                            numberOfLines={1}
-                                            style={[styles.text, homestyle.histtranstime]}>Il y a 12 hours ago</Text>
-                                    </View>
-                                </TouchableOpacity>
-                                <View style={homestyle.separatoritemhist} />
-
-                                <TouchableOpacity 
-                                    onPress={this. _navigateTotransactionDetail.bind(this)}
-                                    style={homestyle.historytransitem}>
-                                    <View style={homestyle.histcovercontainer}>
-                                        <Image
-                                            source={require('../../assets/images/tcash_visa.png')}
-                                            style={homestyle.historycover} />
-                                    </View>
-                                    <View style={homestyle.historycontent}>
-                                        <Text style={[styles.textBold, homestyle.histtranstype]}>T_cash Deposite</Text>
-                                        <Text style={[styles.textItalicBold, homestyle.histransamount]}>+11 000 FCFA</Text>
-                                        <Text style={[styles.text, homestyle.histtransauthor]}>Auteur : Valery Yanick</Text>
-                                    </View>
-                                    <View style={homestyle.historystatus}>
-                                        <Text style={[styles.textItalicBold, homestyle.histtransstatusfail]}>Echec</Text>
-                                        <Text 
-                                            numberOfLines={1}
-                                            style={[styles.text, homestyle.histtranstime]}>Il y a 12 hours ago</Text>
-                                    </View>
-                                </TouchableOpacity>
-                                <View style={homestyle.separatoritemhist} />
-
+                                {
+                                    user_infos.lasttransactions ? 
+                                        user_infos.lasttransactions.map((item, i) => 
+                                            <>
+                                                <TouchableOpacity key={i}
+                                                onPress={this. _navigateTotransactionDetail.bind(this)}
+                                                    style={homestyle.historytransitem}>
+                                                    <View style={homestyle.histcovercontainer}>
+                                                        <Image
+                                                            source={require('../../assets/images/tcash_mtn.png')}
+                                                            style={homestyle.historycover} />
+                                                    </View>
+                                                    <View style={homestyle.historycontent}>
+                                                        <Text style={[styles.textBold, homestyle.histtranstype]}>T_cash Deposite</Text>
+                                                        <Text style={[styles.textItalicBold, homestyle.histransamount]}>+11 000 FCFA</Text>
+                                                        <Text style={[styles.text, homestyle.histtransauthor]}>Auteur : Valery Yanick</Text>
+                                                    </View>
+                                                    <View style={homestyle.historystatus}>
+                                                        <Text style={[styles.textItalicBold, homestyle.histtransstatussuccess]}>Réussie</Text>
+                                                        <Text 
+                                                            numberOfLines={1}
+                                                            style={[styles.text, homestyle.histtranstime]}>Il y a 12 hours ago</Text>
+                                                    </View>
+                                                </TouchableOpacity>
+                                                <View style={homestyle.separatoritemhist} />
+                                            </>
+                                        )
+                                    :
+                                        <View style={homestyle.emptytransaction}>
+                                            <Text style={[styles.text, homestyle.emptytext]}>Aucune transaction pour l'instant.</Text>
+                                        </View>
+                                }
                             </View>
-
                         </ScrollView>
                 </ScrollView>
             </ImageBackground>

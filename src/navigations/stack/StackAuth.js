@@ -8,11 +8,11 @@ import { switchHeaderAction, switchPostFormAction } from "../../reducers/actions
 import { loginstyle } from "../../assets/styles/login";
 import { styles } from "../../assets/styles";
 import AntDesign  from 'react-native-vector-icons/AntDesign';
-import loginPage from "../../components/Auth/LoginPage";
-import signupForm1 from "../../components/Auth/SignupForm1";
-import signupForm2 from "../../components/Auth/SignupForm2";
 import Preload from "../../components/Auth/Preload";
 import activationPage from "../../components/Auth/activationPage";
+import LoginPage from "../../components/Auth/loginPage";
+import signupForm1 from "../../components/Auth/signupForm1";
+import signupForm2 from "../../components/Auth/signupForm2";
 const Stack = createStackNavigator();
 
 class StackAuth extends Component {
@@ -52,7 +52,7 @@ class StackAuth extends Component {
             <Stack.Navigator>
                 <Stack.Screen 
                     name=" " 
-                    component={loginPage}           
+                    component={LoginPage}           
                     options={{
                         headerShown:false, 
                         headerTitle: props => <Image style={loginstyle.logoauth} source={require('../../assets/images/logo.png')}/>,

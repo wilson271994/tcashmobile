@@ -230,16 +230,14 @@ class BottomTabNavigator extends Component{
                                 options={{
                                     title:'',
                                     headerShown: false,
-                                    tabBarStyle:{backgroundColor:'#6dcabb'},  
+                                    tabBarStyle:{backgroundColor:'#6dcabb', paddingBottom:20},  
                                     tabBarIcon: (tabMenu) => {
                                         return (
-                                            <View>
-                                                <Text style={[styles.text, loginstyle.footertitle]}>
-                                                    © {new Date().getFullYear()} Tcash. Develop By 
-                                                    <TouchableOpacity>
-                                                        <Text style={[styles.text, loginstyle.builderlink]}>Poly-H Technology</Text>
-                                                    </TouchableOpacity>
-                                                </Text> 
+                                            <View style={loginstyle.containerfooter}>
+                                                <TouchableOpacity>
+                                                    <Text style={[styles.text, loginstyle.builderlink]}>
+                                                    © {new Date().getFullYear()} Tcash. Develop By Poly-H Technology</Text>
+                                                </TouchableOpacity>
                                             </View>
                                         );
                                     },

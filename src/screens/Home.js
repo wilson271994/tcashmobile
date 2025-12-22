@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
 import { SafeAreaView, Platform, Text } from 'react-native';
 import { styles } from '../assets/styles/index.js';
-import {switchHeaderAction} from '../reducers/actions';
+import {checkAuthDataAction, switchHeaderAction} from '../reducers/actions';
 import HomeIndex from '../components/Home/HomeIndex.js';
 
 class Home extends PureComponent {
@@ -18,13 +18,16 @@ class Home extends PureComponent {
 
     _fechtData = async () => {
         await switchHeaderAction(true);  
+        await checkAuthDataAction();
     } 
 
     render(){
         const {navigation} = this.props; 
         return(
             <SafeAreaView style={styles.container}>
-                <HomeIndex navigation={navigation}/> 
+                <HomeIndex 
+                    navigation={navigation} 
+                /> 
             </SafeAreaView>
         )
     }
@@ -33,14 +36,15 @@ class Home extends PureComponent {
 const mapDispatchToProps = (dispatch) => {
     return {
         ...bindActionCreators({
-            switchHeaderAction
+            switchHeaderAction,
+            checkAuthDataAction
         }, dispatch),
     }
 };
 
 const mapStateToProps = (state) => {
     return {
-        user_infos:state.auth.user_infos,
+        state,
     }
 }
 

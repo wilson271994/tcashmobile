@@ -15,8 +15,10 @@ import { switchHeaderAction } from "../../reducers/actions";
 import TransactionDetail from "../../components/Transaction/TransactionDetail";
 import RechargeIndex from "../../components/Recharge/RechargeIndex";
 import TransfertIndex from "../../components/Transfert/TransfertIndex";
-import BankIndex from "../../components/Transfert/BankIndex";
-import MomoIndex from "../../components/Transfert/MomoIndex";
+import Retrait from "../../components/Transfert/Retrait";
+import SendScreen from "../../components/Transfert/SendScreen";
+
+
 const Stack = createStackNavigator();
 
 class StackHome extends Component {
@@ -85,8 +87,8 @@ class StackHome extends Component {
                 />
 
                 <Stack.Screen
-                    name="Bank"
-                    component={BankIndex}
+                    name="Retrait"
+                    component={Retrait}
                     options={{
                         headerShown: false,
                     }}
@@ -94,8 +96,8 @@ class StackHome extends Component {
 
 
                 <Stack.Screen
-                    name="Momo"
-                    component={MomoIndex}
+                    name="Send"
+                    component={SendScreen}
                     options={{
                         headerShown: false,
                     }}

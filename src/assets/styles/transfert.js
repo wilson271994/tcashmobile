@@ -53,10 +53,11 @@ export const transfertstyle = StyleSheet.create({
   optionCardSelected: {
     borderWidth: 2,
     borderColor: '#6dcabb',
+    justifyContent: 'center'
   },
   optionIcon: {
-    width: 50,
-    height: 50,
+    width: 40,
+    height: 40,
     marginRight: 15,
   },
   optionTextContainer: {

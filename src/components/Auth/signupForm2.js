@@ -103,7 +103,7 @@ const cityselection = [
 ];
 
 
-class signupForm2 extends PureComponent {
+class SignupForm2 extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -568,4 +568,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps, null)(signupForm2);
+export default connect(mapStateToProps, mapDispatchToProps, null)(SignupForm2);

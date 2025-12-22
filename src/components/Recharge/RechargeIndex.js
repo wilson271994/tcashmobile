@@ -172,7 +172,7 @@ class RechargeIndex extends PureComponent {
                 </View>
 
                 <View style={rechargestyle.section}>
-                    <Text style={[styles.text, rechargestyle.label]}>Nom lié compte</Text>
+                    <Text style={[styles.text, rechargestyle.label]}>Nom lié au compte</Text>
                     <View style={rechargestyle.inputContainer}>
                         <Text style={rechargestyle.currency}>{user_infos.currency}</Text>
                         <TextInput
@@ -185,7 +185,7 @@ class RechargeIndex extends PureComponent {
                 </View>
 
                 <View style={rechargestyle.section}>
-                    <Text style={[styles.text, rechargestyle.label]}>Numéro compte</Text>
+                    <Text style={[styles.text, rechargestyle.label]}>Numéro decompte</Text>
                     <View style={rechargestyle.inputContainer}>
                         <Text style={rechargestyle.currency}>{user_infos.currency}</Text>
                         <TextInput

@@ -37,6 +37,12 @@ class HomeIndex extends PureComponent {
         navigation.navigate('Transfert');
     }
 
+     _navigateToRetrait = () => {
+        const {navigation} = this.props;
+        store.dispatch({type:ROOT_NAVIGATION, value:navigation});
+        navigation.navigate('Retrait');
+    }
+
     _navigateToRecharge = () => {
         const {navigation} = this.props;
         store.dispatch({type:ROOT_NAVIGATION, value:navigation});
@@ -124,6 +130,17 @@ class HomeIndex extends PureComponent {
                                     style={homestyle.imageservicehome}
                                 />                     
                                 <Text style={[styles.textBold, homestyle.depositeText]}>Transfert</Text>   
+                            </TouchableOpacity>
+
+
+                            <TouchableOpacity 
+                            onPress={this._navigateToRetrait}
+                            style={[styles.card, homestyle.walletservicebtn]}>
+                                <Image
+                                    source={require('../../assets/images/bank.png')}
+                                    style={homestyle.imageservicehome}
+                                />                     
+                                <Text style={[styles.textBold, homestyle.depositeText]}>Retrait</Text>   
                             </TouchableOpacity>
                         </View>
 

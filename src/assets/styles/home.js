@@ -123,7 +123,7 @@ export const homestyle = StyleSheet.create({
         justifyContent:'center',
     },
     walletservicebtn:{
-        width:'45%',
+        width:'35%',
         height:100,
         alignItems:'center',
         justifyContent:'center',

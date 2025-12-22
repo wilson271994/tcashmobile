@@ -11,8 +11,8 @@ import AntDesign  from 'react-native-vector-icons/AntDesign';
 import Preload from "../../components/Auth/Preload";
 import activationPage from "../../components/Auth/activationPage";
 import LoginPage from "../../components/Auth/loginPage";
-import signupForm1 from "../../components/Auth/signupForm1";
-import signupForm2 from "../../components/Auth/signupForm2";
+import SignupForm1 from "../../components/Auth/SignupForm1";
+import SignupForm2 from "../../components/Auth/SignupForm2";
 const Stack = createStackNavigator();
 
 class StackAuth extends Component {
@@ -63,7 +63,7 @@ class StackAuth extends Component {
 
                 <Stack.Screen 
                     name="SignUpForm1"  
-                    component={signupForm1} 
+                    component={SignupForm1} 
                     options={{
                         headerShown:false, 
                         headerTitle : () => {
@@ -88,7 +88,7 @@ class StackAuth extends Component {
 
                 <Stack.Screen
                     name="SignUpForm2"
-                    component={signupForm2}
+                    component={SignupForm2}
                     options={{
                         headerShown: false,
                         headerTitle: () => {

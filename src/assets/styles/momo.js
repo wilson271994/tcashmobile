@@ -1,6 +1,6 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import { color } from 'react-native-elements/dist/helpers';
-const {width, height} = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 export const momostyle = StyleSheet.create({
   container: {
@@ -16,24 +16,11 @@ export const momostyle = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#eee',
   },
-  backButton: {
-    padding: 10,
-  },
-  backArrow: {
-    fontSize: 28,
-    color: '#333',
-  },
   title: {
     fontSize: 22,
     fontWeight: 'bold',
     color: '#333',
-  },
-  closeButton: {
-    padding: 10,
-  },
-  closeText: {
-    fontSize: 28,
-    color: '#333',
+    transform: [{ translateX: -70 }],
   },
   description: {
     fontSize: 16,
@@ -52,35 +39,6 @@ export const momostyle = StyleSheet.create({
     color: '#6dcabb',
     marginBottom: 10,
     fontWeight: '600',
-  },
-  phoneInput: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    borderRadius: 10,
-    padding: 15,
-    elevation: 2,
-  },
-  phoneContent: {
-    flex: 1,
-  },
-  selectedName: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  selectedNumber: {
-    fontSize: 14,
-    color: '#666',
-  },
-  phonePlaceholder: {
-    fontSize: 16,
-    color: '#999',
-  },
-  phoneArrow: {
-    fontSize: 24,
-    color: '#6dcabb',
   },
   amountContainer: {
     flexDirection: 'row',
@@ -157,6 +115,8 @@ export const momostyle = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
+    width: 200,
+    marginLeft: 70
   },
   continueText: {
     color: '#fff',
@@ -164,4 +124,93 @@ export const momostyle = StyleSheet.create({
     fontWeight: 'bold',
     marginLeft: 10,
   },
+
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f0f0f0',
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    height: 40,
+  },
+
+
+
+  dropdownButton: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#f0f0f0',
+    borderRadius: 10,
+    padding: 15,
+    borderWidth: 1,
+    borderColor: '#ddd',
+  },
+  selectedText: { fontSize: 16, color: '#333' },
+  arrow: { fontSize: 20, color: '#666' },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'flex-end',
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: 20,
+    maxHeight: '80%',
+  },
+  searchInput: {
+    backgroundColor: '#f0f0f0',
+    borderRadius: 10,
+    padding: 12,
+    fontSize: 16,
+    marginBottom: 15,
+  },
+  item: {
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+  },
+  itemName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  itemUsername: {
+    fontSize: 14,
+    color: '#666',
+  },
+  emptyText: {
+    textAlign: 'center',
+    color: '#999',
+    fontSize: 16,
+    marginTop: 20,
+  },
+  backArrow: {
+    backgroundColor: '#6dcabb',
+    padding: 15,
+    borderRadius: 10,
+    marginTop: 20,
+  },
+  closeText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+
+
+  closeButton: {
+    backgroundColor: '#6DCABB',
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  closeText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+
 });

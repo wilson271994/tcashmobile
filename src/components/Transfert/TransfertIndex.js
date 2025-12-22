@@ -28,17 +28,14 @@ class TransfertIndex extends PureComponent {
 
     switch (optionId) {
       case 1:
-        navigation.navigate('Bank'); 
+        navigation.navigate('Send'); 
         break;
-      case 2:
-        navigation.navigate('Momo'); 
-        break;
-      case 3:
-        navigation.navigate('TransfertTcash'); 
-        break;
-      case 4:
-        navigation.navigate('RechargeCredit'); 
-        break;
+      // case 2:
+      //   navigation.navigate('TransfertTcash'); 
+      //   break;
+      // case 3:
+      //   navigation.navigate('RechargeCredit'); 
+      //   break;
       default:
         break;
     }
@@ -81,26 +78,19 @@ class TransfertIndex extends PureComponent {
 
 
           <Text style={transfertstyle.subtitle}>
-            Quel transfert souhaitez-vous effectuer ?
+            Quel opération souhaitez-vous effectuer ?
           </Text>
 
 
           <View style={transfertstyle.optionsContainer}>
             {this.renderOption(
               1,
-              require('../../assets/images/bank.png'),
-              'Transfert Bancaire',
-              'Allow tcash user to make bank transfer'
+              require('../../assets/images/send.png'),
+              'Transfert Tcash',
+              'Allow tcash user to transfert money from balance to other user'
             )}
 
-            {this.renderOption(
-              2,
-              require('../../assets/images/mtn.jpg'),
-              'Mobile money transfert',
-              'Allow tcash user to transfert money from balance to mobile money wallet'
-            )}
-
-            {this.renderOption(
+            {/* {this.renderOption(
               3,
               require('../../assets/images/logo.png'),
               'Transfert Tcash',
@@ -112,7 +102,7 @@ class TransfertIndex extends PureComponent {
               require('../../assets/images/mtn_tcash.png'),
               'Recharge de crédit',
               'Transférer du crédit de communication à vos proches en Afrique, avec quelques clics'
-            )}
+            )} */}
           </View>
         </ScrollView>
       </SafeAreaView>

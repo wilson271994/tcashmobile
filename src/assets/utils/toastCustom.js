@@ -1,15 +1,16 @@
 import {StyleSheet, View, Text} from 'react-native';
 import Entypo  from 'react-native-vector-icons/Entypo';
 import MaterialIcons  from 'react-native-vector-icons/MaterialIcons';
+import { styles } from '../styles';
 
 export const ToastConfig = {
     success: ({ props }) => (
         <View style={toaststyle.container}>
             <View>
-                <Text style={{ color:'#000', fontSize:16, fontFamily:'Riegraf-Bold' }}>{props.title}</Text>
+                <Text style={[styles.textBold, toaststyle.titletoast]}>{props.title}</Text>
                 {
                     props.description ?
-                        <Text style={{ color:'#666', fontSize:14, fontFamily:'Riegraf-Bold' }}>{props.description}</Text>
+                        <Text style={[{ color:'#666', fontSize:14}, styles.text]}>{props.description}</Text>
                     :null
                 }
             </View>
@@ -19,10 +20,10 @@ export const ToastConfig = {
     error: ({ props }) => (
         <View style={toaststyle.container}>
             <View>
-                <Text style={{ color:'#000', fontSize:16, fontFamily:'Riegraf-Bold' }}>{props.title}</Text> 
+                <Text style={[styles.textBold, toaststyle.titletoast]}>{props.title}</Text> 
                 {
                     props.description ?
-                        <Text style={{ color:'#666', fontSize:14, fontFamily:'Riegraf-Bold' }}>{props.description}</Text>
+                        <Text style={[{ color:'#666', fontSize:14}, styles.text]}>{props.description}</Text>
                     :null
                 }
             </View>
@@ -32,10 +33,10 @@ export const ToastConfig = {
     info: ({ props }) => (
         <View style={toaststyle.container}>
             <View>
-                <Text style={{ color:'#000', fontSize:16, fontFamily:'Riegraf-Bold' }}>{props.title}</Text> 
+                <Text style={[styles.textBold, toaststyle.titletoast]}>{props.title}</Text> 
                 {
                     props.description ?
-                        <Text style={{ color:'#666', fontSize:14, fontFamily:'Riegraf-Bold' }}>{props.description}</Text>
+                        <Text style={[{ color:'#666', fontSize:14}, styles.text]}>{props.description}</Text>
                     :null
                 }
             </View>
@@ -67,6 +68,11 @@ export const toaststyle = StyleSheet.create({
     iconstatusinfo:{
         fontSize:20,
         color:'#2e27a5'
+    },
+    titletoast:{
+        color:'#666', 
+        fontSize:16,
+        marginBottom:5
     }
 
 })

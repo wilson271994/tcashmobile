@@ -8,7 +8,7 @@ import { loginstyle } from '../../assets/styles/login';
 import AwesomeAlert from 'react-native-awesome-alerts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AccountActivationAction } from '../../reducers/actions';
-import GradientBackground from '../Gradient/Gradient';
+import GradientBackground from '../Utils/Gradient';
 
 
 class activationPage extends PureComponent {

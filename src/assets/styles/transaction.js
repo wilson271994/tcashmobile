@@ -1,207 +1,201 @@
-import { cloneElement } from 'react';
 import {StyleSheet, Dimensions} from 'react-native';
 import { color } from 'react-native-elements/dist/helpers';
 const {width, height} = Dimensions.get('window');
 
 export const transactionstyle = StyleSheet.create({
-    containertrans:{
-        marginTop:50,
-        height:800
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        marginBottom:80
     },
-    headertrans:{
-        flexDirection:'row',
-        padding:10,
+    header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 15,
+        backgroundColor: '#fff',
+        borderBottomWidth: 1,
+        borderBottomColor: '#ddd',
     },
-    containerlogo:{
-        width:'30%'
+    closeButton: {
+        padding: 10,
     },
-    pagelogo:{
-        width:120,
-        height:50,
+    closeicon:{
+        width:30,
+        height:30
     },
-    transcontainertitle:{
-        width:'70%',
-        justifyContent:'center'
+    closeText: {
+        fontSize: 28,
+        color: '#333',
     },
-    transpagetitle:{
-        textAlign:'center',
-        fontSize:25
-    },
-
-    //Search area
-    searchtrans:{
-        padding:5,
-        flexDirection:'row',
-        backgroundColor:'#fff',
-        borderRadius:20,
-        margin:10,
-        paddingLeft:10,
-    },
-    searchtext:{
-        fontSize:16,
-        width:'80%'
-    },
-    logosearch:{
-        width:'20%',
-        alignSelf:'center',
-        textAlign:'center',
-        fontSize:25
-    },
-
-    //List History area
-    containerHistoryTransation: {
-        flex:1
-    },
-    transactionItemContainer: {
-        padding:20,
-    },
-    headertitletrans:{
-        color:'#666',
+    title: {
         fontSize: 18,
-        marginBottom:20
+        color: '#000',
+        marginLeft: 10,
     },
-    historytransitem:{
-        flexDirection:'row'
+    section: {
+        padding: 20,
+        marginBottom: -20,
     },
-    histcovercontainer:{
-        width:'20%'
+    label: {
+        fontSize: 16,
+        color: '#333',
+        marginBottom: 10,
     },
-    historycontent:{
-        width:'60%'
+    inputContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#eee',
+        borderRadius: 10,
+        paddingHorizontal: 15,
+        height: 45,
     },
-    historystatus:{
-        width:'20%'
-    },
-    historycover:{
-        width:50,
-        height:50,
-        backgroundColor:'#fff',
-        borderRadius:10,
-    },
-    histransamount:{
-        color:'#5eb3a5',
-        marginTop:5
-    },
-    histtransauthor:{
-        fontSize:13,
-        marginTop:5
-    },
-    histtransstatussuccess:{
-        color:'#52954dff',
-    },
-    histtransstatusfail:{
-        color:'#964242ff',
-    },
-    histtranstime:{
-        marginTop:5
-    },
-    separatoritemhist:{
-        borderWidth:0.5,
-        borderColor:'#eee',
-        marginBottom:15,
-        marginTop:15
-    },
-    classicseparator:{
-        borderWidth:0.5,
-        borderColor:'#eee',
-        marginTop:10,
-        marginLeft:20,
-        marginRight:20,
-        marginBottom:20,
-    },
-    containeritem:{
-        padding:20
-    },
-
-    //detail transaction area
-    transcontainerdetail:{
-
-    },
-    scrollContainer:{
-
-    },
-    headertransdetail:{
-        flexDirection:'row',
-        marginTop:40,
-    },
-    backbtn:{
-        width:'20%',
-        marginLeft:10
-    },
-    backicon:{
-        width:40,
-        height:40,
-    },
-    containertitledetail:{
-        width:'80',
-        justifyContent:'center',
-    },
-    titledetailpage:{
-        textAlign:'center',
-        fontSize:20,
-        marginRight:10
-    },
-    detailrubrique:{
-        flexDirection:'row',
-        marginTop:20
-    },
-    containerlogotransdetail:{
-        width:'30%',
-    },
-    logotransdetail:{
-        width:100,
-        height:50,
-        alignSelf:'center',
-        backgroundColor:'#fff',
-        borderRadius:10,
-    },
-    pricedatetransdetail:{
-        width:'70%',
-        justifyContent:'center',
-        alignItems:'flex-end',
-        marginLeft:-20
-    },
-    pricedetailpage:{
-        marginBottom:5,
-        fontSize:18
-    },
-    phonedetailpage:{
-        marginBottom:5,
-        fontSize:16
-    },
-    datedetailpage:{
-        marginBottom:5,
+    inputsearchstyle:{
+        color:'#999',
         fontSize:14
     },
-
-
-    detailrubrique2:{
-        marginTop:20,
-        marginBottom:-5,
-        padding:15
+    currency: {
+        fontSize: 18,
+        color: '#888',
+        marginRight: 10,
     },
-    rwoitemtitle:{
-        fontSize:16,
-        marginBottom:10
+    input: {
+        flex: 1,
+        fontSize: 16,
+        color: '#333',
+
     },
-    rowitem:{
+    gratuitText: {
+        fontSize: 16,
+        color: '#888',
+    },
+    visibilityToggle: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 10,
+    },
+    visibilityText: {
+        color: '#888',
+        fontSize: 14,
+    },
+    eyeIcon: {
+        marginLeft: 5,
+        fontSize: 16,
+    },
+    paymentMethod: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#f9f9f9',
+        borderRadius: 10,
+        padding: 15,
+    },
+    paymentLogo: {
+        width: 40,
+        height: 40,
+        marginRight: 15,
+    },
+    paymentInfo: {
+        flex: 1,
+    },
+    paymentNumber: {
+        fontSize: 16,
+        color: '#333',
+    },
+    paymentProvider: {
+        fontSize: 14,
+        color: '#888',
+    },
+    changeButton: {
+        backgroundColor: '#f0f0f0',
+        paddingHorizontal: 15,
+        paddingVertical: 8,
+        borderRadius: 20,
+    },
+    changeText: {
+        color: '#6dcabb',
+        fontWeight: 'bold',
+    },
+    radioGroup: {
+        marginTop: 10,
+    },
+    radioOption: {
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        backgroundColor: '#f9f9f9',
+        borderRadius: 5,
+        padding: 5,
+        marginBottom: 10,
+        borderWidth: 2,
+        borderColor: 'transparent',
+    },
+    radioOptionSelected: {
+        borderColor: '#5eb3a5',
+    },
+    radioCircle: {
+        width: 20,
+        height: 20,
+        borderRadius: 10,
+        borderWidth: 2,
+        borderColor: '#5eb3a5',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 15,
+        marginTop: 5,
+    },
+    radioDot: {
+        width: 10,
+        height: 10,
+        borderRadius: 5,
+        backgroundColor: '#6dcabb',
+    },
+    radioContent: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+    },
+    radioLogo: {
+        width: 30,
+        height: 30,
+        marginRight: 10,
+    },
+    radioTitle: {
+        fontWeight: 'bold',
+        color: '#333',
+        marginTop:5
+    },
+    continueButton: {
+        backgroundColor: '#6dcabb',
+        margin: 20,
+        paddingVertical: 10,
+        borderRadius: 10,
+        alignItems: 'center',
+    },
+    continueText: {
+        color: '#fff',
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+    recaptitle:{
+        marginBottom:10,
+        fontSize:16
+    },
+    containeritemrecap:{
         flexDirection:'row',
-        marginBottom:10
+        marginBottom:15
     },
-    rowitemlabel:{
-        fontSize:14,
+    itemrecap:{
         width:'50%'
     },
-    rowitemvalue:{
-        fontSize:14,
-        width:'50%',
-        textAlign:'right'
+    labelrecap:{
+        textAlign:'left'
+    },
+    valuerecap:{
+        textAlign:'right',
+        color:'#000'
+    },
+    recapcontainer:{
+        borderWidth:1,
+        borderColor:'#eee',
+        margin:15,
+        borderRadius:10
     }
-
 });
-
-
-
-
-
-

@@ -3,6 +3,10 @@ import { color } from 'react-native-elements/dist/helpers';
 const {width, height} = Dimensions.get('window');
 
 export const homestyle = StyleSheet.create({
+    container:{
+        backgroundColor:'#fff', 
+        flex:1,
+    },
     header:{
         flexDirection: 'row',
         alignItems: 'center',
@@ -63,7 +67,7 @@ export const homestyle = StyleSheet.create({
         marginTop: 10,
         borderRadius: 10,
         overflow: 'hidden',
-        width: '95%',
+        width: '90%',
         height: 100,
         backgroundColor: '#5eb3a5',
         elevation: 50,
@@ -73,7 +77,7 @@ export const homestyle = StyleSheet.create({
         borderBottomColor: 'rgba(0, 0, 0, 0.4)', // Noir semi-transparent
         borderRightColor: 'rgba(109, 202, 187, 1.0)',
         borderRadius:10,
-        marginLeft:5,
+        marginLeft:15,
         flexDirection:'row'
     },
     walletamountcontainer:{
@@ -123,23 +127,29 @@ export const homestyle = StyleSheet.create({
         justifyContent:'center',
     },
     walletservicebtn:{
-        width:'45%',
+        width:'33%',
         height:100,
         alignItems:'center',
         justifyContent:'center',
         borderRadius:20,
-        backgroundColor:'#d0f4ef',
+        backgroundColor: '#5eb3a5',
+        elevation: 50,
+        borderWidth: 1,
+        borderTopColor: 'rgba(109, 202, 187, 1.0)', // Blanc semi-transparent
+        borderLeftColor: 'rgba(109, 202, 187, 1.0)',
+        borderBottomColor: 'rgba(0, 0, 0, 0.4)', // Noir semi-transparent
+        borderRightColor: 'rgba(109, 202, 187, 1.0)',
         marginRight:10,
         marginLeft:10
     },
     depositeText:{
-        color:'#666',
+        color:'#fff',
         fontSize: 13,
         marginTop:5
     },
     imageservicehome:{
-        width:60,
-        height:60
+        width:40,
+        height:40
     },
     transfertText:{
         color:'white',

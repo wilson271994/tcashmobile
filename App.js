@@ -6,7 +6,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import SplashScreen from 'react-native-splash-screen';
 import Toast from 'react-native-toast-message';
 import { ToastConfig } from './src/assets/utils/toastCustom';
-import BottomNavigator from './src/navigations/bottomtab/BottomNavigator';
+import BaseContainer from './src/Base/BaseContainer';
 
 export default App = () => {
     const [loading, setLoading] = useState(true); 
@@ -21,10 +21,11 @@ export default App = () => {
         <Provider store={store}> 
             <NavigationContainer>
                 <StatusBar backgroundColor='#6DCABB' />
-                <BottomNavigator />
+                <BaseContainer />
                 <Toast
                     position='top'
-                    topOffset={0}
+                    topOffset={50}
+                    visibilityTime={8000}
                     config={ToastConfig}
                 />
             </NavigationContainer>

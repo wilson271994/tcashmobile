@@ -13,10 +13,11 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Home from "../../screens/Home";
 import { switchHeaderAction } from "../../reducers/actions";
 import TransactionDetail from "../../components/Transaction/TransactionDetail";
-import RechargeIndex from "../../components/Recharge/RechargeIndex";
-import TransfertIndex from "../../components/Transfert/TransfertIndex";
-import BankIndex from "../../components/Transfert/BankIndex";
-import MomoIndex from "../../components/Transfert/MomoIndex";
+import BankIndex from "../../components/Transaction/BankIndex";
+import MomoIndex from "../../components/Transaction/MomoIndex";
+import Deposit from "../../components/Transaction/Deposit";
+import Withdraw from "../../components/Transaction/Withdraw";
+import Transfer from "../../components/Transaction/Transfer";
 const Stack = createStackNavigator();
 
 class StackHome extends Component {
@@ -45,7 +46,6 @@ class StackHome extends Component {
     _backToMenu = () => {
         const { navigation } = this.props;
         navigation.goBack();
-        navigation.toggleDrawer();
     }
 
     render() {
@@ -69,16 +69,24 @@ class StackHome extends Component {
                 />
 
                 <Stack.Screen
-                    name="Recharge"
-                    component={RechargeIndex}
+                    name="Deposit"
+                    component={Deposit}
                     options={{
                         headerShown: false,
                     }}
                 />
 
                 <Stack.Screen
-                    name="Transfert"
-                    component={TransfertIndex}
+                    name="Transfer"
+                    component={Transfer}
+                    options={{
+                        headerShown: false,
+                    }}
+                />
+
+                <Stack.Screen
+                    name="Withdraw"
+                    component={Withdraw}
                     options={{
                         headerShown: false,
                     }}

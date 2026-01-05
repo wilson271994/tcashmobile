@@ -6,12 +6,123 @@ export const styles = StyleSheet.create({
     container:{
         backgroundColor: '#F5F5F5',
     },
+    main: {
+        flex: 1
+    },
+    bodybase:{
+        flex: 1 
+    },
+    headerbase: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        backgroundColor: '#fff',
+        height:70,
+        marginTop:20
+    },
+    logoContainer: {
+        flexDirection: 'row',
+        marginLeft:-10
+    },
+    logo: {
+        width: 120,
+        height: 100,
+        resizeMode: 'contain',
+    },
+    icon: {
+        width: 30,
+        height: 30,
+        resizeMode: 'contain',
+    },
+    activeicon: {
+        width: 25,
+        height: 25,
+        resizeMode: 'contain',
+        tintColor: 'white'
+    },
+    cartButton: {
+        position: 'relative',
+    },
+    cartIcon: {
+        fontSize: 24,
+        color: '#6aa7d7',
+    },
+    cartBadge: {
+        position: 'absolute',
+        top: -5,
+        right: -5,
+        backgroundColor: '#FF4444',
+        borderRadius: 10,
+        minWidth: 20,
+        height: 20,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    cartBadgeText: {
+        color: '#fff',
+        fontSize: 12,
+        fontWeight: 'bold',
+    },
+    container: {
+        backgroundColor: '#F5F5F5',
+    },
+
+    //NAVIGATION 
+
+    bottomNav: {
+        flexDirection: 'row',
+        backgroundColor: '#FFF',
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        paddingHorizontal: 20,
+        borderTopColor: '#E0E0E0',
+    },
+    navItem: {
+        flex: 1,
+        alignItems: 'center',
+        paddingVertical: 5,
+    },
+    activeNavItem: {
+        alignItems: 'center',
+    },
+    activeNavCircle: {
+        width: 50,
+        height: 50,
+        backgroundColor: '#6dcabb',
+        borderRadius: 25,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 2,
+    },
+    navIcon: {
+        fontSize: 20,
+        marginBottom: 2,
+    },
+    activeNavIcon: {
+        fontSize: 20,
+        color: '#FFF',
+    },
+    navLabel: {
+        fontSize: 12,
+        color: '#666',
+    },
+    activeNavLabel: {
+        fontSize: 12,
+        color: '#333',
+        fontWeight: 'bold',
+    },
+    bottomSpacing: {
+        height: 20,
+    },
 
     //global backgroung
     backgroundapp:{
         resizeMode: 'cover',
         justifyContent: 'center',
-        height:800
+        height:800,
     },
 
     // debut
@@ -382,7 +493,6 @@ export const styles = StyleSheet.create({
     },
 
     //HomePage
-    
 
     //menu
     swipablepanelbarstyle:{
@@ -399,7 +509,6 @@ export const styles = StyleSheet.create({
     iconmenu2:{
         width:30,
         height:30,
-
     },
 
     //Style Principal Menu
@@ -410,6 +519,62 @@ export const styles = StyleSheet.create({
     backbtn:{
         width:40,
         height:40
+    },
+
+    //header page
+    header:{
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 15,
+        marginTop:40
+    },
+    container_pp:{
+        width:'20%'
+    },
+    pp_user: {
+        width:65,
+        height:65,
+        left: 6,
+        top: 4,
+        backgroundColor:'#fff',
+        borderRadius:50
+    },
+    containerusername:{
+        width:'50%',
+        marginTop:10
+    },
+    containernotif:{
+        width:'15%'
+    },
+    comtainersupport:{
+        width:'15%'
+    },
+    UserText:{
+        color: '#000',
+        marginLeft:10
+    },
+    verifiedtext:{
+        color: '#999',
+        fontSize: 15,
+    },
+    conatinerverifystatus:{
+        flexDirection:'row',
+        marginTop:5
+    },
+    verified:{
+        height: 20,
+        width: 20,
+        marginTop:2,
+        marginRight:5,
+        marginLeft:10
+    },
+    notificationlogo:{
+        width:30,
+        height:30
+    },
+    supportlogo:{
+        width:30,
+        height:30
     },
 
 });

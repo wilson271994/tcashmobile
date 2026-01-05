@@ -1824,14 +1824,6 @@
     invariant "^2.2.4"
     nullthrows "^1.1.1"
 
-"@react-navigation/bottom-tabs@^7.4.2":
-  version "7.4.2"
-  resolved "https://registry.npmjs.org/@react-navigation/bottom-tabs/-/bottom-tabs-7.4.2.tgz"
-  integrity sha512-jyBux5l3qqEucY5M/ZWxVvfA8TQu7DVl2gK+xB6iKqRUfLf7dSumyVxc7HemDwGFoz3Ug8dVZFvSMEs+mfrieQ==
-  dependencies:
-    "@react-navigation/elements" "^2.5.2"
-    color "^4.2.3"
-
 "@react-navigation/core@^7.12.1":
   version "7.12.1"
   resolved "https://registry.npmjs.org/@react-navigation/core/-/core-7.12.1.tgz"
@@ -1853,15 +1845,6 @@
     color "^4.2.3"
     use-latest-callback "^0.2.4"
     use-sync-external-store "^1.5.0"
-
-"@react-navigation/material-top-tabs@^7.3.2":
-  version "7.3.2"
-  resolved "https://registry.npmjs.org/@react-navigation/material-top-tabs/-/material-top-tabs-7.3.2.tgz"
-  integrity sha512-ggZlsWV8ZiKWdVoxBZ1fiq8Af/VxYivsLWAccIvOQKom7yquSUkk0VKOc+rdfnRxXv40JhCmGhqCVLko9fjsRA==
-  dependencies:
-    "@react-navigation/elements" "^2.5.2"
-    color "^4.2.3"
-    react-native-tab-view "^4.1.2"
 
 "@react-navigation/native@^7.1.14":
   version "7.1.14"
@@ -6309,13 +6292,6 @@ react-native-swiper@^1.6.0:
   integrity sha512-OnkTTZi+9uZUgy0uz1I9oYDhCU3z36lZn+LFsk9FXPRelxb/KeABzvPs3r3SrHWy1aA67KGtSFj0xNK2QD0NJQ==
   dependencies:
     prop-types "^15.5.10"
-
-react-native-tab-view@^4.1.2:
-  version "4.1.2"
-  resolved "https://registry.npmjs.org/react-native-tab-view/-/react-native-tab-view-4.1.2.tgz"
-  integrity sha512-uzC1hxZGNXeQay8rSjCc7egnoYGHRpB/Y1tAwK5/nnZwrziKry7T6+gNscZgoq88+7Aag/JeNOifdWMZyRclOA==
-  dependencies:
-    use-latest-callback "^0.2.4"
 
 react-native-toast-message@^2.3.3:
   version "2.3.3"

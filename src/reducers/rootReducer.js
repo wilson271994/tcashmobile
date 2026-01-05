@@ -4,6 +4,7 @@ import navigationReducer from "./navigationReducer.js";
 import loadingReducer from "./loadingReducer.js";
 import alertReducer from "./alertReducer.js";
 import listReducer from "./listReducer.js";
+import transReducer from "./transReducer.js";
 
 export const rootReducer = combineReducers(
   {
@@ -11,6 +12,7 @@ export const rootReducer = combineReducers(
     auth        : authReducer, 
     navigation  : navigationReducer,
     alert       : alertReducer,
-    list        : listReducer
+    list        : listReducer,
+    trans       : transReducer
   }
 )

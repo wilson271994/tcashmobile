@@ -23,9 +23,7 @@ class Transaction extends PureComponent {
     render(){
         const {navigation} = this.props; 
         return(
-            <SafeAreaView style={styles.container}>
-                <TransactionIndex navigation={navigation} />
-            </SafeAreaView>
+            <TransactionIndex navigation={navigation} />
         )
     }
 } 

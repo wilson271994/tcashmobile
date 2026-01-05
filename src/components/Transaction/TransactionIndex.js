@@ -8,7 +8,6 @@ import {switchHeaderAction} from '../../reducers/actions/index.js';
 import { styles } from '../../assets/styles/index.js';
 import { transactionstyle } from '../../assets/styles/transaction.js';
 import IconFA  from 'react-native-vector-icons/FontAwesome';
-import { transaction_list } from '../../assets/utils/data.js';
 import { ROOT_NAVIGATION } from '../../reducers/actions/types.js';
 import { store } from '../../reducers/store.js';
 
@@ -92,7 +91,7 @@ class TransactionIndex extends PureComponent {
 
                     <View style={transactionstyle.containeritem}>
                         <FlatList 
-                            data={transaction_list}
+                            data={[]}
                             renderItem={({item, index}) => this._renderItem(item, index)}
                             keyExtractor={(items, index) => index.toString()}
                         />

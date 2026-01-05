@@ -10,7 +10,13 @@ import {
     IS_HEADER, IS_LOADING,
     IS_NETWORK,
     LAST_TRANSACTION,
+    SET_HOME_PAGE,
+    SET_PROFIL_PAGE,
+    SET_SERVICE_PAGE,
+    SET_TRANSACTION_PAGE,
+    TRANSACTION_FEES,
     USER_INFOS,
+    USER_LIST,
     USER_TOKEN,
 } from './types';
 
@@ -38,10 +44,14 @@ export const switchHeaderAction = (data) => {
  * Check If Auth Persist
  */
 export const checkAuthDataAction = async () => {
-    const infoUser = await AsyncStorage.getItem('infoUser');
-    if (infoUser) {
-        store.dispatch({ type: IS_AUTHENTICATED, value: true });
-        store.dispatch({ type: USER_INFOS, value: JSON.parse(infoUser).user_data });
+    const dataUser = await AsyncStorage.getItem('userInfos');  
+    const dataToken = await AsyncStorage.getItem('userToken'); 
+    if(dataUser && dataToken){
+        store.dispatch({type:IS_AUTHENTICATED, value:true});
+        const user_data     = JSON.parse(dataUser);
+        const user_token    = JSON.parse(dataToken);
+        store.dispatch({type:USER_INFOS, value:user_data});
+        store.dispatch({type:USER_TOKEN, value:user_token});
     }
 }
 
@@ -50,13 +60,14 @@ export const checkAuthDataAction = async () => {
  */
 export const LoginAction = (postdata) => {
     store.dispatch({ type: IS_LOADING, value: true });
-    axiosClient.post(`${BASE_URL}api/auth`, postdata)
+    axiosClient.post(`${BASE_URL}/api/auth`, postdata)
     .then(async (res) => {
         const result = res.data.result;
         if (res.data.status === 200) {
             await store.dispatch({ type: USER_TOKEN, value: result.token });
             await store.dispatch({ type: USER_INFOS, value: result.user });
-            await AsyncStorage.setItem('infoUser', USER_INFOS);
+            await AsyncStorage.setItem('userInfos', JSON.stringify(result.user));
+            await AsyncStorage.setItem('userToken', JSON.stringify(result.token));
             await store.dispatch({ type: IS_AUTHENTICATED, value: true })
 
             await store.dispatch({ type: LAST_TRANSACTION, value: result.lasttransactions });
@@ -91,7 +102,7 @@ export const LoginAction = (postdata) => {
 
 export const LogoutActiion = (postdata) => {
     store.dispatch({ type: IS_LOADING, value: true });
-    axiosClient.post(`${BASE_URL}api/logout`, postdata)
+    axiosClient.post(`${BASE_URL}/api/logout`, postdata)
         .then(async (res) => {
             const result = res.data;
             if (result.status === 200) {
@@ -131,6 +142,7 @@ export const LogoutActiion = (postdata) => {
             store.dispatch({ type: IS_LOADING, value: false });
         })
 }
+
 /**
  * 
  * @param {*} postdata 
@@ -139,7 +151,7 @@ export const LogoutActiion = (postdata) => {
 export const SignupAction = (postdata) => {
     const payload = JSON.stringify(postdata)
     store.dispatch({ type: IS_LOADING, value: true})
-    axiosClient.post(`${BASE_URL}api/signup`, payload)
+    axiosClient.post(`${BASE_URL}/api/signup`, payload)
     .then(async (res) => {
         const result = res.data;
         console.log(result, 'result')
@@ -188,16 +200,15 @@ export const SignupAction = (postdata) => {
     })
 
 }
+
 /**
  * 
  * @param {*} postdata 
  * Activate Account
  */
-
-
 export const AccountActivationAction = (postdata) => {
     store.dispatch({ type: IS_LOADING, value: true});
-    axiosClient.post(`${BASE_URL}api-auth/activate-account`, postdata)
+    axiosClient.post(`${BASE_URL}/api/activate-account`, postdata)
         .then(async (res) => {
             const result = res.data;
             if(result.status === 200) {
@@ -235,4 +246,105 @@ export const AccountActivationAction = (postdata) => {
             });
             store.dispatch({ type: IS_LOADING, value: false });
         })
+}
+
+/**
+ * 
+ * @param {*} postdata 
+ */
+export const SearchUserAction = (postdata) => {
+    store.dispatch({type:IS_LOADING, value:true});
+    axiosClient.get(`${BASE_URL}/api/search-user?token=${postdata.token}&key=${postdata.searchkey}`)
+    .then( async (res) => {
+        if(res.data.status === 200){
+            const result = res.data.result; 
+            store.dispatch({type:USER_LIST, value:result});
+            store.dispatch({type:IS_LOADING, value:false});
+        }else{
+            store.dispatch({type:IS_LOADING, value:false});
+            store.dispatch({ type: IS_AUTH_ERROR, value: true })
+            store.dispatch({ type: AUTH_ERROR_MESSAGE, value: result.message })
+        }
+    })
+    .catch((error) => {
+        Toast.show({
+            'type':'info',
+            props:{
+                title:'Connexion internet!',
+                description:'Votre débit internet est instable. Vérifiez votre connectivité et reéssayer',
+            }
+        }); 
+        store.dispatch({type:IS_LOADING, value:false});
+    })
+}
+
+/**
+ * 
+ * @param {*} postdata 
+ */
+export const GetTransactionComAction = (postdata) => {
+    store.dispatch({type:IS_LOADING, value:true});
+    axiosClient.post(`${BASE_URL}/api/get-transaction-fee`, postdata)
+    .then( async (res) => {
+        if(res.data.status === 200){
+            const result = res.data.result; 
+            store.dispatch({type:TRANSACTION_FEES, value:result});
+            store.dispatch({type:IS_LOADING, value:false});
+        }else{
+            store.dispatch({type:IS_LOADING, value:false});
+            store.dispatch({ type: IS_AUTH_ERROR, value: true })
+            store.dispatch({ type: AUTH_ERROR_MESSAGE, value: result.message })
+        }
+    })
+    .catch((error) => {
+        Toast.show({
+            'type':'info',
+            props:{
+                title:'Connexion internet!',
+                description:'Votre débit internet est instable. Vérifiez votre connectivité et reéssayer',
+            }
+        }); 
+        store.dispatch({type:IS_LOADING, value:false});
+    })
+}
+
+
+
+/**
+ * NAVIGATION 
+ */
+export const switchHomePageAction = (data) => { 
+    if (data){
+        store.dispatch({type:SET_HOME_PAGE, value:data});
+        store.dispatch({type:SET_SERVICE_PAGE, value:false});
+        store.dispatch({type:SET_TRANSACTION_PAGE, value:false});
+        store.dispatch({type:SET_PROFIL_PAGE, value:false});
+    }
+}
+
+export const switchServicePageAction = (data) => { 
+    if (data){
+        store.dispatch({type:SET_SERVICE_PAGE, value:data});
+        store.dispatch({type:SET_HOME_PAGE, value:false});
+        store.dispatch({type:SET_TRANSACTION_PAGE, value:false});
+        store.dispatch({type:SET_PROFIL_PAGE, value:false});
+    }
+}
+
+export const switchTransactionPageAction = (data) => { 
+    if (data){
+        store.dispatch({type:SET_TRANSACTION_PAGE, value:data});
+        store.dispatch({type:SET_HOME_PAGE, value:false});
+        store.dispatch({type:SET_SERVICE_PAGE, value:false});
+        store.dispatch({type:SET_PROFIL_PAGE, value:false});
+    }
+}
+
+export const switchProfilPageAction = (data) => { 
+    if (data){
+        store.dispatch({type:SET_PROFIL_PAGE, value:data});
+        store.dispatch({type:SET_HOME_PAGE, value:false});
+        store.dispatch({type:SET_SERVICE_PAGE, value:false});
+        store.dispatch({type:SET_TRANSACTION_PAGE, value:false});
+    }
 }

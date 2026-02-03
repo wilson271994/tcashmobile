@@ -11,27 +11,13 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { store } from '../../reducers/store';
 import { loginstyle } from '../../assets/styles/login';
 import { Dropdown, SelectCountry } from 'react-native-element-dropdown';
-import AwesomeAlert from 'react-native-awesome-alerts';
 import { SignupAction } from '../../reducers/actions';
-import { Picker } from '@react-native-picker/picker';
-import DatePicker from 'react-native-datepicker';
-import { IS_AUTH_ERROR, IS_AUTHENTICATED, IS_LOADING } from '../../reducers/actions/types';
-
-
-
-
-
-const handleValidation = () => {
-    if (!prenom || !numRue || !pays || !ville || !telephone || !typeCompte) {
-        Alert.alert('Erreur', 'Tous les champs sont obligatoires.');
-    } else {
-        Alert.alert('Succès', 'Formulaire soumis avec succès !');
-    }
-};
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
 
 const datagender = [
-    { label: 'Masculin', value: '0' },
-    { label: 'Féminin', value: '1' },
+    { label: 'Masculin', value: 'Masculin' },
+    { label: 'Féminin', value: 'Féminin' },
 ];
 
 const countryselection = [
@@ -102,27 +88,23 @@ const cityselection = [
 
 ];
 
-
 class signupForm2 extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
-            firstname           : '',
-            street              : '',
-            phonenumber         : '',
-            acceptCondition     : false,
-            password1Visible    : false,
-            password2Visible    : false,
-            confidFocus         : false,
             gender              : '',
             country             : '',
             city                : '',
-            account             : '',
             password1           : '',
             password2           : '',
-            is_alert            : false,
-            alert_title         : 'Erreur dans le formulaire!',
-            alert_subtitle      : ''
+            acceptCondition     : false,
+            password1Visible    : false,
+            password2Visible    : false,
+            confidCountryFocus  : false,
+            confidCityFocus     : false,
+            confidGenderFocus   : false,
+            currentyear         : new Date(),
+            cities              : []
         }
     };
 
@@ -138,22 +120,10 @@ class signupForm2 extends PureComponent {
         this.setState({ password2Visible: !this.state.password2Visible });
     }
 
-    _renderDropdownLabel = () => {
-        if (this.state.confidValue || this.state.confidFocus) {
-            return (
-                <Text style={[poststyle.label, this.state.confidFocus && { color: 'blue' }]}>
-                    Dropdown label
-                </Text>
-            );
-        }
-        return null;
-    };
-
     _onChangeAcceptCondition = () => {
         this.setState({ acceptCondition: !this.state.acceptCondition });
     }
 
-    
     _passwordValidation = () => {
         const { password1, password2 } = this.state;
         if (password1 != password2) {
@@ -170,322 +140,260 @@ class signupForm2 extends PureComponent {
         return false;
     }
 
-    _streetValidation = () => {
-        const { username } = this.state;
-        let reg = /^[a-zA-Z0-9.\_$@*!]{3,30}$/;
-        if (reg.test(username) === false) {
-            return false;
-        }
-        return true;
-    }
-
-    _navigateToPreloadPage = () => {
-        const { navigation } = this.props;
-        navigation.navigate('Preload');
-        store.dispatch({ type: IS_AUTHENTICATED, action: true });
-    }
-
-     _navigateToActivationPage = () => {
-        const { navigation } = this.props;
-        navigation.navigate('ActivationPage');
-        store.dispatch({ type: IS_AUTHENTICATED, action: true });
-    }
-
     _authSignup = async () => {
-        const { is_loading, root_navigation } = this.props;
-        const { country, city, password1, password2, street } = this.state;
+        const {navigation} = this.props;
+        const { country, city, password1, password2, gender } = this.state;
         if (
-            country !== '' &&
-            city !== '' &&
-            password1 !== '' &&
-            password2 !== '' &&
-            street !== '' &&
+            country         !== '' &&
+            city            !== '' &&
+            password1       !== '' &&
+            password2       !== '' &&
+            gender          !== '' &&
             this._passwordValidation() &&
-            this._cityValidation() &&
-            this._countryValidation() &&
-            this._acceptConditionValidation() &&
-            this._streetValidation() &&
-            this._authSignupAction()
+            this._acceptConditionValidation()
         ){
-            this.setState({ is_loading: true });
-            const data = {
-                country: country,
-                city: city,
-                street: street,
-                password: password1,
-                confirm_password: password2,
-                device_type: 'phone',
-                navigation: root_navigation,
-
-            }
-
-
-
-            //LoginAction(data);
-            SignupAction(data);
-            this.scrollListReftop.scrollToEnd({ animated: true });
-        }else{
-            if(street === '' && password1 ==='' && password2 ==='' && city === '' && country === ''){
-                this.setState({is_alert:true});
-                this.setState({alert_subtitle:'Veuillez remplir tous les champs.'});
-            }
-
-            if(street === '' && password1 !=='' && password2 !=='' && city !== '' && country !== ''){
-                this.setState({is_alert:true});
-                this.setState({alert_subtitle:'Veuillez saisir votre adresse'});
-            }else if(street !== '' && password1 ==='' && password2 ==='' && city === '' && country === ''){
-                this.setState({is_alert:true});
-                this.setState({alert_subtitle:'Veuillez choisir votre pays, votre ville et entrer votre mot de passe.'});
-            }else if(street !== '' && city !== '' && password1 ==='' && password2 ==='' && country === ''){
-                this.setState({is_alert:true});
-                this.setState({alert_subtitle:'Veuillez choisir votre pays et saisir votre mot de passe.'});
-            }else if(street !== '' && city !== '' && country !== '' && password1 ==='' && password2 ===''){
-                this.setState({is_alert:true});
-                this.setState({alert_subtitle:'Veuillez saisir votre mot de passe et le confirmer.'});    
-            }else if(street !== '' && city !== '' && country !== '' && password1 !=='' && password2 ===''){
-                this.setState({is_alert:true});
-                this.setState({alert_subtitle:'Veuillez confitmer votre mot de passe.'});
-                
-            }else if(street !== '' && city !== '' && country !== '' && password2 !=='' && password1 ===''){
-                this.setState({is_alert:true});
-                this.setState({alert_subtitle:'Veuillez entrer votre mot de passe.'});
-            }else if(street !== '' && city === '' && password1 ==='' && password2 ==='' && country !== ''){
-                this.setState({is_alert:true});
-                this.setState({alert_subtitle:'Veuillez choisir votre ville et saisir votre mot de passe.'});
-            }
-
-            if(country === '' && password1 !=='' && password2 !=='' && city !== '' && street !== ''){
-                this.setState({is_alert:true});
-                this.setState({alert_subtitle:'Veuillez choisir votre pays'})
-            }else if(country !== '' && password1 ==='' && password2 ==='' && city === '' && street === ''){
-                this.setState({is_alert:true});
-                this.setState({alert_subtitle:'Veuillez choisir votre ville, saisir votre adresse et votre mot de passe.'});
-            }else if(country !== '' && city !== '' && password1 ==='' && password2 ==='' && street === ''){
-                this.setState({is_alert:true});
-                this.setState({alert_subtitle:'Veuillez saisir votre adresse et votre mot de passe.'});
-            }else if(country !== '' && city !== '' && street !== '' && password1 ==='' && password2 ===''){
-                this.setState({is_alert:true});
-                this.setState({alert_subtitle:'Veuillez saisir votre mot de passe et le confirmer.'});
-            }else if(country !== '' && city !== '' && street !== '' && password1 !=='' && password2 ===''){
-                this.setState({is_alert:true});
-                this.setState({alert_subtitle:'Veuillez confimer votre mot de passe.'});
-            }else if(country !== '' && city !== '' && street !== '' && password2 !=='' && password1 ===''){
-                this.setState({is_alert:true});
-                this.setState({alert_subtitle:'Veuillez entrer votre mot de passe.'});
-            } 
-                
-            if(city === '' && password1 !=='' && password2 !=='' && country !== '' && street !== ''){
-                this.setState({is_alert:true});
-                this.setState({alert_subtitle:'Veuillez schoisir votre ville.'});
-            }else if(city !== '' && password1 ==='' && password2 ==='' && country === '' && street === ''){
-                this.setState({is_alert:true});
-                this.setState({alert_subtitle:'Veuillez choisir votre pays, saisir votre adresse et votre mot de passe.'});
-            }else if(city !== '' && country !== '' && password1 ==='' && password2 ==='' && street === ''){
-                this.setState({is_alert:true});
-                this.setState({alert_subtitle:'Veuillez saisir votre adresse et votre mot de passe.'});
-            }else if(city !== '' && country !== '' && street !== '' && password1 ==='' && password2 ===''){
-                this.setState({is_alert:true});
-                this.setState({alert_subtitle:'Veuillez saisir votre mot de passe et le confirmer.'});
-            }else if(city !== '' && country !== '' && street !== '' && password1 !=='' && password2 ===''){
-                this.setState({is_alert:true});
-                this.setState({alert_subtitle:'Veuillez confimer votre mot de passe.'});
-            }else if(city !== '' && country !== '' && street !== '' && password2 !=='' && password1 ===''){
-                this.setState({is_alert:true});
-                this.setState({alert_subtitle:'Veuillez entrer votre mot de passe.'});
+            const form1data = await AsyncStorage.getItem('DataForm1');
+            var username    = '';
+            var first_name  = '';
+            var last_name   = '';
+            var email       = '';
+            var phone       = '';
+            if(form1data !== null){
+                const unpackdata = JSON.parse(form1data);
+                if(unpackdata.username !== ''){
+                    username = unpackdata.username;
+                }
+                if(unpackdata.first_name !== ''){
+                    first_name = unpackdata.first_name;
+                }
+                if(unpackdata.last_name !== ''){
+                    last_name = unpackdata.last_name;
+                }
+                if(unpackdata.email !== ''){
+                    email = unpackdata.email;
+                }
+                if(unpackdata.phone !== ''){
+                    phone = unpackdata.phone;
+                }
             }   
-
-            if(password1 === '' && city !== '' && password2 !=='' && country !== '' && street !== ''){
-                this.setState({is_alert:true});
-                this.setState({alert_subtitle:'Veuillez saisir votre mot de passe.'});
-            }else if(password1 !== '' && country ==='' && city ==='' && street === '' && password2 === ''){
-                this.setState({is_alert:true});
-                this.setState({alert_subtitle:'Veuillez choisir votre pays, votre ville, saisir votre adresse et confirmer votre mot depasse.'});
-            }else if(password1 !== '' && country !== '' && city ==='' && street ==='' && password2 === ''){
-                this.setState({is_alert:true});
-                this.setState({alert_subtitle:'Veuillez choisir votre ville, votre adresse et confirmer votre mot de passe.'});
-            }else if(password1 !== '' && country !== '' && city !== '' && street ==='' && password2 ===''){
-                this.setState({is_alert:true});
-                this.setState({alert_subtitle:'Veuillez entrer votre adresse et confirmer votre mot de passe.'});
-            }else if(password1 !== '' && city !== '' && city !== '' && street !=='' && password2 ===''){
-                this.setState({is_alert:true});
-                this.setState({alert_subtitle:'Veuillez confimer votre mot de passe.'});
-            }
-            
-            if(password2 === ''  && city !== '' && password1 !=='' && country !== '' && street !== ''){
-                this.setState({is_alert:true});
-                this.setState({alert_subtitle:'Veuillez confirmer votre mot de passe.'});
-            }else if(password2 !== '' && city ==='' && password1 ==='' && country === '' && street === ''){
-                this.setState({is_alert:true});
-                this.setState({alert_subtitle:'Veuillez choisir votre pays, votre ville, entrer votre adresse et votre mot de passe.'});
-            }else if(password2 !== '' && country !== '' && city ==='' && password1 ==='' && street === ''){
-                this.setState({is_alert:true});
-                this.setState({alert_subtitle:'Veuillez choisir votre ville, votre adresse et entrer votre mot de passe.'});
-            }else if(password2 !== '' && country !== '' && street !== '' && city ==='' && password1 ===''){
-                this.setState({is_alert:true});
-                this.setState({alert_subtitle:'Veuillez choisir votre ville et entrer votre mot de passe.'});
-            }else if(password1 !== '' && city !== '' && city !== '' && street !=='' && password1 ===''){
-                this.setState({is_alert:true});
-                this.setState({alert_subtitle:'Veuillez entrer votre mot de passe.'});
-            }   
-
-            if(street !== '' && password1 !=='' && password2 !=='' && city !== '' && country !== '' && !this._passwordValidation()){
-                this.setState({is_alert:true});
-                this.setState({alert_subtitle:'Les mots de passe sont différents.'});
-            }
-
-            if(this._passwordValidation() && !this._acceptConditionValidation() && street !== '' && password1 !=='' && password2 !=='' && city !== '' && country !== ''){
-                this.setState({is_alert:true});
-                this.setState({alert_subtitle:'Veuillez lire et accepter les conditions d\'utilisation et la police de confidentialité.'});
-            }
-
+            const payload = JSON.stringify({
+                username    : username,
+                first_name  : first_name,
+                last_name   : last_name,
+                email       : email,
+                phone       : phone,
+                country     : country.id,
+                city        : city.id,
+                sexe        : gender.value,
+                referral    : '',
+                password1   : password1,
+                password2   : password2,
+            });
+            SignupAction(payload, navigation);
         }
-
-    }
-
-    _closeAlert = () => {
-        this.setState({
-            is_alert: false 
-        });
-        store.dispatch({ type: IS_AUTH_ERROR, value: false });
-        store.dispatch({ type: IS_LOADING, value: false });
+        if(country === ''){
+            Toast.show({
+                'type': 'error',
+                props: {
+                    title: 'Une erreur c\'est produite!',
+                    description: 'Veuillez renseigner votre pays.',
+                }
+            });
+        }
+        if(city === ''){
+            Toast.show({
+                'type': 'error',
+                props: {
+                    title: 'Une erreur c\'est produite!',
+                    description: 'Veuillez renseigner votre ville.',
+                }
+            });
+        }
+        if(gender === ''){
+            Toast.show({
+                'type': 'error',
+                props: {
+                    title: 'Une erreur c\'est produite!',
+                    description: 'Veuillez renseigner votre sexe.',
+                }
+            });
+        }
+        if(!this._passwordValidation()){
+            Toast.show({
+                'type': 'error',
+                props: {
+                    title: 'Une erreur c\'est produite!',
+                    description: 'Les mots de passe saisis ne sont pas pareils.',
+                }
+            });
+        }
+        if(!this._acceptConditionValidation()){
+            Toast.show({
+                'type': 'error',
+                props: {
+                    title: 'Une erreur c\'est produite!',
+                    description: 'Veuillez accepter les conditions d\'utilisations.',
+                }
+            });
+        }
     }
 
     _redirectPolicy = (url) => {
         Linking.openURL(url);
     }
 
+    _navigateToForm1 = () => {
+        const {navigation} = this.props;
+        navigation.navigate('SignUpForm1');
+    }
+
+    _navigateToActivationForm = () => {
+        const {navigation} = this.props;
+        navigation.navigate('Activation');
+    }
+
+    _toggleCountry = (item) => {
+        this.setState({country:item})
+        this.setState({cities:item.cities});
+    }
+
     render() {
-        const { is_loading } = this.props;
+        const { is_loading, site_infos } = this.props;
         const { 
             password1Visible, 
             password2Visible, 
             acceptCondition, 
-            confidFocus, 
-            street,
+            confidCountryFocus,
+            confidCityFocus,
+            confidGenderFocus, 
             country,
             gender,
             city,
-            is_alert, 
-            alert_title, 
-            alert_subtitle 
+            currentyear,
+            cities
         } = this.state;
         return (
-            <View style={[styles.card, loginstyle.containerSignup]}>
-                <ScrollView
-                    ref={(ref) => { this.scrollListReftop = ref }}>
-                    <ImageBackground
-                    source={require('../../assets/images/background.jpg')}
-                        style={[loginstyle.itemslidersignup]}
-                        >
-                        <View style={loginstyle.containersignup}>
-                            <Text style={[styles.textBold, loginstyle.titlesignup]}>Rejoignez-nous maintenant!</Text>
-
-
-                            <View style={loginstyle.selectcontainer}>
-                                {this._renderDropdownLabel}
-                                <Dropdown
-                                    style={[loginstyle.dropdown, confidFocus && { borderColor: 'blue' }]}
-                                    placeholderStyle={[loginstyle.placeholderStyle, styles.text]}
-                                    selectedTextStyle={[loginstyle.selectedTextStyle, styles.text]}
-                                    itemTextStyle={[loginstyle.itemTextStyle, styles.text]}
-                                    containerStyle={loginstyle.containeritemdrop}
-                                    iconStyle={loginstyle.iconStyle}
-                                    dropdownPosition='auto'
-                                    data={countryselection}
-                                    labelField="label"
-                                    valueField="value"
-                                    placeholder={!confidFocus ? 'Choisir votre Pays' : '...'}
-                                    value={country}
-                                    onFocus={() => this.setState({ confidFocus: true })}
-                                    onBlur={() => this.setState({ confidFocus: false })}
-                                    onChange={item => this.setState({ country: item })}
-                                    renderLeftIcon={() => (<Foundation name='map' style={loginstyle.dropdownicon} />)}
-                                />
+            <ImageBackground source={require('../../assets/images/background.jpg')}>  
+                <ScrollView ref={(ref) => {this.scrollListReftop = ref}}>
+                    <View style={[loginstyle.containersignup]}>
+                        <View style={loginstyle.signupheader}>
+                            <View style={loginstyle.containerlogo}>
+                                <TouchableOpacity onPress={this._navigateToForm1}
+                                    style={loginstyle.closeButton}>
+                                    <Image 
+                                        source={require('../../assets/images/back-w.png')} 
+                                        style={loginstyle.closeicon} 
+                                    />
+                                </TouchableOpacity>
+                                <View style={loginstyle.logoiconcont}>
+                                    <Image source={require('../../assets/images/t_cash.png')} style={loginstyle.logocomp} />
+                                </View>
                             </View>
+                            <Text style={[styles.text, loginstyle.text1]}>Créer un compte</Text>
+                        </View>
+                        
+                        <View style={loginstyle.containerform}>
+                            <Text style={[styles.text, loginstyle.label]}>Choisir votre Pays</Text>
+                            <Dropdown
+                                style={[loginstyle.inputform, confidCountryFocus && { borderColor: 'blue' }]}
+                                placeholderStyle={[loginstyle.placeholderStyle, styles.text]}
+                                selectedTextStyle={[loginstyle.selectedTextStyle, styles.text]}
+                                itemTextStyle={[loginstyle.itemTextStyle, styles.text]}
+                                containerStyle={loginstyle.containeritemdrop}
+                                iconStyle={loginstyle.iconStyle}
+                                dropdownPosition='auto'
+                                data={site_infos.countries}
+                                labelField="name"
+                                valueField="id"
+                                placeholder={!confidCountryFocus ? 'Choisir votre Pays' : '...'}
+                                value={country}
+                                onFocus={() => this.setState({ confidCountryFocus: true })}
+                                onBlur={() => this.setState({ confidCountryFocus: false })}
+                                onChange={item => this._toggleCountry(item)}
+                                renderLeftIcon={() => (<Foundation name='flag' style={loginstyle.dropdownicon} />)}
+                            />
 
-                            <View style={loginstyle.selectcontainer}>
-                                {this._renderDropdownLabel}
-                                <Dropdown
-                                    style={[loginstyle.dropdown, confidFocus && { borderColor: 'blue' }]}
-                                    placeholderStyle={[loginstyle.placeholderStyle, styles.text]}
-                                    selectedTextStyle={[loginstyle.selectedTextStyle, styles.text]}
-                                    itemTextStyle={[loginstyle.itemTextStyle, styles.text]}
-                                    containerStyle={loginstyle.containeritemdrop}
-                                    iconStyle={loginstyle.iconStyle}
-                                    dropdownPosition='auto'
-                                    data={cityselection}
-                                    labelField="label"
-                                    valueField="value"
-                                    placeholder={!confidFocus ? 'Choisir votre Ville' : '...'}
-                                    value={city}
-                                    onFocus={() => this.setState({ confidFocus: true })}
-                                    onBlur={() => this.setState({ confidFocus: false })}
-                                    onChange={item => this.setState({ city : item })}
-                                    renderLeftIcon={() => (<Foundation name='map' style={loginstyle.dropdownicon} />)}
-                                />
-                            </View>
+                            <Text style={[styles.text, loginstyle.label]}>Choisir votre Ville</Text>
+                            <Dropdown
+                                style={[loginstyle.inputform, confidCityFocus && { borderColor: 'blue' }]}
+                                placeholderStyle={[loginstyle.placeholderStyle, styles.text]}
+                                selectedTextStyle={[loginstyle.selectedTextStyle, styles.text]}
+                                itemTextStyle={[loginstyle.itemTextStyle, styles.text]}
+                                containerStyle={loginstyle.containeritemdrop}
+                                iconStyle={loginstyle.iconStyle}
+                                dropdownPosition='auto'
+                                data={cities}
+                                labelField="name"
+                                valueField="id"
+                                placeholder={!confidCityFocus ? 'Choisir votre Ville' : '...'}
+                                value={city}
+                                onFocus={() => this.setState({ confidCityFocus: true })}
+                                onBlur={() => this.setState({ confidCityFocus: false })}
+                                onChange={item => this.setState({ city : item })}
+                                renderLeftIcon={() => (<Foundation name='map' style={loginstyle.dropdownicon} />)}
+                            />
                             
 
-                            <View style={loginstyle.selectcontainer}>
-                                {this._renderDropdownLabel}
-                                <Dropdown
-                                    style={[loginstyle.dropdown, confidFocus && { borderColor: 'blue' }]}
-                                    placeholderStyle={[loginstyle.placeholderStyle, styles.text]}
-                                    selectedTextStyle={[loginstyle.selectedTextStyle, styles.text]}
-                                    itemTextStyle={[loginstyle.itemTextStyle, styles.text]}
-                                    containerStyle={loginstyle.containeritemdrop}
-                                    iconStyle={loginstyle.iconStyle}
-                                    dropdownPosition='auto'
-                                    data={datagender}
-                                    labelField="label"
-                                    valueField="value"
-                                    placeholder={!confidFocus ? 'Choisir votre sexe...' : '...'}
-                                    value={gender}
-                                    onFocus={() => this.setState({ confidFocus: true })}
-                                    onBlur={() => this.setState({ confidFocus: false })}
-                                    onChange={item => this.setState({ gender: item })}
-                                    renderLeftIcon={() => (<Foundation name='male-female' style={loginstyle.dropdownicon} />)}
-                                />
-                            </View>
+                            <Text style={[styles.text, loginstyle.label]}>Selectionner votre sexe</Text>
+                            <Dropdown
+                                style={[loginstyle.inputform, confidGenderFocus && { borderColor: 'blue' }]}
+                                placeholderStyle={[loginstyle.placeholderStyle, styles.text]}
+                                selectedTextStyle={[loginstyle.selectedTextStyle, styles.text]}
+                                itemTextStyle={[loginstyle.itemTextStyle, styles.text]}
+                                containerStyle={loginstyle.containeritemdrop}
+                                iconStyle={loginstyle.iconStyle}
+                                dropdownPosition='auto'
+                                data={datagender}
+                                labelField="label"
+                                valueField="value"
+                                placeholder={!confidGenderFocus ? 'Choisir votre sexe...' : '...'}
+                                value={gender}
+                                onFocus={() => this.setState({ confidGenderFocus: true })}
+                                onBlur={() => this.setState({ confidGenderFocus: false })}
+                                onChange={item => this.setState({ gender: item })}
+                                renderLeftIcon={() => (<Foundation name='male-female' style={loginstyle.dropdownicon} />)}
+                            />
 
-                            <View style={loginstyle.blocinupt2}>
+                            <Text style={[styles.text, loginstyle.label]}>Saisir votre mot de passe</Text>
+                            <View style={loginstyle.passwordinput}>
                                 <TextInput
-                                    style={[loginstyle.inputtextsignup1, styles.text]}
+                                    style={[loginstyle.inputform, loginstyle.inputformpass, styles.text]}
                                     placeholderTextColor='#b1b1b1'
                                     placeholder='Mot de passe'
-                                    secureTextEntry={!password2Visible}
+                                    secureTextEntry={password1Visible}
                                     onChangeText={(val) => {this.setState({password1:val})}}
                                     editable={is_loading ? false : true}
                                 />
-                                <View style={loginstyle.blockhidepass}>
-                                    <TouchableOpacity 
+                                <TouchableOpacity 
                                         disabled={is_loading ? true : false}
-                                        onPress={this._togglePass2Visible}>
-                                        <Entypo 
-                                            name={password2Visible ? 'eye-with-line' : 'eye'} 
-                                            style={loginstyle.iconhidepasssiginup}/>
-                                    </TouchableOpacity>
-                                </View>
+                                        onPress={this._togglePass1Visible}
+                                        style={loginstyle.passwordhidebtn}
+                                    >
+                                    <Entypo 
+                                        name={password1Visible ? 'eye-with-line' : 'eye'} 
+                                        style={loginstyle.iconhidepasssiginup}/>
+                                </TouchableOpacity>
                             </View>
 
-                            <View style={loginstyle.blocinupt2}>
+                            <Text style={[styles.text, loginstyle.label]}>Confirmer votre mot de passe</Text>
+                            <View style={loginstyle.passwordinput}>
                                 <TextInput
-                                    style={[loginstyle.inputtextsignup1, styles.text]}
+                                    style={[loginstyle.inputform, loginstyle.inputformpass, styles.text]}
                                     placeholderTextColor='#b1b1b1'
                                     placeholder='Confirmez Mot de passe'
                                     secureTextEntry={!password2Visible}
                                     onChangeText={(val) => {this.setState({password2:val})}}
                                     editable={is_loading ? false : true}
                                 />
-                                <View style={loginstyle.blockhidepass}>
-                                    <TouchableOpacity 
+                                <TouchableOpacity 
                                         disabled={is_loading ? true : false}
-                                        onPress={this._togglePass2Visible}>
-                                        <Entypo 
-                                            name={password2Visible ? 'eye-with-line' : 'eye'} 
-                                            style={loginstyle.iconhidepasssiginup}/>
-                                    </TouchableOpacity>
-                                </View>
+                                        onPress={this._togglePass2Visible}
+                                        style={loginstyle.passwordhidebtn}
+                                    >
+                                    <Entypo 
+                                        name={password2Visible ? 'eye-with-line' : 'eye'} 
+                                        style={loginstyle.iconhidepasssiginup}/>
+                                </TouchableOpacity>
                             </View>
 
                             <View style={loginstyle.containercondition}>
@@ -494,61 +402,44 @@ class signupForm2 extends PureComponent {
                                     onPress={this._onChangeAcceptCondition}>
                                     {
                                         acceptCondition ?
-                                            <FontAwesome name='check' style={loginstyle.checkicon} />
+                                                <FontAwesome name='check' style={loginstyle.checkicon} />
                                             :
-                                            <Text></Text>
+                                                <Text></Text>
                                     }
                                 </TouchableOpacity>
                                 <Text style={[styles.text, loginstyle.conditiontext]}>
-                                    En créant votre compte, vous acceptez les
-                                    <TouchableOpacity onPress={this._redirectPolicy.bind(this, 'https://japapmessenger.com/terms/terms')}>
+                                    J'accepte les
+                                    <TouchableOpacity onPress={this._redirectPolicy.bind(this, 'https://t-cash.ca/terms')}>
                                         <Text style={[styles.text, loginstyle.conditionlink]}> conditions </Text>
                                     </TouchableOpacity>
                                     d'utilisations et de
-                                    <TouchableOpacity onPress={this._redirectPolicy.bind(this, 'https://japapmessenger.com/terms/privacy-policy')}>
+                                    <TouchableOpacity onPress={this._redirectPolicy.bind(this, 'https://t-cash.ca/privacy-policy')}>
                                         <Text style={[styles.text, loginstyle.conditionlink]}> confidentialités </Text>
                                     </TouchableOpacity>
                                 </Text>
                             </View>
 
-                            <View style={loginstyle.footersignup}>
-                                <TouchableOpacity
-                                    disabled={is_loading ? true : false}
-                                    style={loginstyle.btnsignup}
-                                    onPress={this._authSignup}>
-                                    {
-                                        is_loading ?
-                                            <View style={loginstyle.loaderbtn}>
-                                                <ActivityIndicator size="small" color="#fff" />
-                                            </View>
-                                            :
-                                            <Text style={[styles.textBold, loginstyle.textbtnsubmit]}>Créer maintenant</Text>
-                                    }
-                                </TouchableOpacity>
-                            </View>
-
+                            <TouchableOpacity onPress={this._authSignup}
+                                style={loginstyle.submitButton}
+                                disabled={is_loading ? true : false}
+                            >
+                                {
+                                    is_loading ?
+                                        <ActivityIndicator size="small" color="#fff" />
+                                    :
+                                        <Text style={[styles.textBold, loginstyle.submitBtnText]}>Continuer</Text>
+                                }
+                            </TouchableOpacity> 
                         </View>
-                    </ImageBackground>
+                    </View>
                 </ScrollView>
-
-                {/* Manage Error Alert */}
-                <AwesomeAlert
-                    show={is_alert}
-                    title={alert_title}
-                    titleStyle={[styles.textBold, styles.titlealert]}
-                    message={alert_subtitle}
-                    messageStyle={[styles.text, styles.descriptionalert]}
-                    closeOnTouchOutside={true}
-                    closeOnHardwareBackPress={false}
-                    showCancelButton={false}
-                    showConfirmButton={true}
-                    confirmText="Corriger"
-                    confirmButtonStyle={[styles.text, styles.btnalert]}
-                    confirmButtonColor="#060064"
-                    onConfirmPressed={this._closeAlert}
-                   
-                />
-            </View>
+                <View style={loginstyle.copyrihtcontainer}>
+                    <Text style={[loginstyle.copyrtext, styles.textBold]}>© {currentyear.getFullYear()} Tous droits reservés à T-Cash.</Text>
+                    <TouchableOpacity style={loginstyle.partdevbtn}>
+                        <Text style={styles.text}>Dévelopé par Poly-H Technology</Text>
+                    </TouchableOpacity>
+                </View>
+            </ImageBackground>
         )
     }
 
@@ -563,8 +454,9 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
     return {
-        is_loading: state.loader.is_loading,
-        root_navigation: state.navigation.root_navigation
+        site_infos      : state.auth.site_infos,
+        is_loading      : state.loader.is_loading,
+        root_navigation : state.navigation.root_navigation
     }
 }
 

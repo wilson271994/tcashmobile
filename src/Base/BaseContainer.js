@@ -24,7 +24,7 @@ class BaseContainer extends Component {
             is_transaction_page,
             is_profil_page,
             is_authenticated, 
-            user_infos,
+            user_infos, 
         } = this.props;
         return (
             <View style={styles.main}>

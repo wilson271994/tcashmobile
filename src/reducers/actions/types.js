@@ -44,6 +44,11 @@ export const SET_PROFIL_PAGE            = 'SET_PROFIL_PAGE';
 //LIST ACTION
 export const LAST_TRANSACTION           = 'LAST_TRANSACTION';
 export const USER_LIST                  = 'USER_LIST';
+export const TRANSACTION_LIST           = 'TRANSACTION_LIST';
+export const SERVICE_LIST               = 'SERVICE_LIST';
+
+//DETAIL ACTION
+export const TRANSACTION_DETAIL         = 'TRANSACTION_DETAIL';
 
 //TRANSACTION
 export const TRANSACTION_FEES           = 'TRANSACTION_FEES';

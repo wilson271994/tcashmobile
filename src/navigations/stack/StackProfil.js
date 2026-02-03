@@ -16,6 +16,7 @@ import Support from '../../components/Profile/Support'
 import SupportChat from "../../components/Profile/SupportChat";
 import FaqIndex from "../../components/Profile/FaqIndex";
 import HelpIndex from "../../components/Profile/HelpIndex";
+import UpdateProfil from "../../components/Profile/UpdateProfil";
 
 const Stack = createStackNavigator();
 
@@ -49,59 +50,27 @@ class StackProfil extends Component {
                     }}
                 />
 
-
+                <Stack.Screen 
+                    name="UpdateProfil" 
+                    component={UpdateProfil} 
+                    options={{
+                        headerShown:false,
+                    }}
+                />
 
                 <Stack.Screen 
                     name="FaqIndex" 
                     component={FaqIndex} 
                     options={{
-                        headerShown:true,
-                        headerTitle : () => {
-                            return (
-                                <View style={styles.backText}>
-                                    <Text 
-                                        numberOfLines={1}
-                                        style={[styles.textBold, styles.textHeader]}></Text>
-                                </View>
-                            )
-                        },
-                        headerLeft: () => {
-                            return (
-                                <TouchableOpacity 
-                                    style={styles.btnbackscreen}
-                                    onPress={this._backProfil}>
-                                    <Image style={styles.backbtn} source={require('../../assets/images/back.png')} />
-                                </TouchableOpacity>
-                            )
-                        },
+                        headerShown:false,
                     }}
                 />
-
-
 
                 <Stack.Screen 
                     name="HelpIndex" 
                     component={HelpIndex} 
                     options={{
-                        headerShown:true,
-                        headerTitle : () => {
-                            return (
-                                <View style={styles.backText}>
-                                    <Text 
-                                        numberOfLines={1}
-                                        style={[styles.textBold, styles.textHeader]}>Aide</Text>
-                                </View>
-                            )
-                        },
-                        headerLeft: () => {
-                            return (
-                                <TouchableOpacity 
-                                    style={styles.btnbackscreen}
-                                    onPress={this._backProfil}>
-                                    <Image style={styles.backbtn} source={require('../../assets/images/back.png')} />
-                                </TouchableOpacity>
-                            )
-                        },
+                        headerShown:false,
                     }}
                 />
 
@@ -109,53 +78,15 @@ class StackProfil extends Component {
                     name="Support" 
                     component={Support} 
                     options={{
-                        headerShown:true,
-                        headerTitle : () => {
-                            return (
-                                <View style={styles.backText}>
-                                    <Text 
-                                        numberOfLines={1}
-                                        style={[styles.textBold, styles.textHeader]}></Text>
-                                </View>
-                            )
-                        },
-                        headerLeft: () => {
-                            return (
-                                <TouchableOpacity 
-                                    style={styles.btnbackscreen}
-                                    onPress={this._backProfil}>
-                                    <Image style={styles.backbtn} source={require('../../assets/images/back.png')} />
-                                </TouchableOpacity>
-                            )
-                        },
+                        headerShown:false,
                     }}
                 />
-
-
 
                 <Stack.Screen 
                     name="SupportChat" 
                     component={SupportChat} 
                     options={{
-                        headerShown:true,
-                        headerTitle : () => {
-                            return (
-                                <View style={styles.backText}>
-                                    <Text 
-                                        numberOfLines={1}
-                                        style={[styles.textBold, styles.textHeader]}></Text>
-                                </View>
-                            )
-                        },
-                        headerLeft: () => {
-                            return (
-                                <TouchableOpacity 
-                                    style={styles.btnbackscreen}
-                                    onPress={this._backProfil}>
-                                    <Image style={styles.backbtn} source={require('../../assets/images/back.png')} />
-                                </TouchableOpacity>
-                            )
-                        },
+                        headerShown:false,
                     }}
                 />
             </Stack.Navigator>

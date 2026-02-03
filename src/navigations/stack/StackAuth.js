@@ -5,14 +5,11 @@ import {connect} from 'react-redux';
 import { createStackNavigator } from "@react-navigation/stack";
 import {Image, Text, TouchableOpacity} from "react-native";
 import { switchHeaderAction, switchPostFormAction } from "../../reducers/actions";
-import { loginstyle } from "../../assets/styles/login";
-import { styles } from "../../assets/styles";
-import AntDesign  from 'react-native-vector-icons/AntDesign';
 import Preload from "../../components/Auth/Preload";
-import activationPage from "../../components/Auth/activationPage";
-import LoginPage from "../../components/Auth/loginPage";
+import LoginPage from "../../components/Auth/loginForm";
 import signupForm1 from "../../components/Auth/signupForm1";
 import signupForm2 from "../../components/Auth/signupForm2";
+import activationForm from "../../components/Auth/activationForm";
 const Stack = createStackNavigator();
 
 class StackAuth extends Component {
@@ -55,9 +52,6 @@ class StackAuth extends Component {
                     component={LoginPage}           
                     options={{
                         headerShown:false, 
-                        headerTitle: props => <Image style={loginstyle.logoauth} source={require('../../assets/images/logo.png')}/>,
-                        headerTitleAlign:'center',
-                        headerStyle : loginstyle.headertitlestyle
                     }}
                 />
 
@@ -66,23 +60,6 @@ class StackAuth extends Component {
                     component={signupForm1} 
                     options={{
                         headerShown:false, 
-                        headerTitle : () => {
-                            return (
-                                <Text 
-                                numberOfLines={1}
-                                style={[styles.textBold, loginstyle.titlepagesignup]}>{page_title}</Text>
-                            )
-                        },
-                        headerLeft: () => {
-                            return (
-                                <TouchableOpacity 
-                                    style={styles.btnbackscreen}
-                                    onPress={this._backHome}>
-                                    <Image style={loginstyle.backstyle} source={require('../../assets/images/back.png')} />
-                                </TouchableOpacity>
-                            )
-                        },
-                        
                     }}
                 />
 
@@ -91,24 +68,16 @@ class StackAuth extends Component {
                     component={signupForm2}
                     options={{
                         headerShown: false,
-                        headerTitle: () => {
-                            return (
-                                <Text
-                                numberOfLines={1}
-                                style={[styles.textBold, loginstyle.titlepagesignup]}>{page_title}</Text>
-                            )
-                        },
-                        headerLeft: () => {
-                            return (
-                                <TouchableOpacity
-                                    onPress={this. _backProfil}
-                                    style={styles.btnbackscreen}>
-                                    <Image style={loginstyle.backstyle} source={require('../../assets/images/back.png')} />
-                                </TouchableOpacity>
-                            )
-                        },
                     }}
 
+                />
+
+                <Stack.Screen 
+                    name="Activation"  
+                    component={activationForm} 
+                    options={{
+                        headerShown:false, 
+                    }}
                 />
 
                 <Stack.Screen
@@ -116,49 +85,8 @@ class StackAuth extends Component {
                     component={Preload}
                     options={{
                         headerShown: false,
-                        headerTitle: () => {
-                            return (
-                                <Text
-                                numberOfLines={1}
-                                style={[styles.textBold, loginstyle.titlepagesignup]}>{page_title}</Text>
-                            )
-                        },
-                        headerLeft: () => {
-                            return (
-                                <TouchableOpacity
-                                    onPress={this. _backProfil}
-                                    style={styles.btnbackscreen}>
-                                    <Image style={loginstyle.backstyle} source={require('../../assets/images/back.png')} />
-                                </TouchableOpacity>
-                            )
-                        },
                     }}
 
-                />
-
-
-                <Stack.Screen 
-                    name="Activation"  
-                    component={activationPage} 
-                    options={{
-                        headerShown:false, 
-                        headerTitle : () => {
-                            return (
-                                <Text 
-                                    numberOfLines={1}
-                                    style={[styles.textBold, loginstyle.titlesignup]}>{page_title}</Text>
-                            )
-                        },
-                        headerLeft: () => {
-                            return (
-                                <TouchableOpacity 
-                                    style={styles.btnbackscreen}
-                                    onPress={this._backHome}>
-                                    <AntDesign name="left" style={styles.angleleft}/>
-                                </TouchableOpacity>
-                            )
-                        },
-                    }}
                 />
 
             </Stack.Navigator>

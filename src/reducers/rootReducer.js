@@ -5,14 +5,16 @@ import loadingReducer from "./loadingReducer.js";
 import alertReducer from "./alertReducer.js";
 import listReducer from "./listReducer.js";
 import transReducer from "./transReducer.js";
+import detailReducer from "./detailReducer.js";
 
 export const rootReducer = combineReducers(
-  {
-    loader      : loadingReducer,
-    auth        : authReducer, 
-    navigation  : navigationReducer,
-    alert       : alertReducer,
-    list        : listReducer,
-    trans       : transReducer
-  }
+    {
+        loader      : loadingReducer,
+        auth        : authReducer, 
+        navigation  : navigationReducer,
+        alert       : alertReducer,
+        list        : listReducer,
+        detail      : detailReducer,
+        trans       : transReducer
+    }
 )

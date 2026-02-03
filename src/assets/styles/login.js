@@ -39,22 +39,6 @@ export const loginstyle = StyleSheet.create({
         borderBottomLeftRadius: 15,
         borderBottomRightRadius: 15,
     },
-    itemslider: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'space-around',
-        paddingBottom: 150,
-        width: '100%',
-        height: height,
-
-    },
-    itemslidersignup: {
-        flex: 1,
-        alignItems: 'center',
-        backgroundColor: '#fff',
-        justifyContent: 'space-around',
-        paddingBottom: 150,
-    },
     container: {
         flex: 1,
         backgroundColor: '#fff',
@@ -133,9 +117,6 @@ export const loginstyle = StyleSheet.create({
     loginformtitle: {
         color: '#000',
         fontSize: 22
-    },
-    containerSignup: {
-        flex: 1,
     },
 
     preloadBackgound: {
@@ -280,40 +261,10 @@ export const loginstyle = StyleSheet.create({
         textAlign: 'center',
         fontSize: 17
     },
-    loginbox: {
-        width: '85%',
-        padding: 20,
-        borderRadius: 20,
-
-    },
     View:{
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'center',
-    },
-    inputtextlogin: {
-        fontSize: 16,
-        borderWidth: 3,
-        borderColor: '#3e8f81ff',
-        color: '#000000ff',
-        backgroundColor: '#fff',
-        paddingBottom: 8,
-        width: '115%',
-        right: 20,
-        borderRadius: 10,
-        paddingLeft: 10
-    },
-    inputtextsignup: {
-        backgroundColor: '#fff',
-        fontSize: 16,
-        borderWidth: 3,
-        borderColor: '#3e8f81ff',
-        color: '#fff',
-        paddingTop: 5,
-        color: '#000',
-        width: '100%',
-        borderRadius: 10,
-        paddingLeft: 10
     },
     inputdatesignup: {
         backgroundColor: '#fff',
@@ -384,10 +335,6 @@ export const loginstyle = StyleSheet.create({
         color: '#6cdabb',
         fontSize: 15
     },
-    signupfooter: {
-        position: 'absolute',
-        right: 5
-    },
     signupfootertext: {
         color: '#000',
         fontSize: 15,
@@ -397,23 +344,6 @@ export const loginstyle = StyleSheet.create({
         position: 'absolute',
         top: 50,
         right: 20
-    },
-    iconhidepasssiginup: {
-        color: '#b1b1b1',
-        fontSize: 25,
-        marginTop: -35,
-        right: 10
-    },
-    iconmenup: {
-        width: 80,
-        height: 80,
-        top: 30
-    },
-    iconmenup1: {
-        width: 70,
-        height: 70,
-        top: 1,
-        left: 70
     },
     iconlow: {
         width: 30,
@@ -427,8 +357,7 @@ export const loginstyle = StyleSheet.create({
         left: 155,
         top: -6
     },
-    text:
-    {
+    text:{
         color: 'white',
         fontSize: 30,
         fontWeight: 'bold',
@@ -442,11 +371,9 @@ export const loginstyle = StyleSheet.create({
         top: 5,
         left: 5
     },
-    text2:
-    {
+    text2:{
         color: 'white',
         fontSize: 18,
-        top: 15
     },
     text3:
     {
@@ -505,28 +432,152 @@ export const loginstyle = StyleSheet.create({
         color: '#fff',
     },
 
-    //signup
+    //################################### Login style ////////////////////////
+    containerlogin: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        paddingBottom: 150,
+        width: '100%',
+        height: height,
+
+    },
+    loginheader:{
+        marginTop:50,
+        alignItems:'center'
+    },
+    iconlogologin: {
+        width: 80,
+        height: 80,
+    },
+    logintitle:{
+        fontSize:25,
+        marginTop:10,
+        color:'#fff'
+    },
+    loginsubtitle:{
+        fontSize:20,
+        marginTop:10,
+        color:'#fff'
+    },
+    loginbox: {
+        width: '90%',
+        padding: 20,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 5,
+            height: 5
+        },
+        shadowOpacity: 0.6,
+        backgroundColor:"#fff",
+        elevation: 2,
+        borderRadius:10,
+        marginTop:-50
+    },
+    blocinupt: {
+        marginBottom:20
+    },
+    inputlogin: {
+        fontSize: 16,
+        borderWidth: 1,
+        borderColor: '#eee',
+        color: '#000000ff',
+        backgroundColor: '#fff',
+        paddingBottom: 8,
+        borderRadius: 10,
+        paddingLeft: 10
+    },
+    inputloginlabel:{
+        marginBottom:10,
+        fontSize:17
+    },
+    signupbtn: {
+        position: 'absolute',
+        right: 5
+    },
+    signupbtntext:{
+        color:'#6DCABB',
+        fontSize:15
+    },
+
+    //####################################signup /////////////////////////////
     containersignup: {
-        marginTop: 20,
-        width: '90%'
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'space-around',
+        paddingBottom: 150,
+        width: '100%',
+        height: height,
+    },
+    containerlogo:{
+        flexDirection:'row',
+        width:'100%'
+    },
+    closeButton:{
+        width:'10%',
+        marginTop:20
+    },
+    closeicon:{
+        width:30,
+        height:30
+    },
+    logoiconcont:{
+        width:'80%',
+        alignItems:'center',
+    },
+    logocomp: {
+        width: 70,
+        height: 70,
+        marginRight:25
+    },
+    signupheader:{
+        marginTop:20,
+        alignItems:'center'
+    },
+    containerform:{
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 5,
+            height: 5
+        },
+        shadowOpacity: 0.6,
+        backgroundColor:"#fff",
+        elevation: 2,
+        borderRadius:8,
+        padding:15,
+        marginTop:50,
+        width:'90%',
+    },
+    inputform:{
+        borderWidth:1,
+        borderColor:'#eee',
+        height:50,
+        paddingRight:10,
+        paddingLeft:10
+    },
+    label:{
+        fontSize:15,
+        color:'#666',
+        marginBottom:10,
+        marginTop:10
     },
     containercondition: {
         flexDirection: 'row',
         padding: 10,
-        marginTop: 10
     },
     checkbtn: {
         borderColor: '#3e8f81ff',
         borderWidth: 2,
-        width: 25,
-        height: 25,
+        width: 20,
+        height: 20,
         marginTop: 10,
         padding: 2
     },
     conditiontext: {
         color: '#000',
         fontSize: 16,
-        marginLeft: 10
+        marginLeft: 10,
+        width:'90%'
     },
     conditioncontainer: {
         flexDirection: "row",
@@ -538,22 +589,95 @@ export const loginstyle = StyleSheet.create({
     },
     checkicon: {
         color: 'orange',
-        fontSize: 16,
-        marginRight: 5,
+        fontSize: 12,
     },
-    selectcontainer: {
-        marginTop: 15,
+    submitButton:{
+        backgroundColor:'#6DCABB',
+        padding:10,
+        borderRadius:5,
+        marginTop:10
     },
-    dropdown: {
-        borderColor: '#3e8f81ff',
-        backgroundColor: '#fff',
-        borderWidth: 3,
-        borderRadius: 10,
-        paddingHorizontal: 8,
-        height: 50,
-        width: '100%'
+    submitBtnText:{
+        color:'#fff',
+        textAlign:'center',
+        fontSize:15
     },
-    iconStyle: {
+    passwordinput:{
+        flexDirection:'row',
+        alignItems:'center'
+    },
+    inputformpass:{
+        width:'83%' 
+    },
+    passwordhidebtn:{
+        width:'15%',
+        backgroundColor:'#eee',
+        padding:13,
+        marginLeft:5,
+        borderRadius:10
+    },
+    iconhidepasssiginup: {
+        color: '#b1b1b1',
+        fontSize: 20,
+    },
+
+    //#############################Activation Form #######################
+    containeractivationform:{
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 5,
+            height: 5
+        },
+        shadowOpacity: 0.6,
+        backgroundColor:"#fff",
+        elevation: 2,
+        borderRadius:8,
+        padding:15,
+        width:'90%',
+    },
+    logoiconcontactivation:{
+        width:'100%',
+        alignItems:'center',
+        marginLeft:30
+    },
+    activationheader:{
+        marginTop:50,
+        alignItems:'center',
+    },
+    activationsubtitle:{
+        fontSize:16,
+        marginTop:10,
+        color:'#666',
+        marginBottom:20,
+        lineHeight:22
+    },
+    resentcodecont:{
+        marginTop:20,
+        alignItems:'center'
+    },
+    resendLink:{
+        marginTop:10
+    },
+    resendText:{
+        color:'#6DCABB',
+    },
+
+
+    //##########################Copyrigth
+    copyrihtcontainer:{
+        position:'absolute',
+        padding:10,
+        bottom:50,
+        width:'100%',
+        alignItems:'center'
+    },
+    copyrtext:{
+        fontSize:15
+    },
+    partdevbtn:{
+        marginTop:5
+    },
+        iconStyle: {
         width: 20,
         height: 20,
     },
@@ -572,8 +696,6 @@ export const loginstyle = StyleSheet.create({
         fontSize: 16,
         color: '#b1b1b1',
         textAlign: 'center',
-
-
     },
     dropdownicon: {
         marginLeft: 8,
@@ -585,261 +707,4 @@ export const loginstyle = StyleSheet.create({
         borderColor: '#fff',
         borderRadius: 10,
     },
-    btnnext: {
-        backgroundColor: '#3e8f81ff',
-        borderColor: '#3e8f81ff',
-        borderWidth: 4,
-        paddingTop: 10,
-        paddingBottom: 10,
-        marginLeft: 20,
-        marginRight: 20,
-        borderRadius: 20,
-        width: '120%',
-        right: 45,
-        top: 50
-    },
-    btnsignup: {
-        backgroundColor: '#3e8f81ff',
-        borderColor: '#3e8f81ff',
-        borderWidth: 4,
-        paddingTop: 5,
-        borderRadius: 10,
-        textAlign: 'center',
-        height: 45,
-        marginTop: 15
-    },
-    code: {
-        height: 80,
-        width: 80,
-        top: 80,
-        left: 100,
-    },
-
-    //preload 
-    btnspreload: {
-        borderRadius: 10,
-        backgroundColor: '#6dcabb',
-        borderColor: '#6dcabb',
-        borderWidth: 1,
-        position: 'relative',
-        top: 160,
-        zIndex: 9999,
-        height: 45,
-        paddingTop: 8,
-        width: '90%',
-        marginLeft: 20
-    },
-    preloadlogo: {
-        alignItems: 'center',
-    },
-    preloadheaderlogo: {
-        height: 200,
-        width: 200,
-    },
-    preloadheaderimage: {
-        height: 300,
-        width: 300,
-        borderRadius: 30,
-        resizeMode: 'contain',
-        position: 'relative',
-        top: 110,
-        zIndex: 9999,
-        paddingRight: 15,
-        paddingLeft: 15,
-        paddingBottom: 5,
-    },
-    textpreload: {
-        fontSize: 15,
-        top: 60,
-        color: '#000',
-        textAlign: 'center',
-        paddingTop: 5,
-    },
-    textpreloadtitle: {
-        fontSize: 20,
-        top: 12,
-        color: '#000',
-        textAlign: 'center',
-        paddingTop: 5,
-    },
-    preloadimage: {
-        alignItems: 'center',
-    },
-    iconpreload: {
-        fontSize: 20,
-        marginLeft: 5
-    },
-
-    image: {
-        height: 90,
-        width: 90,
-        transform: [{ translateY: 50 }],
-        left: 80
-    },
-    image1: {
-        height: 70,
-        width: 70,
-        top: 12,
-        left: 120
-
-    },
-    image2: {
-        height: 70,
-        width: 70,
-        top: 12,
-        left: 155
-    },
-    footersignup: {
-        justifyContent: 'center',
-        marginTop: 20,
-        marginBottom: 50
-    },
-    containerpreload: {
-        flex: 1,
-        backgroundColor: '#fff',
-    },
-
-    titlepagesignup: {
-        fontSize: 20,
-        color: '#000',
-        marginLeft: 50,
-    },
-    blocinupt: {
-        marginBottom:20
-    },
-    blocinupt2: {
-        marginTop: 20,
-    },
-    copyriht: {
-        width: 20,
-        height: 20
-    },
-    iconhidepass: {
-        top: -35,
-        left: 20,
-        fontSize: 30
-    },
-
-    //secondeform
-    containersecondform: {
-        flex: 1,
-        padding: 20,
-        backgroundColor: '#fff',
-    },
-    label: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        marginVertical: 5,
-    },
-    input: {
-        borderWidth: 1,
-        borderColor: '#ccc',
-        padding: 10,
-        borderRadius: 5,
-        marginBottom: 10,
-    },
-    picker: {
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 5,
-        marginBottom: 10,
-    },
-    datePicker: {
-        width: '100%',
-        marginBottom: 10,
-    },
-
-    backstyle: {
-        width: 40,
-        height: 40
-    },
-    backstyle1: {
-        width: 40,
-        height: 40,
-        position: 'absolute',
-        top: 20,
-        left: 10
-    },
-
-    //activation
-    safeArea: {
-
-    },
-    container1: {
-        paddingHorizontal: 30,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: 300,
-        transform: [{ translateY: 70 }],
-    },
-    titleText: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: '#e63946',
-        marginBottom: 10,
-    },
-    background: {
-
-    },
-    instructionText: {
-        fontSize: 16,
-        color: '#000',
-        textAlign: 'center',
-        marginBottom: 30,
-        lineHeight: 24,
-    },
-    inputContainer: {
-        width: '100%',
-        marginBottom: 20,
-    },
-    input: {
-        backgroundColor: '#fff',
-        borderRadius: 10,
-        paddingHorizontal: 20,
-        paddingVertical: 15,
-        fontSize: 16,
-        borderWidth: 1,
-        borderColor: '#ccc',
-        color: '#333',
-    },
-    confirmButton: {
-        backgroundColor: '#6dcabb',
-        width: '100%',
-        paddingVertical: 15,
-        borderRadius: 10,
-        alignItems: 'center',
-        marginBottom: 20,
-    },
-    confirmButtonText: {
-        color: '#fff',
-        fontSize: 18,
-        fontWeight: 'bold',
-    },
-    resendLink: {
-        marginBottom: 20,
-    },
-    resendText: {
-        color: 'orange',
-        fontSize: 14,
-        textAlign: 'center',
-    },
-    sendText: {
-        color: '#000000ff',
-        fontSize: 14,
-        textAlign: 'center',
-    },
-
-    //update
-    entetelogin:{
-        marginLeft:-10,
-        marginBottom:10,
-        fontSize:17
-    },
-    containerfooter:{
-        
-    },
-    builderlink:{
-        width:'100%',
-        marginTop:10,
-    }
 });

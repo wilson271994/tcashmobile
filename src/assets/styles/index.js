@@ -42,31 +42,11 @@ export const styles = StyleSheet.create({
         resizeMode: 'contain',
         tintColor: 'white'
     },
-    cartButton: {
-        position: 'relative',
-    },
-    cartIcon: {
-        fontSize: 24,
-        color: '#6aa7d7',
-    },
-    cartBadge: {
-        position: 'absolute',
-        top: -5,
-        right: -5,
-        backgroundColor: '#FF4444',
-        borderRadius: 10,
-        minWidth: 20,
-        height: 20,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    cartBadgeText: {
-        color: '#fff',
-        fontSize: 12,
-        fontWeight: 'bold',
-    },
-    container: {
-        backgroundColor: '#F5F5F5',
+
+
+    //##############################Manage alert component#####################
+    btnalert:{
+        backgroundColor:'#6DCABB'
     },
 
     //NAVIGATION 
@@ -120,9 +100,9 @@ export const styles = StyleSheet.create({
 
     //global backgroung
     backgroundapp:{
-        resizeMode: 'cover',
-        justifyContent: 'center',
-        height:800,
+        flex: 1,
+        width:width,
+        height:height,
     },
 
     // debut
@@ -145,9 +125,11 @@ export const styles = StyleSheet.create({
     },
     textItalic:{
         fontFamily:'UbuntuItalic-Bpm8',
+        fontStyle:'italic'
     }, 
     textItalicBold:{
-        fontFamily:'UbuntuBoldItalic-Rg86',
+        fontFamily:'UbuntuBold-1YyB',
+        fontStyle:'italic'
     },
     toasttitle1:{
         fontSize:25

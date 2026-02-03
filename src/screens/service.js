@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
 import { SafeAreaView, Platform, Text } from 'react-native';
 import { styles } from '../assets/styles/index.js';
-import {switchHeaderAction} from '../reducers/actions/index.js';
+import {ServiceListAction} from '../reducers/actions/index.js';
 import ServiceIndex from '../components/Service/ServiceIndex.js';
 
 class Service extends PureComponent {
@@ -13,19 +13,20 @@ class Service extends PureComponent {
     };
 
     componentDidMount(){
-        this._fechtData(); 
+        this._fechtData();  
     } 
 
     _fechtData = async () => {
-        await switchHeaderAction(true);  
-    } 
+        const {user_token} = this.props; 
+        ServiceListAction(user_token);
+    }  
  
     render(){
         const {navigation} = this.props; 
         return(
-            <SafeAreaView style={styles.container}>
-                <ServiceIndex navigation={navigation} />
-            </SafeAreaView>
+            <ServiceIndex 
+                navigation={navigation} 
+            />
         )
     }
 } 
@@ -33,14 +34,15 @@ class Service extends PureComponent {
 const mapDispatchToProps = (dispatch) => {
     return {
         ...bindActionCreators({
-            switchHeaderAction
+            ServiceListAction
         }, dispatch),
     }
 };
 
 const mapStateToProps = (state) => {
     return {
-        user_infos:state.auth.user_infos,
+        user_infos  : state.auth.user_infos,
+        user_token  : state.auth.user_token
     }
 }
 

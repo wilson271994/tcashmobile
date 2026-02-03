@@ -26,8 +26,8 @@ class ServiceBanner extends PureComponent {
                     scrollEnabled
                     dot={false}
                     containerStyle={servicestyle.swiperstyle}>
-                            <View style={servicestyle.containerbanner} key={i}>
-                                <ImageBackground
+                            <View style={servicestyle.containerbanner}>
+                                {/* <ImageBackground
                                     key={i}
                                     source={item.cover}
                                     style={servicestyle.backgroundimagebanner}
@@ -35,7 +35,7 @@ class ServiceBanner extends PureComponent {
                                 <Text numberOfLines={1} style={[servicestyle.bookname, styles.textBold]}>Tst</Text>
                                 <View style={servicestyle.catcontain}>
                                     <Text style={[servicestyle.categoryproductproduct, styles.textBold]}>Management</Text>
-                                </View>
+                                </View> */}
                             </View>
                 </Swiper>
             </View>

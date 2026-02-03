@@ -14,6 +14,8 @@ import { styles } from '../../assets/styles/index.js';
 import { store } from '../../reducers/store.js';
 import { service_list } from '../../assets/utils/data.js';
 import ServiceBanner from './ServiceBanner.js';
+import IconFA  from 'react-native-vector-icons/FontAwesome';
+import { BASE_URL } from '../../api/config.js';
 
 class ServiceIndex extends PureComponent {
     constructor(props){
@@ -39,56 +41,106 @@ class ServiceIndex extends PureComponent {
         navigation.navigate('BookDetail');
     }
 
+    _renderFooter = () => {
+        const {is_loading} = this.props;
+        if (!is_loading) return null;
+        return (
+            <View style={servicestyle.footerlist}> 
+                <ActivityIndicator size="small" />
+            </View>
+        );
+    };
+
+    _navigateToDeposit = () => {
+        const {navigation} = this.props;
+        store.dispatch({type:ROOT_NAVIGATION, value:navigation});
+        navigation.navigate('Deposit');
+    }
+
+    _navigateToTransfer = () => {
+        const {navigation} = this.props;
+        store.dispatch({type:ROOT_NAVIGATION, value:navigation});
+        navigation.navigate('Transfer');
+    }
+
+    _navigateToWithdrawal = () => {
+        const {navigation} = this.props;
+        store.dispatch({type:ROOT_NAVIGATION, value:navigation});
+        navigation.navigate('Withdraw');
+    }
+
     _renderItem = (item) => { 
         return (
-            <TouchableOpacity style={servicestyle.serviceitem} key={i}>
-                <Image 
-                    style={servicestyle.coverserviceitem}
-                    source={item.cover}
-                />
-                <Text 
-                    numberOfLines={1}
-                    style={[servicestyle.bookname, styles.textBold]} >
-                        {item.name}
-                </Text>
+            <TouchableOpacity 
+                style={servicestyle.serviceitem}
+                onPress={
+                    item.service_code === 1001 ?
+                        this._navigateToDeposit 
+                    :
+                    item.service_code === 1002 ?
+                        this._navigateToTransfer
+                    :
+                        this._navigateToWithdrawal
+                }
+            >
+                <View style={servicestyle.servicecovercontainer}>
+                    <Image 
+                        style={servicestyle.coverserviceitem}
+                        source={{ uri : BASE_URL + item.cover }}
+                    />
+                </View>
+                <View style={servicestyle.footerserviceitem}>
+                    <Text 
+                        numberOfLines={1}
+                        style={[styles.textBold, servicestyle.nameservice]} >
+                            {item.name}
+                    </Text>
+                </View>
             </TouchableOpacity>
         )
     }
 
+    _renderEmpty = (item) => {
+        return (
+            <View style={servicestyle.emptycard}>
+                <Text style={[styles.text]}>Aucun service pour l'instant.</Text>
+            </View>
+        )
+    }
+
     render(){
-        const {navigation, is_loading} = this.props; 
+        const {navigation, is_loading, service_list} = this.props; 
         return(
-            <ImageBackground source={require('../../assets/images/background.jpg')} style={styles.backgroundapp}>
-                <View style={servicestyle.servicecontainer}>
-                    
-                    <View style={servicestyle.headerservice}>
-                        <View style={servicestyle.serviceheaderlogocontainer}>
-                            <Image source={require('../../assets/images/logo.png')} style={servicestyle.servicelogo} />
-                        </View>
-                        <View style={servicestyle.containerheadertitle}>
-                            <Text style={[styles.textBold, servicestyle.headerservicetitle]}>Services</Text>
-                        </View>
-                        <TouchableOpacity style={servicestyle.serviceheadersearch}>
-                            <Image source={require('../../assets/images/recherche.png')} style={servicestyle.servicelsearchlogo} />
+            <View style={servicestyle.servicecontainer}>
+                <ImageBackground 
+                    source={require('../../assets/images/background.jpg')} 
+                    style={styles.backgroundapp}
+                    resizeMode="cover"
+                >
+                    <View style={servicestyle.headerpage}>
+                        <Text style={[styles.textBold, servicestyle.titlepage]}>Consultez nos services</Text>
+                        <TouchableOpacity style={servicestyle.searchtrans}>
+                            <Text style={[styles.text, servicestyle.searchtext]}>Recherche...</Text> 
+                            <IconFA name='search' style={servicestyle.logosearch} />
                         </TouchableOpacity>
                     </View>
 
-                    <ServiceBanner />
+                    {/* <ServiceBanner /> */}
 
-                    <View style={servicestyle.containerlistservice}>
-                        <View style={servicestyle.servicelistheader}>
-                            <Text style={[styles.textBold, servicestyle.servlisttitle]}>Consultez nos offres</Text>
-                        </View>
-
+                    <View style={servicestyle.containeritem}>
                         <FlatList 
-                            style={servicestyle.serviceitemlist}
+                            data={service_list}
                             renderItem={({item, index}) => this._renderItem(item, index)}
                             keyExtractor={(items, index) => index.toString()}
-                            
+                            //onEndReached={this._onRefresh}
+                            //onEndReachedThreshold={0.5}
+                            ListFooterComponent={this._renderFooter}
+                            ListEmptyComponent={this._renderEmpty}
+                            numColumns={2}
                         />
                     </View>
-                </View>
-            </ImageBackground>
+                </ImageBackground>
+            </View>
         )
     }
 } 
@@ -103,8 +155,9 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
     return {
-        user_infos:state.auth.user_infos,
-        is_loading : state.loader.is_loading
+        user_infos      : state.auth.user_infos,
+        is_loading      : state.loader.is_loading,
+        service_list    : state.list.service_list
     }
 }
 

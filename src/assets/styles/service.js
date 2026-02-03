@@ -4,35 +4,57 @@ const {width, height} = Dimensions.get('window');
 
 export const servicestyle = StyleSheet.create({
     servicecontainer:{
-        marginTop:50,
+        flex:1
     },
-    headerservice:{
+    headerpage:{
+        marginTop:10,
+        padding:15,
+        backgroundColor:'#fff',
+        borderRadius:10,
+        marginRight:10,
+        marginLeft:10,
+        marginBottom:10
+    },
+    titlepage:{
+        fontSize:16,
+        color:'#000',
+        marginBottom:20
+    },
+    searchtrans:{
+        borderColor:'#eee',
+        borderWidth:1,
+        borderRadius:20,
+        height:38,
+        paddingLeft:20,
+        paddingRight:20,
+        paddingTop:10,
         flexDirection:'row',
+        backgroundColor:'#fff'
     },
-    serviceheaderlogocontainer:{
-        width:'40%'
+    searchtext:{ 
+        width:'70%'
     },
-    containerheadertitle:{  
-        width:'40%',
-        justifyContent:'center'
+    logosearch:{
+        width:'30%',
+        fontSize:20,
+        textAlign:'right'
     },
-    serviceheadersearch:{
-        width:'20%',
-        justifyContent:'center',
+    emptycard:{
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 5,
+            height: 5
+        },
+        shadowOpacity: 0.6,
+        backgroundColor:"#fff",
+        elevation: 2,
+        borderRadius:5,
+        padding:95
     },
-    servicelogo:{
-        width:120,
-        height:50,
+    footerlist:{
+        paddingVertical: 20,
+    },
 
-    },
-    servicelsearchlogo:{
-        width:30,
-        height:30,
-        alignSelf:'center'
-    },
-    headerservicetitle:{
-        fontSize:25,    
-    },
 
     //Manage service banner 
     containerbanner:{
@@ -42,29 +64,36 @@ export const servicestyle = StyleSheet.create({
         height:200,
     },
 
-    //Service List Item
-    containerlistservice:{
-        marginTop:50,
-        padding:10,
-    },
-    serviceitemlist:{
-        backgroundColor:'#000',
-    },
-    servicelistheader:{
-        marginBottom:20
-    },
-    servlisttitle:{
-        fontSize:18
-    },
     serviceitem:{
+        height:160,  
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 5,
+            height: 5
+        },
+        shadowOpacity: 0.6,
+        backgroundColor:"#fff",
+        elevation: 2,
+        borderRadius:5,
+        padding:10,
+        width:'45%',
+        marginBottom:20,
+        marginRight:10,
+        marginLeft:9
+    },
+    servicecovercontainer:{
+        width:100,
         height:100,
-        width:'50%',    
-        backgroundColor:'#000',
-        marginRight:5
+        alignItems:'center',
+        alignContent:'center',
+        alignSelf:'center'
     },
     coverserviceitem:{
-        width:100,
-        height:100
+        width:'100%',
+        height:80
+    },
+    footerserviceitem:{
+        marginTop:10
     }
 });
 

@@ -1,9 +1,11 @@
-import { LAST_TRANSACTION, TRANSACTION_FEES, USER_LIST } from "./actions/types"
+import { LAST_TRANSACTION, SERVICE_LIST, TRANSACTION_LIST, USER_LIST } from "./actions/types"
 
 
 const initialState = {
     last_transaction    : [],
-    user_list           : []
+    user_list           : [],
+    transaction_list   : [],
+    service_list        : [],
 }
 
 const listReducer = (state = initialState, action) => {
@@ -18,6 +20,18 @@ const listReducer = (state = initialState, action) => {
             return {
                 ...state,
                 user_list: action.value
+            }
+
+        case TRANSACTION_LIST:
+            return {
+                ...state,
+                transaction_list: action.value
+            }
+        
+        case SERVICE_LIST:
+            return {
+                ...state,
+                service_list: action.value
             }
 
         default:

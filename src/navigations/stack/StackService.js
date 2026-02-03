@@ -6,7 +6,10 @@ import { createStackNavigator } from "@react-navigation/stack";
 import {Image, TextInput, TouchableOpacity, View, Text} from "react-native";
 import {styles} from "../../assets/styles";
 import { switchHeaderAction } from "../../reducers/actions";
-import service from "../../screens/service";
+import Service from "../../screens/Service";
+import Deposit from "../../components/Transaction/Deposit";
+import Transfer from "../../components/Transaction/Transfer";
+import Withdraw from "../../components/Transaction/Withdraw";
 
 const Stack = createStackNavigator();
 
@@ -38,9 +41,33 @@ class StackService extends Component {
             <Stack.Navigator>
                 <Stack.Screen 
                     name=" " 
-                    component={service} 
+                    component={Service} 
                     options={{
                         headerShown:false
+                    }}
+                />
+
+                <Stack.Screen
+                    name="Deposit"
+                    component={Deposit}
+                    options={{
+                        headerShown: false,
+                    }}
+                />
+
+                <Stack.Screen
+                    name="Transfer"
+                    component={Transfer}
+                    options={{
+                        headerShown: false,
+                    }}
+                />
+
+                <Stack.Screen
+                    name="Withdraw"
+                    component={Withdraw}
+                    options={{
+                        headerShown: false,
                     }}
                 />
 

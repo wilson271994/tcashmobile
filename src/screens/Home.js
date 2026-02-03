@@ -10,7 +10,7 @@ class Home extends PureComponent {
     };
 
     render(){
-        const {navigation} = this.props; 
+        const {navigation} = this.props;  
         return(
             <HomeIndex 
                 navigation={navigation} 

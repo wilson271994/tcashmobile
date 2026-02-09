@@ -2,21 +2,14 @@
 import React, { Component } from "react";
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
-import { store } from "../../reducers/store";
 import { createStackNavigator } from "@react-navigation/stack";
-import {Image, TextInput, TouchableOpacity, View, Icon, Button, Text} from "react-native";
-import {styles} from "../../assets/styles";
-import IconFA  from 'react-native-vector-icons/FontAwesome';
 import Profil from "../../screens/Profil";
-import { switchHeaderAction, switchPostFormAction } from "../../reducers/actions";
-import { htmlstyles } from "../../assets/styles/htmlviewstyle";
-import HTMLView from 'react-native-htmlview'; 
-import Toast from 'react-native-toast-message';
-import Support from '../../components/Profile/Support'
+import UpdateProfil from "../../components/Profile/Forms/UpdateProfil";
+import Support from "../../components/Profile/Support";
 import SupportChat from "../../components/Profile/SupportChat";
-import FaqIndex from "../../components/Profile/FaqIndex";
-import HelpIndex from "../../components/Profile/HelpIndex";
-import UpdateProfil from "../../components/Profile/UpdateProfil";
+import UpdateNotify from "../../components/Profile/Forms/UpdateNotify";
+import SupportFaq from "../../components/Profile/SupportFaq";
+import UpdateKYC from "../../components/Profile/Forms/UpdateKYC";
 
 const Stack = createStackNavigator();
 
@@ -25,17 +18,6 @@ class StackProfil extends Component {
         super(props);
         this.state = {
         }
-    }
-
-    _backProfil = () => {
-        const {root_navigation} = this.props; 
-        switchHeaderAction(true);
-        root_navigation.goBack();
-    } 
-
-    ToggleSearchBar = () => {
-        const {root_navigation} = this.props; 
-        console.log('yesssssssssssss')
     }
 
     render () {
@@ -59,16 +41,24 @@ class StackProfil extends Component {
                 />
 
                 <Stack.Screen 
-                    name="FaqIndex" 
-                    component={FaqIndex} 
+                    name="UpdateNotify" 
+                    component={UpdateNotify} 
                     options={{
                         headerShown:false,
                     }}
                 />
 
                 <Stack.Screen 
-                    name="HelpIndex" 
-                    component={HelpIndex} 
+                    name="UpdateKYC" 
+                    component={UpdateKYC} 
+                    options={{
+                        headerShown:false,
+                    }}
+                />
+
+                <Stack.Screen 
+                    name="SupportFaq" 
+                    component={SupportFaq} 
                     options={{
                         headerShown:false,
                     }}
@@ -97,7 +87,7 @@ class StackProfil extends Component {
 const mapDispatchToProps = (dispatch) => {
     return {
         dispatch,
-        ...bindActionCreators({switchHeaderAction, switchPostFormAction}, dispatch),
+        ...bindActionCreators({ }, dispatch),
     }
 };
 

@@ -3,9 +3,6 @@ import React, { Component } from "react";
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
 import { createStackNavigator } from "@react-navigation/stack";
-import {Image, TextInput, TouchableOpacity, View, Text} from "react-native";
-import {styles} from "../../assets/styles";
-import { switchHeaderAction } from "../../reducers/actions";
 import Service from "../../screens/Service";
 import Deposit from "../../components/Transaction/Deposit";
 import Transfer from "../../components/Transaction/Transfer";
@@ -20,21 +17,6 @@ class StackService extends Component {
         }
     }
 
-    _filterSearch = (text) => {
-    
-    }
-
-    ToggleSearchBar = () => {
-        const {navigation} = this.props; 
-        console.log('yesssssssssssss')
-    }
-
-    _backService = () => {
-        const {root_navigation} = this.props;  
-        switchHeaderAction(true);
-        root_navigation.goBack();
-    } 
-    
     render () {
         const {is_loading} = this.props;
         return ( 

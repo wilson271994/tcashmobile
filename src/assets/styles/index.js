@@ -4,7 +4,7 @@ const {width, height} = Dimensions.get('window');
 
 export const styles = StyleSheet.create({
     container:{
-        backgroundColor: '#F5F5F5',
+        backgroundColor: '#fff',
     },
     main: {
         flex: 1
@@ -539,6 +539,10 @@ export const styles = StyleSheet.create({
         color: '#999',
         fontSize: 15,
     },
+    unverifiedtext:{
+        color: 'red',
+        fontSize: 15,
+    },
     conatinerverifystatus:{
         flexDirection:'row',
         marginTop:5
@@ -546,9 +550,9 @@ export const styles = StyleSheet.create({
     verified:{
         height: 20,
         width: 20,
-        marginTop:2,
+        marginTop:-1,
         marginRight:5,
-        marginLeft:10
+        marginLeft:5
     },
     notificationlogo:{
         width:30,

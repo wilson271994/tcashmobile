@@ -1,16 +1,14 @@
 import React, {Component} from 'react';
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
-import {View, Text, Image, TextInput, Modal,TouchableOpacity, ActivityIndicator, ImageBackground, StatusBar} from 'react-native';
+import {View, Text, Image, TextInput,TouchableOpacity, ActivityIndicator, ImageBackground, ScrollView} from 'react-native';
 import { styles } from '../../assets/styles';
 import { loginstyle } from '../../assets/styles/login';
-import Entypo  from 'react-native-vector-icons/Entypo';
 import FontAwesome  from 'react-native-vector-icons/FontAwesome';
 import { store } from '../../reducers/store';
-import { AUTH_ERROR_MESSAGE, IS_AUTH_ERROR, IS_LOADING, PAGE_TITLE, ROOT_NAVIGATION } from '../../reducers/actions/types';
+import { IS_LOADING } from '../../reducers/actions/types';
 import { LoginAction, checkAuthDataAction } from '../../reducers/actions';
-import { ScrollView } from 'react-native';
-import AwesomeAlert from 'react-native-awesome-alerts';
+import { switchSignupForm1Action } from '../../navigations/rootNavigation';
 
 class LoginForm extends Component {
     constructor(props){
@@ -25,23 +23,12 @@ class LoginForm extends Component {
 
     componentDidMount(){
         checkAuthDataAction(); 
-        store.dispatch({type:IS_LOADING, value:false})
+        store.dispatch({type:IS_LOADING, value:false});
     }
 
     _togglePassVisible = () => {  
         this.setState({passwordVisible:!this.state.passwordVisible});
     } 
-
-    _emailValidation = (text) => {
-        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
-        if (reg.test(text) === false) {
-            this.setState({ email: text })
-            return false;
-        }
-        else {
-            this.setState({ email: text })
-        }
-    }
         
     _authSignin = async () => {
         const {password, username} = this.state;
@@ -60,24 +47,17 @@ class LoginForm extends Component {
         }
     } 
 
-    _authSignup = () => {
-        const {navigation} = this.props;
-        store.dispatch({type:PAGE_TITLE, value:''})
-        store.dispatch({type:ROOT_NAVIGATION, value:navigation})
-        navigation.navigate('SignUpForm1');
-    }
-
-    _closeAlert = () => {
-        store.dispatch({type:IS_AUTH_ERROR, value:false});
+    _authSignup = () => { 
+        switchSignupForm1Action(true);
     }
 
     render(){
         const {is_loading} = this.props;
-        const {currentyear} = this.state;
+        const {currentyear, passwordVisible} = this.state;
         return (
-            <ImageBackground
-                source={require('../../assets/images/background.jpg')}>
-                <ScrollView>  
+            <ScrollView>  
+                <ImageBackground
+                    source={require('../../assets/images/background.jpg')}>
                     <View style={[loginstyle.containerlogin]}>
                         <View style={loginstyle.loginheader}>
                             <Image source={require('../../assets/images/t_cash.png')} style={loginstyle.iconlogologin} />
@@ -88,16 +68,15 @@ class LoginForm extends Component {
                         <View style={[loginstyle.loginbox]}>
                             <Text style={[styles.text, loginstyle.inputloginlabel]}>Utilisateur ou email</Text>
                             <View style={loginstyle.blocinupt}>
-                                    <TextInput
+                                <TextInput
                                     style={[loginstyle.inputlogin, styles.text]}
-                                    autoCapitalize="none" 
-                                    autoCorrect={false}
                                     placeholderTextColor='#b1b1b1'
                                     placeholder='Utilisateur ou adresse email'
                                     onChangeText={(val) => {this.setState({username:val})}}
                                     editable={is_loading ? false : true}
+                                    autoCorrect={false}
+                                    spellCheck={false}
                                 />
-                                
                             </View>
                             <Text style={[styles.text, loginstyle.inputloginlabel]}>Mot de passe</Text>
                             <View style={loginstyle.blocinupt}>
@@ -105,14 +84,17 @@ class LoginForm extends Component {
                                     style={[loginstyle.inputlogin, styles.text]}
                                     placeholderTextColor='#b1b1b1'
                                     placeholder='Entrez votre Mot de passe'
-                                    secureTextEntry={!this.state.passwordVisible}
+                                    secureTextEntry={!passwordVisible}
                                     onChangeText={(val) => {this.setState({password:val})}}
                                     editable={is_loading ? false : true}
+                                    autoCorrect={false}
+                                    spellCheck={false}
                                 />
                                 <View style={loginstyle.blockhidepass}>
                                     <TouchableOpacity 
                                         disabled={is_loading ? true : false}
                                         onPress={this._togglePassVisible}>
+                                            <FontAwesome name='eye' size={15} />
                                     </TouchableOpacity>
                                 </View>
                             </View>
@@ -141,17 +123,17 @@ class LoginForm extends Component {
                                     <Text style={[styles.textBold, loginstyle.submitBtnText]}>Connexion</Text>
                             }
                             </TouchableOpacity>
-
                         </View>
                     </View>
-                </ScrollView>
-                <View style={loginstyle.copyrihtcontainer}>
-                    <Text style={[loginstyle.copyrtext, styles.textBold]}>© {currentyear.getFullYear()} Tous droits reservés à T-Cash.</Text>
-                    <TouchableOpacity style={loginstyle.partdevbtn}>
-                        <Text style={styles.text}>Dévelopé par Poly-H Technology</Text>
-                    </TouchableOpacity>
-                </View>
-            </ImageBackground>
+
+                    <View style={loginstyle.copyrihtcontainer}>
+                        <Text style={[loginstyle.copyrtext, styles.textBold]}>© {currentyear.getFullYear()} Tous droits reservés à T-Cash.</Text>
+                        <TouchableOpacity style={loginstyle.partdevbtn}>
+                            <Text style={styles.text}>Dévelopé par Poly-H Technology</Text>
+                        </TouchableOpacity>
+                    </View>
+                </ImageBackground>
+            </ScrollView>
         );
     }
 }
@@ -159,7 +141,7 @@ class LoginForm extends Component {
 const mapDispatchToProps = (dispatch) => {
     return {
         dispatch,
-        ...bindActionCreators({LoginAction, checkAuthDataAction}, dispatch),
+        ...bindActionCreators({LoginAction, checkAuthDataAction, switchSignupForm1Action}, dispatch),
     }
 };
 

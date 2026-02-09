@@ -2,19 +2,13 @@ import React, { PureComponent } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { View, Text, TouchableOpacity, Image, ImageBackground, TextInput, ScrollView, ActivityIndicator } from 'react-native';
-import Moment from 'moment';
-import { store } from '../../reducers/store.js';
-import 'moment/locale/fr';
-import { IS_AUTH_ERROR, PAGE_TITLE, ROOT_NAVIGATION, TRANSACTION_FEES } from '../../reducers/actions/types.js';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { FetchPreloadDataAction, UpdateProfilAction } from '../../reducers/actions/index.js';
-import { homestyle } from '../../assets/styles/home.js';
-import { Dropdown, SelectCountry } from 'react-native-element-dropdown';
-import { styles } from '../../assets/styles/index.js';
+import { Dropdown } from 'react-native-element-dropdown';
+import { styles } from '../../../assets/styles/index.js';
 import Toast from 'react-native-toast-message';
-import { profilstyle } from '../../assets/styles/profil.js';
+import { FetchPreloadDataAction, UpdateProfilAction } from '../../../reducers/actions/index.js';
+import { profilstyle } from '../../../assets/styles/profil.js';
 
-class UpdateNotify extends PureComponent {
+class UpdateProfil extends PureComponent {
     constructor(props){
         super(props);
         this.state = {
@@ -24,7 +18,7 @@ class UpdateNotify extends PureComponent {
             cityFocus:false,
             city:'',
             username:'',
-            firs_name:'',
+            first_name:'',
             last_name:'',
             phone:'',
             email:''
@@ -36,13 +30,22 @@ class UpdateNotify extends PureComponent {
     }
 
     _fetchNecessaryData = () => {
+        const {user_infos} = this.props;
+        this.setState({
+            country         : user_infos.country,
+            city            : user_infos.city,
+            username        : user_infos.username,
+            first_name      : user_infos.first_name,
+            last_name       : user_infos.last_name,
+            phone           : user_infos.phone,
+            email           : user_infos.email
+        })
         FetchPreloadDataAction();
     }
 
-    _navigateToHome = () => {
+    _navigateToProfil = () => {
         const { navigation } = this.props;
-        store.dispatch({ type: ROOT_NAVIGATION, value: navigation });
-        navigation.navigate(' ');
+        navigation.goBack();
     }
 
     _toggleCountry = (item) => {
@@ -51,11 +54,12 @@ class UpdateNotify extends PureComponent {
     }
 
     _updateProfil = () => {
-        const { navigation } = this.props;
-        const {username, firs_name, last_name, phone, email, country, city} = this.state;
+        const { navigation, user_token } = this.props;
+        const {username, first_name, last_name, phone, email, country, city} = this.state;
         const data = JSON.stringify({
-            username   : username,
-            firs_name   : firs_name,
+            token       : user_token,
+            username    : username,
+            first_name  : first_name,
             last_name   : last_name,
             email       : email,
             phone       : phone,
@@ -73,7 +77,7 @@ class UpdateNotify extends PureComponent {
             cityFocus, 
             city,
             cities,
-            firs_name,
+            first_name,
             last_name,
             email,
             phone,
@@ -82,16 +86,16 @@ class UpdateNotify extends PureComponent {
         return (
             <View style={profilstyle.containerform}>
                 <ImageBackground 
-                    source={require('../../assets/images/background.jpg')} 
+                    source={require('../../../assets/images/background.jpg')} 
                     style={styles.backgroundapp}
                     resizeMode="cover"
                 >
                     <ScrollView contentContainerStyle={profilstyle.scroolviecontainer}>
                         <View style={profilstyle.headerform}>
-                            <TouchableOpacity onPress={this._navigateToHome}
+                            <TouchableOpacity onPress={this._navigateToProfil}
                                 style={profilstyle.closeButton}>
                                 <Image 
-                                    source={require('../../assets/images/back.png')} 
+                                    source={require('../../../assets/images/back.png')} 
                                     style={profilstyle.closeicon} 
                                 />
                             </TouchableOpacity>
@@ -106,7 +110,7 @@ class UpdateNotify extends PureComponent {
                                     placeholder="Saisir votre nom d'utilisateur"
                                     placeholderTextColor='#999'
                                     onChangeText={text => this.setState({ username: text })}
-                                    value={user_infos.username}
+                                    value={username}
                                 />
                             </View>
 
@@ -117,7 +121,7 @@ class UpdateNotify extends PureComponent {
                                     placeholder="Saisir votre nom"
                                     placeholderTextColor='#999'
                                     onChangeText={text => this.setState({ first_name: text })}
-                                    value={user_infos.first_name}
+                                    value={first_name}
                                 />
                             </View>
 
@@ -128,7 +132,7 @@ class UpdateNotify extends PureComponent {
                                     placeholder="Saisir votre prenom"
                                     placeholderTextColor='#999'
                                     onChangeText={text => this.setState({ last_name: text })}
-                                    value={user_infos.last_name}
+                                    value={last_name}
                                 />
                             </View>
 
@@ -140,7 +144,7 @@ class UpdateNotify extends PureComponent {
                                     placeholderTextColor='#999'
                                     onChangeText={text => this.setState({ phone: text })}
                                     keyboardType="numeric"
-                                    value={user_infos.phone}
+                                    value={phone}
                                 />
                             </View>
 
@@ -152,7 +156,7 @@ class UpdateNotify extends PureComponent {
                                     placeholderTextColor='#999'
                                     onChangeText={text => this.setState({ phone: text })}
                                     keyboardType="email-address"
-                                    value={user_infos.email}
+                                    value={email}
                                 />
                             </View>
 
@@ -166,9 +170,10 @@ class UpdateNotify extends PureComponent {
                                     containerStyle={profilstyle.containeritemdrop}
                                     iconStyle={profilstyle.iconStyle}
                                     dropdownPosition='auto'
-                                    data={site_infos.countries}
+                                    data={site_infos.countries ? site_infos.countries : []}
                                     labelField="name"
                                     valueField="id"
+                                    value={country}
                                     placeholder={!countryFocus ? 'Choisir le pays...' : '...'}
                                     onFocus={() => this.setState({ countryFocus: true })}
                                     onBlur={() => this.setState({ countryFocus: false })}
@@ -189,10 +194,11 @@ class UpdateNotify extends PureComponent {
                                     data={cities}
                                     labelField="name"
                                     valueField="id"
+                                    value={city}
                                     placeholder={!cityFocus ? 'Choisir la ville...' : '...'}
                                     onFocus={() => this.setState({ cityFocus: true })}
                                     onBlur={() => this.setState({ cityFocus: false })}
-                                    onChange={item => this.setState({ city: item })}
+                                    onChange={item => this.setState({ city: item.id })}
                                 />
                             </View>
                     
@@ -233,4 +239,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps, null)(UpdateNotify);
+export default connect(mapStateToProps, mapDispatchToProps, null)(UpdateProfil);

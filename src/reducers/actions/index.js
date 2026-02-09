@@ -5,16 +5,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import {
     AUTH_ERROR_MESSAGE,
+    FAQ_LIST,
     IS_AUTHENTICATED,
     IS_AUTH_ERROR,
     IS_HEADER, IS_LOADING,
-    IS_NETWORK,
     LAST_TRANSACTION,
     SERVICE_LIST,
-    SET_HOME_PAGE,
-    SET_PROFIL_PAGE,
-    SET_SERVICE_PAGE,
-    SET_TRANSACTION_PAGE,
     SITE_INFOS,
     TRANSACTION_FEES,
     TRANSACTION_LIST,
@@ -22,16 +18,14 @@ import {
     USER_LIST,
     USER_TOKEN,
 } from './types';
+import { switchActivationFormAction, switchHomePageAction } from '../../navigations/rootNavigation';
 
-//Global Constantes
-const TIMEOUT = 8000;
-const LIMIT_LIST = 10;
 //SET AXIOS 
 const axiosClient = axios.create();
 axiosClient.defaults.baseURL = BASE_URL;
 axiosClient.defaults.headers = headerRequest.headers;
 axiosClient.defaults.onUploadProgress = headerRequest.onUploadProgress;
-axiosClient.defaults.onDownloadProgress = headerRequest.onUploadProgress;
+axiosClient.defaults.onDownloadProgress = headerRequest.onUploadProgress; 
 axiosClient.defaults.withCredentials = true;
 
 /**
@@ -94,6 +88,7 @@ export const LoginAction = (postdata) => {
     store.dispatch({ type: IS_LOADING, value: true });
     axiosClient.post(`${BASE_URL}/api/auth`, postdata)
     .then(async (res) => {
+        console.log(res.data)
         const result = res.data.result;
         if (res.data.status === 200) {
             await store.dispatch({ type: USER_TOKEN, value: result.token });
@@ -103,19 +98,14 @@ export const LoginAction = (postdata) => {
             await store.dispatch({ type: IS_AUTHENTICATED, value: true })
 
             await store.dispatch({ type: LAST_TRANSACTION, value: result.lasttransactions });
-
-        } else if (res.data.status === 500) {
-            store.dispatch({ type: IS_LOADING, value: false });
-
-            //view the error message
-            store.dispatch({ type: IS_AUTH_ERROR, value: true })
-            store.dispatch({ type: AUTH_ERROR_MESSAGE, value: result.message })
+            console.log(result)
         } else {
+            store.dispatch({ type: IS_LOADING, value: false });
             Toast.show({
                 'type': 'error',
                 props: {
                     title: 'Erreur dans le formulaire',
-                    description: 'Une erreur s\'est produite',
+                    description: res.data.message,
                 }
             });
         }
@@ -137,7 +127,7 @@ export const LoginAction = (postdata) => {
  * @param {*} postdata 
  * Create Account
  */
-export const SignupAction = (postdata, navigation) => {
+export const SignupAction = (postdata) => {
     store.dispatch({ type: IS_LOADING, value: true})
     axiosClient.post(`${BASE_URL}/api/signup`, postdata)
     .then(async (res) => {
@@ -151,7 +141,7 @@ export const SignupAction = (postdata, navigation) => {
                     description: 'Success',
                 }
             });
-            navigation.navigate("Activation");
+            switchActivationFormAction(true);
         } else if (result.status === 500) {
             store.dispatch({ type : IS_LOADING, value: false });
             Toast.show({
@@ -189,18 +179,60 @@ export const SignupAction = (postdata, navigation) => {
  * @param {*} postdata  
  * Activate Account
  */
+export const resentActivationCodeAction = (postdata) => {
+    store.dispatch({ type: IS_LOADING, value: true});
+    axiosClient.post(`${BASE_URL}/api/esent-activation-code`, postdata)
+    .then(async (res) => {
+        const result = res.data;
+        if(result.status === 200) {
+            store.dispatch({ type: IS_LOADING, value: false });
+            Toast.show({
+                'type': 'success',
+                props: {
+                    title: 'Opération réussie.',
+                    description: result.message,
+                }
+            });
+        } else {
+            store.dispatch({ type: IS_LOADING, value: false });
+            Toast.show({
+                'type': 'error',
+                props: {
+                    title: 'Erreur de connexion',
+                    description: result.message,
+                }
+            });
+        }
+    })
+    .catch((error) => {
+        Toast.show({
+            'type': 'info',
+            props: {
+                title: 'Connexion internet!',
+                description: 'Votre débit internet est instable. Vérifiez votre connectivité et réessayez',
+            }
+        });
+        store.dispatch({ type: IS_LOADING, value: false });
+    })
+}
+
+/**
+ * 
+ * @param {*} postdata  
+ * Activate Account
+ */
 export const AccountActivationAction = (postdata) => {
     store.dispatch({ type: IS_LOADING, value: true});
     axiosClient.post(`${BASE_URL}/api/activate-account`, postdata)
         .then(async (res) => {
-            const result = res.data;
-            if(result.status === 200) {
+            const result = res.data.result;
+            if(res.data.status === 200) {
                 await store.dispatch({ type: USER_TOKEN, value: result.token });
                 await store.dispatch({ type: USER_INFOS, value: result.user });
                 await AsyncStorage.setItem('userInfos', JSON.stringify(result.user));
                 await AsyncStorage.setItem('userToken', JSON.stringify(result.token));
                 await store.dispatch({ type: IS_AUTHENTICATED, value: true })
-            } else if ( result.status === 500 ) {
+            } else {
                 store.dispatch({ type: IS_LOADING, value: false })
                 Toast.show({
                     'type': 'error',
@@ -210,15 +242,6 @@ export const AccountActivationAction = (postdata) => {
                     }
                 });
             }
-            else {
-                Toast.show({
-                    'type': 'error',
-                    props: {
-                        title: 'Erreur de connexion',
-                        description: 'Une erreur s\' est produite',
-                    }
-                });
-            } 
         })
         .catch((error) => {
             Toast.show({
@@ -321,17 +344,17 @@ export const GetUserInfoAction = (postdata) => {
  * Create Account
  */
 export const UpdateProfilAction = (postdata, navigation) => {
-    const payload = JSON.stringify(postdata)
     store.dispatch({ type: IS_LOADING, value: true})
-    axiosClient.post(`${BASE_URL}/api/signup`, payload)
+    axiosClient.post(`${BASE_URL}/api/update-user-infos`, postdata)
     .then(async (res) => {
         const result = res.data;
         if(result.status === 200) {
+            const response_data = res.data.result;
             store.dispatch({ type: IS_LOADING, value: false });
-            await store.dispatch({ type: USER_TOKEN, value: result.token });
-            await store.dispatch({ type: USER_INFOS, value: result.user });
-            await AsyncStorage.setItem('userInfos', JSON.stringify(result.user));
-            await AsyncStorage.setItem('userToken', JSON.stringify(result.token));
+            await store.dispatch({ type: USER_TOKEN, value: response_data.token });
+            await store.dispatch({ type: USER_INFOS, value: response_data.user });
+            await AsyncStorage.setItem('userInfos', JSON.stringify(response_data.user));
+            await AsyncStorage.setItem('userToken', JSON.stringify(response_data.token));
             Toast.show({
                 'type': 'success',
                 props: {
@@ -339,23 +362,14 @@ export const UpdateProfilAction = (postdata, navigation) => {
                     description:res.data.message,
                 }
             });
-            navigation.navigate(" ");
-        } else if (result.status === 500) {
+            navigation.goBack();
+        } else {
             store.dispatch({ type : IS_LOADING, value: false })
             Toast.show({
                 'type': 'error',
                 props: {
                     title: 'Une erreur s\'est produite',
                     description: result.message,
-                }
-            });
-        }
-        else {
-            Toast.show({
-                'type': 'error',
-                props: {
-                    title: 'Erreur de connexion',
-                    description: 'Une erreur s\'est produite',
                 }
             });
         }
@@ -372,6 +386,134 @@ export const UpdateProfilAction = (postdata, navigation) => {
     })
 
 }
+
+/**
+ * 
+ * @param {*} postdata 
+ * Create Account
+ */
+export const UpdateNotificationPermissionAction = (postdata, navigation) => {
+    store.dispatch({ type: IS_LOADING, value: true})
+    axiosClient.post(`${BASE_URL}/api/notif-permission-update`, postdata)
+    .then(async (res) => {
+        const result = res.data;
+        if(result.status === 200) {
+            const response_data = res.data.result;
+            store.dispatch({ type: IS_LOADING, value: false });
+            await store.dispatch({ type: USER_INFOS, value: response_data.user });
+            await AsyncStorage.setItem('userInfos', JSON.stringify(response_data.user));
+            Toast.show({
+                'type': 'success',
+                props: {
+                    title: 'Opération réssie!',
+                    description:res.data.message,
+                }
+            });
+            navigation.goBack();
+        } else {
+            store.dispatch({ type : IS_LOADING, value: false })
+            Toast.show({
+                'type': 'error',
+                props: {
+                    title: 'Une erreur s\'est produite',
+                    description: result.message,
+                }
+            });
+        }
+    })
+    .catch((error) => {
+        Toast.show({
+            'type': 'info',
+            props: {
+                title: 'Connexion internet!',
+                description: 'Votre débit internet est instable. Vérifiez votre connectivité et reéssayez',
+            }
+        });
+        store.dispatch({ type: IS_LOADING, value: false });
+    })
+
+}
+
+/**
+ * 
+ * @param {*} postdata 
+ * Create Account
+ */
+export const UpdateKycAction = (postdata, navigation) => {
+    store.dispatch({ type: IS_LOADING, value: true})
+    axiosClient.post(`${BASE_URL}/api/kyc-verification`, postdata)
+    .then(async (res) => {
+        const result = res.data;
+        if(result.status === 200) {
+            const response_data = res.data.result;
+            store.dispatch({ type: IS_LOADING, value: false });
+            await store.dispatch({ type: USER_INFOS, value: response_data.user });
+            await AsyncStorage.setItem('userInfos', JSON.stringify(response_data.user));
+            Toast.show({
+                'type': 'success',
+                props: {
+                    title: 'Opération réssie!',
+                    description:res.data.message,
+                }
+            });
+            navigation.goBack();
+        } else {
+            store.dispatch({ type : IS_LOADING, value: false })
+            Toast.show({
+                'type': 'error',
+                props: {
+                    title: 'Une erreur s\'est produite',
+                    description: result.message,
+                }
+            });
+        }
+    })
+    .catch((error) => {
+        Toast.show({
+            'type': 'info',
+            props: {
+                title: 'Connexion internet!',
+                description: 'Votre débit internet est instable. Vérifiez votre connectivité et reéssayez',
+            }
+        });
+        store.dispatch({ type: IS_LOADING, value: false });
+    })
+
+}
+
+/**
+ *******************************************************************
+ ************************ Customers Utilities **********************
+ ********************************************************************
+ */
+/**
+ * 
+ * Preload Data 
+ */
+export const FaqListAction = (token) => {
+    store.dispatch({type:IS_LOADING, value:true}); 
+    axiosClient.get(`${BASE_URL}/api/faq-list?token=${token}`) 
+    .then( async (res) => {
+        if(res.data.status === 200){
+            const result = res.data.result;  
+            store.dispatch({type:FAQ_LIST, value:result});
+            store.dispatch({type:IS_LOADING, value:false});
+        }else{
+            store.dispatch({type:IS_LOADING, value:false});
+        }
+    })
+    .catch((error) => {
+        Toast.show({
+            'type':'info',
+            props:{
+                title:'Connexion internet!',
+                description:'Votre débit internet est instable. Vérifiez votre connectivité et reéssayer',
+            }
+        }); 
+        store.dispatch({type:IS_LOADING, value:false});
+    })
+}
+
 
 /**
  * 
@@ -607,41 +749,3 @@ export const ServiceListAction = (postdata) => {
     })
 }
 
-/**
- * NAVIGATION 
- */
-export const switchHomePageAction = (data) => { 
-    if (data){
-        store.dispatch({type:SET_HOME_PAGE, value:data});
-        store.dispatch({type:SET_SERVICE_PAGE, value:false});
-        store.dispatch({type:SET_TRANSACTION_PAGE, value:false});
-        store.dispatch({type:SET_PROFIL_PAGE, value:false});
-    }
-}
-
-export const switchServicePageAction = (data) => { 
-    if (data){
-        store.dispatch({type:SET_SERVICE_PAGE, value:data});
-        store.dispatch({type:SET_HOME_PAGE, value:false});
-        store.dispatch({type:SET_TRANSACTION_PAGE, value:false});
-        store.dispatch({type:SET_PROFIL_PAGE, value:false});
-    }
-}
-
-export const switchTransactionPageAction = (data) => { 
-    if (data){
-        store.dispatch({type:SET_TRANSACTION_PAGE, value:data});
-        store.dispatch({type:SET_HOME_PAGE, value:false});
-        store.dispatch({type:SET_SERVICE_PAGE, value:false});
-        store.dispatch({type:SET_PROFIL_PAGE, value:false});
-    }
-}
-
-export const switchProfilPageAction = (data) => { 
-    if (data){
-        store.dispatch({type:SET_PROFIL_PAGE, value:data});
-        store.dispatch({type:SET_HOME_PAGE, value:false});
-        store.dispatch({type:SET_SERVICE_PAGE, value:false});
-        store.dispatch({type:SET_TRANSACTION_PAGE, value:false});
-    }
-}

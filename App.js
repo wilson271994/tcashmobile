@@ -6,7 +6,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import SplashScreen from 'react-native-splash-screen';
 import Toast from 'react-native-toast-message';
 import { ToastConfig } from './src/assets/utils/toastCustom';
-import BaseContainer from './src/Base/BaseContainer';
+import BaseContainer from './src/base/BaseContainer';
 
 export default App = () => {
     const [loading, setLoading] = useState(true); 

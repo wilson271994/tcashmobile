@@ -41,11 +41,18 @@ export const SET_SERVICE_PAGE           = 'SET_SERVICE_PAGE';
 export const SET_TRANSACTION_PAGE       = 'SET_TRANSACTION_PAGE';
 export const SET_PROFIL_PAGE            = 'SET_PROFIL_PAGE';
 
+//Login Routing
+export const SET_LOGIN_FORM             = 'SET_LOGIN_FORM';
+export const SET_SIGNUP1_FORM           = 'SET_SIGNUP1_FORM';
+export const SET_SIGNUP2_FORM           = 'SET_SIGNUP2_FORM';
+export const SET_ACTIVATION_FORM        = 'SET_ACTIVATION_FORM';
+
 //LIST ACTION
 export const LAST_TRANSACTION           = 'LAST_TRANSACTION';
 export const USER_LIST                  = 'USER_LIST';
 export const TRANSACTION_LIST           = 'TRANSACTION_LIST';
 export const SERVICE_LIST               = 'SERVICE_LIST';
+export const FAQ_LIST                   = 'FAQ_LIST';
 
 //DETAIL ACTION
 export const TRANSACTION_DETAIL         = 'TRANSACTION_DETAIL';

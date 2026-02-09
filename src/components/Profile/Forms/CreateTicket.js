@@ -19,28 +19,7 @@ const dataconfid = [
     {label:'Technique', value:2}
 ] 
 
-const datacat = [
-    {value:'2', label:'Cars and Vehicles'},
-    {value:'3', label:'Comedy'},
-    {value:'4', label:'Economics and Trade'},
-    {value:'5', label:'Education'},
-    {value:'6', label:'Entertainment'},
-    {value:'7', label:'Movies & Animation'},
-    {value:'8', label:'Gaming'},
-    {value:'9', label:'History and Facts'},
-    {value:'10', label:'Live Style'},
-    {value:'11', label:'Natural'},
-    {value:'12', label:'News and Politics'},
-    {value:'13', label:'People and Nations'},
-    {value:'14', label:'Pets and Animals'},
-    {value:'15', label:'Places and Regions'},
-    {value:'16', label:'Science and Technology'},
-    {value:'17', label:'Sport'},
-    {value:'18', label:'Travel and Events'},
-    {value:'1', label:'Other'}
-]
-
-class CreateJob extends PureComponent {
+class CreateTicket extends PureComponent {
     constructor(props){
         super(props);
         this.state = {
@@ -271,21 +250,6 @@ class CreateJob extends PureComponent {
                         <MaterialCommunityIcons size={25}  color='#ECB818' name='send' style={supportstyle.icon} />
                     </TouchableOpacity>
                 </View>
-                <AwesomeAlert
-                    show={is_alert}
-                    title={alert_title}
-                    titleStyle={[styles.textBold, styles.titlealert]}
-                    message={alert_subtitle}
-                    messageStyle={[styles.text, styles.descriptionalert]}
-                    closeOnTouchOutside={true}
-                    closeOnHardwareBackPress={false}
-                    showCancelButton={false}
-                    showConfirmButton={true}
-                    confirmText="Ok"
-                    confirmButtonStyle={[styles.text, styles.btnalert]}
-                    confirmButtonColor="#060064"
-                    onConfirmPressed={this._handleCloseAlert}
-                />
                 </ScrollView>
             </Modal>
 
@@ -306,4 +270,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps, null)(CreateJob);
+export default connect(mapStateToProps, mapDispatchToProps, null)(CreateTicket);

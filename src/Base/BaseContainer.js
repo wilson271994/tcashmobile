@@ -2,19 +2,30 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { View, TouchableOpacity, Text, Image, StatusBar} from "react-native";
-import { switchHomePageAction, switchHeaderAction, switchServicePageAction, switchTransactionPageAction, switchProfilPageAction } from "../reducers/actions/index.js";
 import StackHome from "../navigations/stack/StackHome.js";
 import StackAuth from "../navigations/stack/StackAuth.js"; 
 import { styles } from "../assets/styles/index.js";  
 import StackService from "../navigations/stack/StackService.js";
 import StackTransaction from "../navigations/stack/StackTransaction.js";
 import StackProfil from "../navigations/stack/StackProfil.js";
+import AuthNavigation from "../navigations/AuthNavigation.js";
+import { switchHomePageAction, switchProfilPageAction, switchServicePageAction, switchTransactionPageAction } from "../navigations/rootNavigation.js";
 
 class BaseContainer extends Component { 
         constructor(props) {
         super(props);
         this.state = {
         }
+    }
+
+    _navigateToNotification = () => {
+        const {root_navigation} = this.props;
+        root_navigation.navigate('Notification');
+    }
+
+    _navigateToSupport = () => {
+        const {root_navigation} = this.props;
+        root_navigation.navigate('Support');
     }
 
     render() {
@@ -42,22 +53,38 @@ class BaseContainer extends Component {
                             <View style={styles.containerusername}>
                                 <Text style={[styles.textBold, styles.UserText]}>{user_infos.name}</Text>
                                 <View style={styles.conatinerverifystatus}>
-                                    <Image
-                                        source={require('../assets/images/verified.png')}
-                                        style={styles.verified}
-                                    />
-                                    <Text style={styles.verifiedtext}>verifié</Text>
+                                    
+                                    {
+                                        user_infos.is_verified ?
+                                            <>
+                                                <Image
+                                                    source={require('../assets/images/verified.png')}
+                                                    style={styles.verified}
+                                                />
+                                                <Text style={[styles.text, styles.verifiedtext]}>vérifié</Text>
+                                            </>
+                                        :
+                                            <>
+                                                <Image
+                                                    source={require('../assets/images/verified.png')}
+                                                    style={styles.verified}
+                                                />
+                                                <Text style={[styles.text, styles.unverifiedtext]}>non vérifié</Text>
+                                            </>
+                                    }
                                 </View>
                             </View> 
 
-                            <TouchableOpacity style={styles.comtainersupport}>
+                            <TouchableOpacity onPress={this._navigateToSupport}
+                                style={styles.comtainersupport}>
                                 <Image
-                                    source={require('../assets/images/support.png')}
+                                    source={require('../assets/images/support.png')} 
                                     style={styles.supportlogo}
                                 />
                             </TouchableOpacity>
 
-                            <TouchableOpacity style={styles.containernotif}>
+                            <TouchableOpacity onPress={this._navigateToNotification}
+                                style={styles.containernotif}>
                                 <Image
                                     source={require('../assets/images/notification.png')}
                                     style={styles.notificationlogo}
@@ -93,7 +120,7 @@ class BaseContainer extends Component {
                                 }
                             </>
                         :
-                            <StackAuth />
+                            <AuthNavigation />
                     }
                 </View>
                 {
@@ -153,7 +180,9 @@ class BaseContainer extends Component {
 const mapDispatchToProps = (dispatch) => ({
     ...bindActionCreators({ 
         switchHomePageAction, 
-        switchHeaderAction, 
+        switchServicePageAction,
+        switchTransactionPageAction,
+        switchProfilPageAction
     }, dispatch)
 });
 
@@ -167,7 +196,8 @@ const mapStateToProps = (state) => {
         is_profil_page      : state.navigation.is_profil_page,
         user_infos          : state.auth.user_infos,
         user_token          : state.auth.user_token,
-        user_infos          : state.auth.user_infos
+        user_infos          : state.auth.user_infos,
+        root_navigation     : state.navigation.root_navigation
     }
 }
 

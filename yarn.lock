@@ -6137,6 +6137,11 @@ react-devtools-core@^4.27.7:
     shell-quote "^1.6.1"
     ws "^7"
 
+react-freeze@^1.0.0:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/react-freeze/-/react-freeze-1.0.4.tgz#cbbea2762b0368b05cbe407ddc9d518c57c6f3ad"
+  integrity sha512-r4F0Sec0BLxWicc7HEyo2x3/2icUTrRmDjaaRyzzn+7aDyFZliszMDOgLVwSnQnYENOlL1o569Ze2HZefk8clA==
+
 "react-is@^16.12.0 || ^17.0.0 || ^18.0.0", react-is@^18.0.0, react-is@^18.2.0:
   version "18.3.1"
   resolved "https://registry.npmjs.org/react-is/-/react-is-18.3.1.tgz"
@@ -6219,10 +6224,10 @@ react-native-elements@^3.4.3:
     react-native-ratings "8.0.4"
     react-native-size-matters "^0.3.1"
 
-react-native-gesture-handler@2.18.0:
-  version "2.18.0"
-  resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.18.0.tgz#0246ff3b6b1d26e2dc2e6990dfcb06e100a163de"
-  integrity sha512-NA77wlyTIXBZcPsZY2mUfvTrXp9/eTfwmIViakfDUGMYZTRdT/3cp9ugCIX44CHq5GlYdjy63mIjjCs1qMJ3Jg==
+react-native-gesture-handler@2.18.1:
+  version "2.18.1"
+  resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.18.1.tgz#ec9206f34cd2f34a66c0430b2c416d31ee6dff17"
+  integrity sha512-WF2fxQ5kTaxHghlkBM4YxO86SyGWVwrSNgJ1E8z/ZtL2xD5B3bg5agvuVFfOzvceC114yq71s6E9vKPz94ZxRw==
   dependencies:
     "@egjs/hammerjs" "^2.0.17"
     hoist-non-react-statics "^3.3.0"
@@ -6265,6 +6270,14 @@ react-native-safe-area-context@4.10.5:
   resolved "https://registry.yarnpkg.com/react-native-safe-area-context/-/react-native-safe-area-context-4.10.5.tgz#a9c677a48bd273afa6876772062ce08e8af1f18d"
   integrity sha512-Wyb0Nqw2XJ6oZxW/cK8k5q7/UAhg/wbEG6UVf89rQqecDZTDA5ic//P9J6VvJRVZerzGmxWQpVuM7f+PRYUM4g==
 
+react-native-screens@3.27.0:
+  version "3.27.0"
+  resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-3.27.0.tgz#2ac39f78dee27df97d3b6fb11ebf8e5751aa986a"
+  integrity sha512-FzSUygZ7yLQyhDJZsl7wU68LwRpVtVdqOPWribmEU3Tf26FohFGGcfJx1D8lf2V2Teb8tI+IaLnXCKbyh2xffA==
+  dependencies:
+    react-freeze "^1.0.0"
+    warn-once "^0.1.0"
+
 react-native-size-matters@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/react-native-size-matters/-/react-native-size-matters-0.3.1.tgz#24d0cfc335a2c730f6d58bd7b43ea5a41be4b49f"
@@ -6306,10 +6319,10 @@ react-native-vector-icons@^10.3.0:
     prop-types "^15.7.2"
     yargs "^16.1.1"
 
-react-native@0.73.11:
-  version "0.73.11"
-  resolved "https://registry.npmjs.org/react-native/-/react-native-0.73.11.tgz"
-  integrity sha512-yvQIX+ZXOHMFnhmwZ1fBpRI/53k+iLN8DxVf24Fx4ABU63RGAYfyCZC0/3W+5OUVx4KSIZUv4Tv+/NGIieBOwg==
+react-native@0.73.10:
+  version "0.73.10"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.73.10.tgz#d1768cd70de084c3eb9dd6a6452b75b41100738e"
+  integrity sha512-ucr9GO6iAUi3A1KZ7DjxLtS91QqTw2gJdKwvz5wNK4DCVF3neJyNUPs7fgpGngYtBsio4PaefVOXyrWAklTBXA==
   dependencies:
     "@jest/create-cache-key-function" "^29.6.3"
     "@react-native-community/cli" "12.3.7"
@@ -7400,6 +7413,11 @@ walker@^1.0.7, walker@^1.0.8:
   integrity sha512-ts/8E8l5b7kY0vlWLewOkDXMmPdLcVV4GmOQLyxuSswIJsweeFZtAsMF7k1Nszz+TYBQrlYRmzOnr398y1JemQ==
   dependencies:
     makeerror "1.0.12"
+
+warn-once@^0.1.0:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/warn-once/-/warn-once-0.1.1.tgz#952088f4fb56896e73fd4e6a3767272a3fccce43"
+  integrity sha512-VkQZJbO8zVImzYFteBXvBOZEl1qL175WH8VmZcxF2fZAoudNhNDvHi+doCaAEdU2l2vtcIwa2zn0QK5+I1HQ3Q==
 
 wcwidth@^1.0.1:
   version "1.0.1"

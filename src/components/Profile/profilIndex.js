@@ -25,22 +25,8 @@ class ProfilIndex extends PureComponent {
 
     };
 
-    _navigateToProfilUpdate = () => {
-        const { navigation } = this.props;
-        store.dispatch({ type: ROOT_NAVIGATION, value: navigation });
-        navigation.navigate('UpdateProfil');
-    }
+    componentDidMount(){
 
-    _navigateToSupport = () => {
-        const { navigation } = this.props;
-        store.dispatch({ type: ROOT_NAVIGATION, value: navigation });
-        navigation.navigate('Support');
-    }
-
-    _navigateToFaq = () => {
-        const { navigation } = this.props;
-        store.dispatch({ type: ROOT_NAVIGATION, value: navigation });
-        navigation.navigate('FaqIndex');
     }
 
     _toggleLogout = () => {
@@ -71,6 +57,36 @@ class ProfilIndex extends PureComponent {
         this.setState({ isVisibleTckCrModal: true });
     }
 
+    _navigateToProfilUpdate = () => {
+        const { navigation } = this.props;
+        store.dispatch({ type: ROOT_NAVIGATION, value: navigation });
+        navigation.navigate('UpdateProfil');
+    }
+
+    _navigateToNotifyUpdate = () => {
+        const { navigation } = this.props;
+        store.dispatch({ type: ROOT_NAVIGATION, value: navigation });
+        navigation.navigate('UpdateNotify');
+    }
+
+    _navigateToSupport = () => {
+        const { navigation } = this.props;
+        store.dispatch({ type: ROOT_NAVIGATION, value: navigation });
+        navigation.navigate('Support');
+    }
+
+    _navigateToFaq = () => {
+        const { navigation } = this.props;
+        store.dispatch({ type: ROOT_NAVIGATION, value: navigation });
+        navigation.navigate('SupportFaq');
+    }
+
+    _navigateToKYC = () => {
+        const { navigation } = this.props;
+        store.dispatch({ type: ROOT_NAVIGATION, value: navigation });
+        navigation.navigate('UpdateKYC');
+    }
+
 
     render() {
         const { is_alert, alert_title, alert_subtitle, is_loading } = this.state;
@@ -79,7 +95,7 @@ class ProfilIndex extends PureComponent {
         return (
             <View style={[profilstyle.container]}>
                 <ScrollView contentContainerStyle={profilstyle.scrollContainer}>
-                    <Text style={[styles.textItalicBold, profilstyle.sectionTitle]}>Paramètres</Text>
+                    <Text style={[styles.textItalicBold, profilstyle.sectionTitle]}>Mon Compte</Text>
                     <View style={profilstyle.bloccontainer}>
                         <View style={profilstyle.paramitem}>
                             <TouchableOpacity style={profilstyle.flexrowitem} onPress={this._navigateToProfilUpdate}>
@@ -94,7 +110,19 @@ class ProfilIndex extends PureComponent {
                         </View>
 
                         <View style={profilstyle.paramitem}>
-                            <TouchableOpacity style={profilstyle.flexrowitem}>
+                            <TouchableOpacity style={profilstyle.flexrowitem} onPress={this._navigateToKYC}>
+                                <View style={profilstyle.containericonimg}>
+                                    <Image source={require('../../assets/images/kyc.png')} style={profilstyle.iconimage} />
+                                </View>
+                                <View style={profilstyle.labelmenucont}>
+                                    <Text style={[styles.textBold, profilstyle.itemlisttext]}>Mise à jour du KYC</Text>
+                                    <Text style={[styles.text, profilstyle.itemlisthelptext]}>Identifiez-vous et </Text>
+                                </View>
+                            </TouchableOpacity>
+                        </View>
+
+                        <View style={profilstyle.paramitem}>
+                            <TouchableOpacity style={profilstyle.flexrowitem} onPress={this._navigateToNotifyUpdate}>
                                 <View style={profilstyle.containericonimg}>
                                     <Image source={require('../../assets/images/notification.png')} style={profilstyle.iconimage} />
                                 </View>
@@ -106,7 +134,7 @@ class ProfilIndex extends PureComponent {
                         </View>
                     </View>
 
-                    <Text style={[styles.textItalicBold, profilstyle.sectionTitle]}>Payements</Text>
+                    <Text style={[styles.textItalicBold, profilstyle.sectionTitle]}>Paiements</Text>
                     <View style={profilstyle.bloccontainer}>
                         <View style={profilstyle.paramitem}>
                             <TouchableOpacity style={profilstyle.flexrowitem}>
@@ -124,7 +152,8 @@ class ProfilIndex extends PureComponent {
                     <Text style={[styles.textItalicBold, profilstyle.sectionTitle]}>Supports</Text>
                     <View style={profilstyle.bloccontainer}>
                         <View style={profilstyle.paramitem}>
-                            <TouchableOpacity style={profilstyle.flexrowitem}>
+                            <TouchableOpacity onPress={this._navigateToFaq}
+                                style={profilstyle.flexrowitem}>
                                 <View style={profilstyle.containericonimg}>
                                     <Image source={require('../../assets/images/info.png')} style={profilstyle.iconimage} />
                                 </View>
@@ -148,7 +177,7 @@ class ProfilIndex extends PureComponent {
                         </View>
                     </View>
 
-                    <Text style={[styles.textItalicBold, profilstyle.sectionTitle]}>Comptes</Text>
+                    <Text style={[styles.textItalicBold, profilstyle.sectionTitle]}>Authentification</Text>
                     <View style={profilstyle.bloccontainer}>
                         <View style={profilstyle.paramitem}>
                             <TouchableOpacity style={profilstyle.flexrowitem} onPress={this._toggleLogout}>

@@ -6,7 +6,7 @@ import { View, Text, TextInput, TouchableOpacity, ActivityIndicator, Image, Imag
 import { styles } from '../../assets/styles';
 import { loginstyle } from '../../assets/styles/login';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { AccountActivationAction } from '../../reducers/actions';
+import { AccountActivationAction, resentActivationCodeAction } from '../../reducers/actions';
 import Toast from 'react-native-toast-message';
 
 
@@ -29,6 +29,35 @@ class activationForm extends PureComponent {
                 email       : signup_info_json.email,
             });
             AccountActivationAction(data);
+        }
+        if(confirmationCode === ''){
+            Toast.show({
+                'type': 'error',
+                props: {
+                    title: 'Une erreur c\'est produite!',
+                    description: 'Veuillez saisir le code reçu par email.',
+                }
+            });
+        }
+        if(signup_info === null){
+            Toast.show({
+                'type': 'error',
+                props: {
+                    title: 'Une erreur c\'est produite!',
+                    description: 'Fermez l\'application et recommencer la création de votre compte.',
+                }
+            });
+        }
+    }
+
+    _resentActivateCode =  async () => {
+        const signup_info = await AsyncStorage.getItem('DataForm1');
+        if (signup_info !== null) {
+            const signup_info_json = JSON.parse(signup_info);
+            const data = JSON.stringify({
+                email       : signup_info_json.email,
+            });
+            resentActivationCodeAction(data);
         }
         if(confirmationCode === ''){
             Toast.show({
@@ -102,7 +131,8 @@ class activationForm extends PureComponent {
 
                                 <View style={loginstyle.resentcodecont}>
                                     <Text style={[styles.text, loginstyle.sendText]}>Vous n'avez pas reçu de code?</Text>
-                                    <TouchableOpacity style={loginstyle.resendLink}>
+                                    <TouchableOpacity onPress={this._resentActivateCode}
+                                        style={loginstyle.resendLink}>
                                         <Text style={[styles.text, loginstyle.resendText]}> Renvoyer</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -122,7 +152,7 @@ class activationForm extends PureComponent {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        ...bindActionCreators({}, dispatch),
+        ...bindActionCreators({resentActivationCodeAction, AccountActivationAction}, dispatch),
     }
 };
 

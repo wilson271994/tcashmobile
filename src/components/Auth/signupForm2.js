@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { View, Text, Image, TextInput, Modal, TouchableOpacity, ActivityIndicator, ImageBackground, ScrollView, Linking } from 'react-native';
+import { View, Text, Image, TextInput, KeyboardAvoidingView, TouchableOpacity, ActivityIndicator, ImageBackground, ScrollView, Linking } from 'react-native';
 import { styles } from '../../assets/styles';
 import Moment from 'moment';
 import 'moment/locale/fr';
@@ -14,6 +14,7 @@ import { Dropdown, SelectCountry } from 'react-native-element-dropdown';
 import { SignupAction } from '../../reducers/actions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
+import { switchSignupForm1Action } from '../../navigations/rootNavigation';
 
 const datagender = [
     { label: 'Masculin', value: 'Masculin' },
@@ -98,8 +99,8 @@ class signupForm2 extends PureComponent {
             password1           : '',
             password2           : '',
             acceptCondition     : false,
-            password1Visible    : false,
-            password2Visible    : false,
+            password1hide       : true,
+            password2hide       : true,
             confidCountryFocus  : false,
             confidCityFocus     : false,
             confidGenderFocus   : false,
@@ -113,11 +114,11 @@ class signupForm2 extends PureComponent {
     }
 
     _togglePass1Visible = () => {
-        this.setState({ password1Visible: !this.state.password1Visible });
+        this.setState({ password1hide: !this.state.password1hide });
     }
 
     _togglePass2Visible = () => {
-        this.setState({ password2Visible: !this.state.password2Visible });
+        this.setState({ password2hide: !this.state.password2hide });
     }
 
     _onChangeAcceptCondition = () => {
@@ -141,7 +142,6 @@ class signupForm2 extends PureComponent {
     }
 
     _authSignup = async () => {
-        const {navigation} = this.props;
         const { country, city, password1, password2, gender } = this.state;
         if (
             country         !== '' &&
@@ -189,7 +189,7 @@ class signupForm2 extends PureComponent {
                 password1   : password1,
                 password2   : password2,
             });
-            SignupAction(payload, navigation);
+            SignupAction(payload);
         }
         if(country === ''){
             Toast.show({
@@ -243,8 +243,7 @@ class signupForm2 extends PureComponent {
     }
 
     _navigateToForm1 = () => {
-        const {navigation} = this.props;
-        navigation.navigate('SignUpForm1');
+        switchSignupForm1Action(true);
     }
 
     _navigateToActivationForm = () => {
@@ -260,8 +259,8 @@ class signupForm2 extends PureComponent {
     render() {
         const { is_loading, site_infos } = this.props;
         const { 
-            password1Visible, 
-            password2Visible, 
+            password1hide, 
+            password2hide, 
             acceptCondition, 
             confidCountryFocus,
             confidCityFocus,
@@ -273,8 +272,8 @@ class signupForm2 extends PureComponent {
             cities
         } = this.state;
         return (
-            <ImageBackground source={require('../../assets/images/background.jpg')}>  
-                <ScrollView ref={(ref) => {this.scrollListReftop = ref}}>
+            <ScrollView>  
+                <ImageBackground source={require('../../assets/images/background.jpg')}>  
                     <View style={[loginstyle.containersignup]}>
                         <View style={loginstyle.signupheader}>
                             <View style={loginstyle.containerlogo}>
@@ -360,7 +359,7 @@ class signupForm2 extends PureComponent {
                                     style={[loginstyle.inputform, loginstyle.inputformpass, styles.text]}
                                     placeholderTextColor='#b1b1b1'
                                     placeholder='Mot de passe'
-                                    secureTextEntry={password1Visible}
+                                    secureTextEntry={password1hide}
                                     onChangeText={(val) => {this.setState({password1:val})}}
                                     editable={is_loading ? false : true}
                                 />
@@ -370,7 +369,7 @@ class signupForm2 extends PureComponent {
                                         style={loginstyle.passwordhidebtn}
                                     >
                                     <Entypo 
-                                        name={password1Visible ? 'eye-with-line' : 'eye'} 
+                                        name={!password1hide ? 'eye-with-line' : 'eye'} 
                                         style={loginstyle.iconhidepasssiginup}/>
                                 </TouchableOpacity>
                             </View>
@@ -381,7 +380,7 @@ class signupForm2 extends PureComponent {
                                     style={[loginstyle.inputform, loginstyle.inputformpass, styles.text]}
                                     placeholderTextColor='#b1b1b1'
                                     placeholder='Confirmez Mot de passe'
-                                    secureTextEntry={!password2Visible}
+                                    secureTextEntry={password2hide}
                                     onChangeText={(val) => {this.setState({password2:val})}}
                                     editable={is_loading ? false : true}
                                 />
@@ -391,7 +390,7 @@ class signupForm2 extends PureComponent {
                                         style={loginstyle.passwordhidebtn}
                                     >
                                     <Entypo 
-                                        name={password2Visible ? 'eye-with-line' : 'eye'} 
+                                        name={!password2hide ? 'eye-with-line' : 'eye'} 
                                         style={loginstyle.iconhidepasssiginup}/>
                                 </TouchableOpacity>
                             </View>
@@ -432,14 +431,14 @@ class signupForm2 extends PureComponent {
                             </TouchableOpacity> 
                         </View>
                     </View>
-                </ScrollView>
-                <View style={loginstyle.copyrihtcontainer}>
-                    <Text style={[loginstyle.copyrtext, styles.textBold]}>© {currentyear.getFullYear()} Tous droits reservés à T-Cash.</Text>
-                    <TouchableOpacity style={loginstyle.partdevbtn}>
-                        <Text style={styles.text}>Dévelopé par Poly-H Technology</Text>
-                    </TouchableOpacity>
-                </View>
-            </ImageBackground>
+                    <View style={loginstyle.copyrihtcontainer}>
+                        <Text style={[loginstyle.copyrtext, styles.textBold]}>© {currentyear.getFullYear()} Tous droits reservés à T-Cash.</Text>
+                        <TouchableOpacity style={loginstyle.partdevbtn}>
+                            <Text style={styles.text}>Dévelopé par Poly-H Technology</Text>
+                        </TouchableOpacity>
+                    </View>
+                </ImageBackground>
+            </ScrollView>
         )
     }
 
@@ -448,7 +447,7 @@ class signupForm2 extends PureComponent {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        ...bindActionCreators({}, dispatch),
+        ...bindActionCreators({switchSignupForm1Action}, dispatch),
     }
 };
 

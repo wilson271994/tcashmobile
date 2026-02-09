@@ -2,22 +2,13 @@ import React, {PureComponent} from 'react';
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
 import { ImageBackground, ScrollView, Text, Button, SafeAreaView,TextInput, Slider, TouchableOpacity,RadioButton, View, Image } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import FontAwesome  from 'react-native-vector-icons/FontAwesome';
-import MaterialIcons  from 'react-native-vector-icons/MaterialIcons';
-import FontAwesome5  from 'react-native-vector-icons/FontAwesome5';
-import AntDesign  from 'react-native-vector-icons/AntDesign';
-import FontAwesome6  from 'react-native-vector-icons/FontAwesome6';
 import { store } from '../../reducers/store';
 import { IS_AUTH_ERROR, PAGE_TITLE, ROOT_NAVIGATION } from '../../reducers/actions/types';
-import Moment from 'moment';
-import { Picker } from '@react-native-picker/picker'; // Pour lesupportsupportstyle listes déroulantes
-import 'moment/locale/fr';
-import cover from '../../assets/images/biblio.jpg';
+import { styles } from '../../assets/styles';
 import { supportstyle } from '../../assets/styles/support';
-import TicketCreation from './Modal/TicketCreation';
+import CreateTicket from './Forms/CreateTicket';
 
-class SearchFilter extends PureComponent {
+class Support extends PureComponent {
     constructor(props){
         super(props);
         this.state = {
@@ -26,11 +17,9 @@ class SearchFilter extends PureComponent {
         }
     };
 
-
     _navigateToSupportChat = () => {
-        const {navigation} = this.props; 
-        store.dispatch({type:ROOT_NAVIGATION, value:navigation});
-        navigation.navigate('SupportChat');
+        const {root_navigation} = this.props; 
+        root_navigation.navigate('SupportChat');
     }
 
     _toggleScrollView = (data) => {
@@ -48,15 +37,23 @@ class SearchFilter extends PureComponent {
         this.setState({isVisibleTckCrModal:false});
     }
 
+    _backToHome = () => {
+        const {root_navigation} = this.props;
+        root_navigation.goBack();
+    }
+
     render(){
         const {is_loading} = this.props;
         const {isVisibleTckCrModal} = this.state;
         return( 
-            
-
-            <SafeAreaView style={supportstyle.container}>
+            <View style={supportstyle.container}>
                 <View style={supportstyle.header}>
-                    <Text style={supportstyle.headerTitle}>Conversations</Text>
+                        <TouchableOpacity 
+                            onPress={this._backToHome}
+                            style={supportstyle.backbtn}>
+                            <Image source={require('../../assets/images/back.png')} style={supportstyle.backicon} />
+                        </TouchableOpacity>
+                    <Text style={[styles.textBold, supportstyle.headerTitle]}>Support client</Text>
                 </View>
 
                 <ScrollView style={supportstyle.conversationsList}>
@@ -78,21 +75,19 @@ class SearchFilter extends PureComponent {
                     <View style={supportstyle.unreadIndicator} />
                 </TouchableOpacity>
                 </ScrollView>                
-                <TouchableOpacity 
-                    style={supportstyle.fab}
-                    //onPress={this._openModalTicketCreation}
-                    onPress={this._navigateToSupportChat.bind(this)}>
+                <TouchableOpacity onPress={this._navigateToSupportChat.bind(this)}
+                    style={supportstyle.fab}>
                     <Image
-                    source={require('../../assets/images/edit.png')}
-                    style={supportstyle.fabIcon}
+                        source={require('../../assets/images/new-message.png')}
+                        style={supportstyle.fabIcon}
                     />
                 </TouchableOpacity>
                     
-                <TicketCreation 
+                <CreateTicket 
                     _closeModalTicketCreation   = {this._closeModalTicketCreation}
                     isVisibleTckCrModal         = {isVisibleTckCrModal}
                 />
-            </SafeAreaView>
+            </View>
         )
     }
 } 
@@ -106,7 +101,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
     return {
+        root_navigation     : state.navigation.root_navigation
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps, null)(SearchFilter);
+export default connect(mapStateToProps, mapDispatchToProps, null)(Support);

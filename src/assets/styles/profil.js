@@ -152,4 +152,58 @@ export const profilstyle = StyleSheet.create({
         textAlign:'center',
         fontSize:15
     },
+
+    //Notification Style
+    formcheckitem:{
+        flexDirection:'row',
+        borderBottomColor:'#eee',
+        borderBottomWidth:1,
+        paddingBottom:20
+    },
+    labelcheckitem:{
+        width:'85%'
+    },
+    checkbtncont:{
+        width:'10%',
+        alignContent:'center',
+        alignSelf:'center',
+        alignItems:'center'
+    },
+    checkbtn:{
+        borderWidth:1,
+        borderColor:'#999',
+        borderRadius:5,
+        height:25,
+        width:25,
+        padding:5
+    },
+    ischeckbtn:{
+        borderWidth:1,
+        borderColor:'#6DCABB',
+    },
+    ischeckicon:{
+        color:'#6DCABB',
+    },
+
+    //KYC
+    containerimagekyc:{
+        borderColor:'#eee',
+        borderWidth:1,
+        borderRadius:10,
+        marginTop:10,
+        alignItems:'center',
+        height:200,
+    },
+    iconcontaineridcard:{
+        padding:100,
+    },
+    idcardimage:{
+        height:70,
+        width:70,
+    },
+    approvedimage:{
+        position:'absolute',
+        right:-50,
+        top:20
+    }
 });

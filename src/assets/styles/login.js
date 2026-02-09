@@ -329,7 +329,8 @@ export const loginstyle = StyleSheet.create({
     },
     lostpassbox: {
         flexDirection: 'row',
-        marginTop: 20
+        marginTop: 0,
+        marginBottom:10
     },
     forgetpassfooter: {
         color: '#6cdabb',
@@ -342,11 +343,11 @@ export const loginstyle = StyleSheet.create({
     },
     blockhidepass: {
         position: 'absolute',
-        top: 50,
+        top: 14,
         right: 20
     },
     iconlow: {
-        width: 30,
+        width: 30, 
         height: 30,
         top: 25,
         left: 105
@@ -363,10 +364,9 @@ export const loginstyle = StyleSheet.create({
         fontWeight: 'bold',
         top: 25
     },
-    text1:
-    {
+    text1:{
         color: 'white',
-        fontSize: 30,
+        fontSize: 25,
         fontWeight: 'bold',
         top: 5,
         left: 5
@@ -443,12 +443,12 @@ export const loginstyle = StyleSheet.create({
 
     },
     loginheader:{
-        marginTop:50,
+        marginTop:10,
         alignItems:'center'
     },
     iconlogologin: {
-        width: 80,
-        height: 80,
+        width: 50,
+        height: 50,
     },
     logintitle:{
         fontSize:25,
@@ -472,7 +472,6 @@ export const loginstyle = StyleSheet.create({
         backgroundColor:"#fff",
         elevation: 2,
         borderRadius:10,
-        marginTop:-50
     },
     blocinupt: {
         marginBottom:20
@@ -502,12 +501,10 @@ export const loginstyle = StyleSheet.create({
 
     //####################################signup /////////////////////////////
     containersignup: {
-        flex: 1,
         alignItems: 'center',
         justifyContent: 'space-around',
-        paddingBottom: 150,
         width: '100%',
-        height: height,
+        marginBottom: 150,
     },
     containerlogo:{
         flexDirection:'row',
@@ -526,13 +523,13 @@ export const loginstyle = StyleSheet.create({
         alignItems:'center',
     },
     logocomp: {
-        width: 70,
-        height: 70,
+        width: 50,
+        height: 50,
         marginRight:25
     },
     signupheader:{
         marginTop:20,
-        alignItems:'center'
+        alignItems:'center',
     },
     containerform:{
         shadowColor: "#000",
@@ -661,7 +658,6 @@ export const loginstyle = StyleSheet.create({
     resendText:{
         color:'#6DCABB',
     },
-
 
     //##########################Copyrigth
     copyrihtcontainer:{

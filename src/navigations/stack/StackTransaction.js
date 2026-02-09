@@ -2,15 +2,7 @@
 import React, { Component } from "react";
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
-import { store } from "../../reducers/store";
 import { createStackNavigator } from "@react-navigation/stack";
-import {Image, TextInput, TouchableOpacity, View, Icon, Button, Text} from "react-native";
-import {styles} from "../../assets/styles";
-import IconFA  from 'react-native-vector-icons/FontAwesome';
-import { switchHeaderAction } from "../../reducers/actions";
-import HTMLView from 'react-native-htmlview'; 
-import { htmlstyles } from '../../assets/styles/htmlviewstyle';
-import File from "../../screens/Transaction";
 import Transaction from "../../screens/Transaction";
 import TransactionDetail from "../../components/Transaction/TransactionDetail";
 const Stack = createStackNavigator();

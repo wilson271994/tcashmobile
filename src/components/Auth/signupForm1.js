@@ -1,14 +1,14 @@
 import React, {PureComponent} from 'react';
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
-import {View, Text, Image, TextInput, Modal,TouchableOpacity, ActivityIndicator, ImageBackground, ScrollView, Linking} from 'react-native';
+import {View, Text, Image, TextInput,TouchableOpacity, ActivityIndicator, ImageBackground, ScrollView, Linking} from 'react-native';
 import  {styles}  from '../../assets/styles';
 import Moment from 'moment';
 import 'moment/locale/fr';
-import { store } from '../../reducers/store';
 import { loginstyle } from '../../assets/styles/login';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
+import { switchLoginFormAction, switchSignupForm2Action } from '../../navigations/rootNavigation';
 
 class SignupForm1 extends PureComponent {
     constructor(props){
@@ -66,8 +66,7 @@ class SignupForm1 extends PureComponent {
     }
 
     _navigateToLogin = () => {
-        const {navigation} = this.props;
-        navigation.navigate(' ');
+        switchLoginFormAction(true);
     }
 
     _navigateToForm2 = async () => {
@@ -88,7 +87,7 @@ class SignupForm1 extends PureComponent {
                 phone       : phone
             });
             await AsyncStorage.setItem('DataForm1', data);
-            navigation.navigate('SignUpForm2');
+            switchSignupForm2Action(true);
         }
         if(username === ''){
             Toast.show({
@@ -165,8 +164,8 @@ class SignupForm1 extends PureComponent {
             currentyear
         } = this.state;
         return(
-            <ImageBackground source={require('../../assets/images/background.jpg')}>  
-                <ScrollView ref={(ref) => {this.scrollListReftop = ref}}>
+            <ScrollView overScrollMode="never">  
+                <ImageBackground source={require('../../assets/images/background.jpg')}>  
                     <View style={[loginstyle.containersignup]}>
                         <View style={loginstyle.signupheader}>
                             <View style={loginstyle.containerlogo}>
@@ -186,7 +185,7 @@ class SignupForm1 extends PureComponent {
                         </View>
 
                         <View style={loginstyle.containerform}>
-                            <Text style={[styles.text, loginstyle.label]}>Nom d'utilisateur</Text>
+                            <Text style={[styles.text, loginstyle.label]}>Votre nom d'utilisateur</Text>
                             <TextInput
                                 style={[loginstyle.inputform, styles.text]}
                                 autoCapitalize="none" 
@@ -198,52 +197,52 @@ class SignupForm1 extends PureComponent {
                                 value={username}
                             />
 
-                            <Text style={[styles.text, loginstyle.label]}>Saisir votre Nom</Text>
+                            <Text style={[styles.text, loginstyle.label]}>Votre nom</Text>
                             <TextInput
                                 style={[loginstyle.inputform, styles.text]}
                                 autoCapitalize="none" 
                                 autoCorrect={false}
                                 placeholderTextColor='#b1b1b1'
-                                placeholder="Votre nom"
+                                placeholder='Votre nom'
                                 onChangeText={(val) => {this.setState({first_name:val})}}
                                 editable={is_loading ? false : true}
                                 value={first_name}
                             />
 
-                            <Text style={[styles.text, loginstyle.label]}>Saisir votre Prenom</Text>
+                            <Text style={[styles.text, loginstyle.label]}>Votre prenom</Text>
                             <TextInput
                                 style={[loginstyle.inputform, styles.text]}
                                 autoCapitalize="none" 
                                 autoCorrect={false}
                                 placeholderTextColor='#b1b1b1'
-                                placeholder="Votre nom"
+                                placeholder='Votre prenom'
                                 onChangeText={(val) => {this.setState({last_name:val})}}
                                 editable={is_loading ? false : true}
                                 value={last_name}
                             />
 
-                            <Text style={[styles.text, loginstyle.label]}>Saisir votre adresse email</Text>
+                            <Text style={[styles.text, loginstyle.label]}>Votre adresse email</Text>
                             <TextInput
                                 style={[loginstyle.inputform, styles.text]}
                                 autoCapitalize="none" 
                                 autoCorrect={false}
                                 placeholderTextColor='#b1b1b1'
-                                placeholder="Votre adresse email"
+                                placeholder='Votre Adresse Email'
                                 onChangeText={(val) => {this.setState({email:val})}}
                                 editable={is_loading ? false : true}
-                                keyboardType="email-address"
                                 value={email}
                             />
-                            <Text style={[styles.text, loginstyle.label]}>Saisir votre numéro de téléphone</Text>
+
+                            <Text style={[styles.text, loginstyle.label]}>Numéro de téléphone</Text>
                             <TextInput
                                 style={[loginstyle.inputform, styles.text]}
                                 autoCapitalize="none" 
                                 autoCorrect={false}
+                                keyboardType='numeric'
                                 placeholderTextColor='#b1b1b1'
-                                placeholder="Votre numéro de téléphone"
+                                placeholder='Votre numéro de téléphone'
                                 onChangeText={(val) => {this.setState({phone:val})}}
                                 editable={is_loading ? false : true}
-                                keyboardType="numeric"
                                 value={phone}
                             />
 
@@ -260,14 +259,14 @@ class SignupForm1 extends PureComponent {
                             </TouchableOpacity>     
                         </View>
                     </View>
-                </ScrollView>
-                <View style={loginstyle.copyrihtcontainer}>
-                    <Text style={[loginstyle.copyrtext, styles.textBold]}>© {currentyear.getFullYear()} Tous droits reservés à T-Cash.</Text>
-                    <TouchableOpacity style={loginstyle.partdevbtn}>
-                        <Text style={styles.text}>Dévelopé par Poly-H Technology</Text>
-                    </TouchableOpacity>
-                </View>
-            </ImageBackground>
+                    <View style={loginstyle.copyrihtcontainer}>
+                        <Text style={[loginstyle.copyrtext, styles.textBold]}>© {currentyear.getFullYear()} Tous droits reservés à T-Cash.</Text>
+                        <TouchableOpacity style={loginstyle.partdevbtn}>
+                            <Text style={styles.text}>Dévelopé par Poly-H Technology</Text>
+                        </TouchableOpacity>
+                    </View>
+                </ImageBackground>
+            </ScrollView>
         )
     }
 
@@ -276,7 +275,7 @@ class SignupForm1 extends PureComponent {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        ...bindActionCreators({}, dispatch),
+        ...bindActionCreators({switchLoginFormAction, switchSignupForm2Action}, dispatch),
     }
 };
 

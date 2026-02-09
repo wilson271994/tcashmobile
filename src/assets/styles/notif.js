@@ -2,7 +2,7 @@ import {StyleSheet, Dimensions} from 'react-native';
 import { color } from 'react-native-elements/dist/helpers';
 const {width, height} = Dimensions.get('window');
 
-export const transactionstyle = StyleSheet.create({
+export const notifstyle = StyleSheet.create({
     containertrans:{
         flex:1,
     },
@@ -14,6 +14,9 @@ export const transactionstyle = StyleSheet.create({
         marginRight:10,
         marginLeft:10,
         marginBottom:10
+    },
+    headerpage2:{
+        flexDirection:'row'
     },
     titlepage:{
         fontSize:16,
@@ -124,11 +127,12 @@ export const transactionstyle = StyleSheet.create({
         marginTop:10
     },
     backbtn:{
-        width:'10%'
+        width:'10%',
+        marginTop:-3
     },
     backicon:{
-        width:30,
-        height:30
+        width:25,
+        height:25
     },
     containertitledetail:{
         width:'70%',

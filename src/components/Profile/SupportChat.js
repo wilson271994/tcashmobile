@@ -2,40 +2,36 @@ import React, {PureComponent} from 'react';
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
 import { ImageBackground, ScrollView, Text, Button, SafeAreaView,TextInput, Slider, TouchableOpacity,RadioButton, View, Image } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import FontAwesome  from 'react-native-vector-icons/FontAwesome';
-import MaterialIcons  from 'react-native-vector-icons/MaterialIcons';
-import FontAwesome5  from 'react-native-vector-icons/FontAwesome5';
-import AntDesign  from 'react-native-vector-icons/AntDesign';
-import FontAwesome6  from 'react-native-vector-icons/FontAwesome6';
-import { store } from '../../reducers/store';
-import Moment from 'moment';
-import { Picker } from '@react-native-picker/picker'; // Pour lesupportchatsupportchatstyle listes déroulantes
-import 'moment/locale/fr';
-import cover from '../../assets/images/biblio.jpg';
 import { supportchatstyle } from '../../assets/styles/supportchat';
 
 class SupportChat extends PureComponent {
-
     constructor(props){
         super(props); 
         this.state = {
-       is_loading:false,
-            searchText : 
-            '',
+            is_loading:false,
+            searchText : '',
         };
 
     };
 
+    _backToHome = () => {
+        const {root_navigation} = this.props;
+        root_navigation.goBack();
+    }
+
     render(){
         const {is_loading} = this.props;
         return( 
-            <SafeAreaView style={supportchatstyle.safeArea}>
+            <View style={supportchatstyle.container}>
                 <View style={supportchatstyle.header}>
-                    <Image source={require('../../assets/images/group.png')} style={supportchatstyle.headerImage} />
+                    <TouchableOpacity 
+                        onPress={this._backToHome}
+                        style={supportchatstyle.backbtn}>
+                        <Image source={require('../../assets/images/back.png')} style={supportchatstyle.headerImage} />
+                    </TouchableOpacity>
                     <View style={supportchatstyle.headerInfo}>
-                    <Text style={supportchatstyle.headerTitle}>Service Client t-cash</Text>
-                    <Text style={supportchatstyle.headerSubtitle}>quelques minutes</Text>
+                        <Text style={supportchatstyle.headerTitle}>Conversation</Text>
+                        <Text style={supportchatstyle.headerSubtitle}>quelques minutes</Text>
                     </View>
                 </View>
 
@@ -72,7 +68,7 @@ class SupportChat extends PureComponent {
                     <Image source={require('../../assets/images/plus.png')} style={supportchatstyle.icon} />
                     </TouchableOpacity>
                 </View>
-            </SafeAreaView>
+            </View>
         );
     }
 
@@ -88,6 +84,7 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
     return {
+        root_navigation     : state.navigation.root_navigation
     }
 }
 

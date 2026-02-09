@@ -1,4 +1,4 @@
-import { IS_HEADER, PAGE_TITLE, ROOT_NAVIGATION, SET_HOME_PAGE, SET_PROFIL_PAGE, SET_SERVICE_PAGE, SET_TRANSACTION_PAGE } from "./actions/types"
+import { IS_HEADER, PAGE_TITLE, ROOT_NAVIGATION, SET_ACTIVATION_FORM, SET_HOME_PAGE, SET_LOGIN_FORM, SET_PROFIL_PAGE, SET_SERVICE_PAGE, SET_SIGNUP1_FORM, SET_SIGNUP2_FORM, SET_TRANSACTION_PAGE } from "./actions/types"
 
 
 const initialState = {
@@ -9,6 +9,12 @@ const initialState = {
     is_service_page     : false,
     is_transaction_page : false,
     is_profil_page      : false,
+
+    //auth
+    is_login_form       : true,
+    is_signup1_form     : false,
+    is_signup2_form     : false,
+    is_activation_form  : false,
 }
 
 const navigationReducer = ( state = initialState, action ) => {
@@ -53,6 +59,28 @@ const navigationReducer = ( state = initialState, action ) => {
             return {
                 ...state,
                 is_profil_page: action.value
+            }
+
+        //Auth
+        case SET_LOGIN_FORM:
+            return {
+                ...state, 
+                is_login_form: action.value
+            }
+        case SET_SIGNUP1_FORM:
+            return {
+                ...state,
+                is_signup1_form: action.value
+            }
+        case SET_SIGNUP2_FORM:
+            return {
+                ...state,
+                is_signup2_form: action.value
+            }
+        case SET_ACTIVATION_FORM:
+            return {
+                ...state,
+                is_activation_form: action.value
             }
 
         default:

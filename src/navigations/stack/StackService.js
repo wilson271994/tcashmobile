@@ -3,10 +3,10 @@ import React, { Component } from "react";
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
 import { createStackNavigator } from "@react-navigation/stack";
-import {Image, TextInput, TouchableOpacity, View, Text} from "react-native";
-import {styles} from "../../assets/styles";
-import { switchHeaderAction } from "../../reducers/actions";
-import service from "../../screens/service";
+import Service from "../../screens/Service";
+import Deposit from "../../components/Transaction/Deposit";
+import Transfer from "../../components/Transaction/Transfer";
+import Withdraw from "../../components/Transaction/Withdraw";
 
 const Stack = createStackNavigator();
 
@@ -17,30 +17,39 @@ class StackService extends Component {
         }
     }
 
-    _filterSearch = (text) => {
-    
-    }
-
-    ToggleSearchBar = () => {
-        const {navigation} = this.props; 
-        console.log('yesssssssssssss')
-    }
-
-    _backService = () => {
-        const {root_navigation} = this.props;  
-        switchHeaderAction(true);
-        root_navigation.goBack();
-    } 
-    
     render () {
         const {is_loading} = this.props;
         return ( 
             <Stack.Navigator>
                 <Stack.Screen 
                     name=" " 
-                    component={service} 
+                    component={Service} 
                     options={{
                         headerShown:false
+                    }}
+                />
+
+                <Stack.Screen
+                    name="Deposit"
+                    component={Deposit}
+                    options={{
+                        headerShown: false,
+                    }}
+                />
+
+                <Stack.Screen
+                    name="Transfer"
+                    component={Transfer}
+                    options={{
+                        headerShown: false,
+                    }}
+                />
+
+                <Stack.Screen
+                    name="Withdraw"
+                    component={Withdraw}
+                    options={{
+                        headerShown: false,
                     }}
                 />
 

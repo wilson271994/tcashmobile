@@ -1,189 +1,149 @@
 import React, {PureComponent} from 'react';
 import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
-import {View, Text, Image, TextInput, Modal,TouchableOpacity, ActivityIndicator, ImageBackground, ScrollView, Linking} from 'react-native';
+import {View, Text, Image, TextInput,TouchableOpacity, ActivityIndicator, ImageBackground, ScrollView, Linking} from 'react-native';
 import  {styles}  from '../../assets/styles';
 import Moment from 'moment';
 import 'moment/locale/fr';
-import Foundation  from 'react-native-vector-icons/Foundation';
-import Entypo  from 'react-native-vector-icons/Entypo';
-import FontAwesome  from 'react-native-vector-icons/FontAwesome';
-import { store } from '../../reducers/store';
 import { loginstyle } from '../../assets/styles/login';
-import { Dropdown } from 'react-native-element-dropdown';
-import AwesomeAlert from 'react-native-awesome-alerts';
-import { SignupAction } from '../../reducers/actions';
-
-const datagender = [ 
-    { label: 'Masculin', value: '0' },
-    { label: 'Féminin', value: '1' },
-];
-
-const account = [ 
-
-    { label: 'Particulier', value:'2'},
-    {label: 'Entreprise', value:'2'},
-    {label: 'Etudiant', value:'2'},
-    {label: 'Enseignant', value:'2'},
-    {label: 'Consultant', value:'2'},
-   
-
-];
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
+import { switchLoginFormAction, switchSignupForm2Action } from '../../navigations/rootNavigation';
 
 class SignupForm1 extends PureComponent {
     constructor(props){
         super(props);
         this.state = {
-            username:'',
-            email:'',
-            password1:'',
-            password2:'',
-            acceptCondition:false,
-            password1Visible:false,
-            password2Visible:false,
-            confidFocus:false,
-            gender:'',
-            is_alert:false,
-            alert_title:'',
-            alert_subtitle:''
+            username        : '',
+            first_name      : '',
+            last_name       : '',
+            email           : '',
+            phone           : '',
+            currentyear     : new Date(),
         } 
     };
 
-  
-
     componentDidMount(){
-
+        this._fillUpPersistData();
     }
 
-    _togglePass1Visible = () => {  
-        this.setState({password1Visible:!this.state.password1Visible});
-    } 
-
-    _togglePass2Visible = () => {  
-        this.setState({password2Visible:!this.state.password2Visible});
-    } 
-
-    _renderDropdownLabel = () => {
-        if (this.state.confidValue || this.state.confidFocus) {
-            return (
-            <Text style={[poststyle.label, this.state.confidFocus && { color: 'blue' }]}>
-                Dropdown label
-            </Text>
-            );
-        }
-        return null;
-    };
-
-    _onChangeAcceptCondition = () => {
-        this.setState({acceptCondition:!this.state.acceptCondition});
+    _fillUpPersistData = async () => {
+        const form1data = await AsyncStorage.getItem('DataForm1');
+        if(form1data !== null){
+            const unpackdata = JSON.parse(form1data);
+            if(unpackdata.username !== ''){
+                this.setState({username:unpackdata.username})
+            }
+            if(unpackdata.first_name !== ''){
+                this.setState({first_name:unpackdata.first_name})
+            }
+            if(unpackdata.last_name !== ''){
+                this.setState({last_name:unpackdata.last_name})
+            }
+            if(unpackdata.email !== ''){
+                this.setState({email:unpackdata.email})
+            }
+            if(unpackdata.phone !== ''){
+                this.setState({phone:unpackdata.phone})
+            }
+        }   
     }
 
-    _emailValidation = () => {
-        const {email} = this.state;
-        let reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
-        if (reg.test(email) === false) {
-            return false;
-        }
-        return true;
-    }
-
-    _passwordValidation = () => {
-        const {password1, password2} = this.state;
-        if (password1 != password2) {
-            return false;
-        }
-        return true;
-    }
-
-    _acceptConditionValidation = () => {
-        const {acceptCondition} = this.state;
-        if (acceptCondition) {
+    _usernameValidation = () => {
+        const {username} = this.state;
+        const regex = /^[a-zA-Z][a-zA-Z0-9_]{2,15}$/;
+        if (regex.test(username)) {
             return true;
         }
         return false;
     }
 
-    _usernameValidation = () => {
-        const {username} = this.state;
-        let reg = /^[a-zA-Z0-9.\_$@*!]{3,30}$/;
-        if (reg.test(username) === false) {
-            return false;
-        }
-        return true;
+    _emailValidation = () => {
+        const {email} = this.state;
+        return email.match(
+            /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        );
     }
 
+    _navigateToLogin = () => {
+        switchLoginFormAction(true);
+    }
 
-    _navigateToForm2 = () => {
+    _navigateToForm2 = async () => {
         const {navigation} = this.props;
-        navigation.navigate('SignupForm2');
-    }
-         
-     _authSignup = async () => {
-        const {is_loading, root_navigation} = this.props;
-        const {country, city,  password1, password2, street} = this.state;
+        const {username, first_name, last_name, email, phone} = this.state;
         if(
-            country !== '' &&
-            city !== '' &&
-            password1 !== '' &&
-                password2 !== '' &&
-            street !== '' &&
-            this._passwordValidation() &&
-                this._cityValidation() &&
-                this._countryValidation() &&
-                this._acceptConditionValidation() &&
-                this._dateofbirthValidation() &&
-                this._streetValidation() &&
-                this._authSignupAction()
+            username !== '' && this._usernameValidation() &&
+            email    !== '' && this._emailValidation()    &&
+            first_name  !== '' &&
+            last_name   !== '' &&
+            phone       !== ''
         ){
-            const data = {
-                country:country,
-                city:city,
-                dateofbirth:dateofbirth,
-                street:street,
-                password:password1,
-                confirm_password:password2,
-                device_type:'phone',
-                navigation:root_navigation,
-                
-            }
-            //LoginAction(data);
-            SignupAction(data);
-            this.scrollListReftop.scrollToEnd({animated : true});
+            const data = JSON.stringify({
+                username    : username,
+                first_name  : first_name,
+                last_name   : last_name,
+                email       : email,
+                phone       : phone
+            });
+            await AsyncStorage.setItem('DataForm1', data);
+            switchSignupForm2Action(true);
         }
-        // }else if(username === ''){
-        //     this.setState({is_alert:true});
-        //     this.setState({alert_subtitle:'Erreur de donnée!'})
-        //     this.setState({alert_subtitle:'Veuillez saisir votre nom d\'utilisateur.'})
-        // }else if(!this._usernameValidation()){
-        //     this.setState({is_alert:true});
-        //     this.setState({alert_subtitle:'Erreur de donnée!'})
-        //     this.setState({alert_subtitle:'Nom d\'utilisateur invalid. Le nom d\'utilisateur ne doit pas contenir d\'espace ni de tirai.'})
-        // }else if(password1 === ''){
-        //     this.setState({is_alert:true});
-        //     this.setState({alert_subtitle:'Erreur de donnée!'})
-        //     this.setState({alert_subtitle:'Veuillez saisir votre mot de passe.'})
-        // }else if(password2 === ''){
-        //     this.setState({is_alert:true});
-        //     this.setState({alert_subtitle:'Erreur de donnée!'})
-        //     this.setState({alert_subtitle:'Veuillez confirmer votre mot de passe.'})
-        // }else if(!this._passwordValidation()){
-        //     this.setState({is_alert:true});
-        //     this.setState({alert_subtitle:'Erreur de donnée!'})
-        //     this.setState({alert_subtitle:'Les mots de passe sont différents.'})
-        // }else if(email === ''){
-        //     this.setState({is_alert:true});
-        //     this.setState({alert_subtitle:'Erreur de donnée!'})
-        //     this.setState({alert_subtitle:'Veuillez saisir votre adresse email.'})
-        // }else if(!this._emailValidation()){
-        //     this.setState({is_alert:true});
-        //     this.setState({alert_subtitle:'Erreur de donnée!'})
-        //     this.setState({alert_subtitle:'Votre adresse email est incorrect.'})
-        // }else if(!this._acceptConditionValidation()){
-        //     this.setState({is_alert:true});
-        //     this.setState({alert_subtitle:'Erreur de donnée!'})
-        //     this.setState({alert_subtitle:'Veuillez lire et accepter les conditions d\'utilisation et la police de confidentialité.'})
-        // }
-    } 
+        if(username === ''){
+            Toast.show({
+                'type': 'error',
+                props: {
+                    title: 'Une erreur c\'est produite!',
+                    description: 'Veuillez renseigner votre nom d\'utilisateur.',
+                }
+            });
+        }
+        if(!this._usernameValidation()){
+            Toast.show({
+                'type': 'error',
+                props: {
+                    title: 'Une erreur c\'est produite!',
+                    description: 'Votre nom d\'utilisateur ne doit pas contenir des caractères spéciaux ni d\'espace.',
+                }
+            });
+        }
+        if(first_name === '' || last_name === ''){
+            Toast.show({
+                'type': 'error',
+                props: {
+                    title: 'Une erreur c\'est produite!',
+                    description: 'Veuillez renseigner votre nom et votre prenom.',
+                }
+            });
+        }
+        if(email === ''){
+            Toast.show({
+                'type': 'error',
+                props: {
+                    title: 'Une erreur c\'est produite!',
+                    description: 'Veuillez renseigner votre adresse email.',
+                }
+            });
+        }
+        if(!this._emailValidation()){
+            Toast.show({
+                'type': 'error',
+                props: {
+                    title: 'Une erreur c\'est produite!',
+                    description: 'Veuillez renseigner une adresse email valide.',
+                }
+            });
+        }
+        if(phone === ''){
+            Toast.show({
+                'type': 'error',
+                props: {
+                    title: 'Une erreur c\'est produite!',
+                    description: 'Veuillez renseigner votre numéro de téléphone.',
+                }
+            });
+        }
+    }
 
     _closeAlert = () => {
         this.setState({is_alert:false});
@@ -195,106 +155,118 @@ class SignupForm1 extends PureComponent {
 
     render(){
         const {is_loading} = this.props;
-        const {password1Visible, password2Visible, acceptCondition, confidFocus, gender, is_alert, alert_title, alert_subtitle} = this.state;
+        const {
+            username,
+            first_name,
+            last_name,
+            email,
+            phone,
+            currentyear
+        } = this.state;
         return(
-            <View style={[styles.card, loginstyle.containerSignup]}>
-                <ScrollView 
-                    ref={(ref) => {this.scrollListReftop = ref}}>
-                    <ImageBackground 
-                    source={require('../../assets/images/background.jpg')}
-                        style={[loginstyle.itemslidersignup]}
-                        >  
-                        <View style={loginstyle.containersignup}>
-                            <Image source={require('../../assets/images/t_cash.png')} style={loginstyle.iconmenup1} />
-                            <Text style={loginstyle.text1}>Créer un compte</Text>
-                            <Text style={loginstyle.text4}>Créez un compte T-cash et profitez</Text>
-
-                          
-                            <View style={loginstyle.blocinupt2}>
-                                <TextInput
-                                    style={[loginstyle.inputtextsignup, styles.text]}
-                                    autoCapitalize="none" 
-                                    autoCorrect={false}
-                                    placeholderTextColor='#b1b1b1'
-                                    placeholder="Nom d'utilisateur"
-                                    onChangeText={(val) => {this.setState({email:val})}}
-                                    editable={is_loading ? false : true}
-                                />
+            <ScrollView overScrollMode="never">  
+                <ImageBackground source={require('../../assets/images/background.jpg')}>  
+                    <View style={[loginstyle.containersignup]}>
+                        <View style={loginstyle.signupheader}>
+                            <View style={loginstyle.containerlogo}>
+                                <TouchableOpacity onPress={this._navigateToLogin}
+                                    style={loginstyle.closeButton}>
+                                    <Image 
+                                        source={require('../../assets/images/back-w.png')} 
+                                        style={loginstyle.closeicon} 
+                                    />
+                                </TouchableOpacity>
+                                <View style={loginstyle.logoiconcont}>
+                                    <Image source={require('../../assets/images/t_cash.png')} style={loginstyle.logocomp} />
+                                </View>
                             </View>
+                            <Text style={[styles.text, loginstyle.text1]}>Créer un compte</Text>
+                            <Text style={[styles.text, loginstyle.text4]}>Créez un compte T-cash et profitez</Text>
+                        </View>
 
-                             <View style={loginstyle.blocinupt2}>
-                                <TextInput
-                                    style={[loginstyle.inputtextsignup, styles.text]}
-                                    autoCapitalize="none" 
-                                    autoCorrect={false}
-                                    placeholderTextColor='#b1b1b1'
-                                    placeholder='Votre nom'
-                                    onChangeText={(val) => {this.setState({email:val})}}
-                                    editable={is_loading ? false : true}
-                                />
-                            </View>
+                        <View style={loginstyle.containerform}>
+                            <Text style={[styles.text, loginstyle.label]}>Votre nom d'utilisateur</Text>
+                            <TextInput
+                                style={[loginstyle.inputform, styles.text]}
+                                autoCapitalize="none" 
+                                autoCorrect={false}
+                                placeholderTextColor='#b1b1b1'
+                                placeholder="Nom d'utilisateur"
+                                onChangeText={(val) => {this.setState({username:val})}}
+                                editable={is_loading ? false : true}
+                                value={username}
+                            />
 
-                             <View style={loginstyle.blocinupt2}>
-                                <TextInput
-                                    style={[loginstyle.inputtextsignup, styles.text]}
-                                    autoCapitalize="none" 
-                                    autoCorrect={false}
-                                    placeholderTextColor='#b1b1b1'
-                                    placeholder='Votre prénom'
-                                    onChangeText={(val) => {this.setState({email:val})}}
-                                    editable={is_loading ? false : true}
-                                />
-                            </View>
+                            <Text style={[styles.text, loginstyle.label]}>Votre nom</Text>
+                            <TextInput
+                                style={[loginstyle.inputform, styles.text]}
+                                autoCapitalize="none" 
+                                autoCorrect={false}
+                                placeholderTextColor='#b1b1b1'
+                                placeholder='Votre nom'
+                                onChangeText={(val) => {this.setState({first_name:val})}}
+                                editable={is_loading ? false : true}
+                                value={first_name}
+                            />
 
-                             <View style={loginstyle.blocinupt2}>
-                                <TextInput
-                                    style={[loginstyle.inputtextsignup, styles.text]}
-                                    autoCapitalize="none" 
-                                    autoCorrect={false}
-                                    placeholderTextColor='#b1b1b1'
-                                    placeholder='Votre Adresse Email'
-                                    onChangeText={(val) => {this.setState({email:val})}}
-                                    editable={is_loading ? false : true}
-                                />
-                            </View>
+                            <Text style={[styles.text, loginstyle.label]}>Votre prenom</Text>
+                            <TextInput
+                                style={[loginstyle.inputform, styles.text]}
+                                autoCapitalize="none" 
+                                autoCorrect={false}
+                                placeholderTextColor='#b1b1b1'
+                                placeholder='Votre prenom'
+                                onChangeText={(val) => {this.setState({last_name:val})}}
+                                editable={is_loading ? false : true}
+                                value={last_name}
+                            />
 
-                            <View style={loginstyle.footersignup}>
-                                <TouchableOpacity 
-                                    disabled={is_loading ? true : false}
-                                    style={loginstyle.btnnext} 
-                                    onPress={this._navigateToForm2}>
+                            <Text style={[styles.text, loginstyle.label]}>Votre adresse email</Text>
+                            <TextInput
+                                style={[loginstyle.inputform, styles.text]}
+                                autoCapitalize="none" 
+                                autoCorrect={false}
+                                placeholderTextColor='#b1b1b1'
+                                placeholder='Votre Adresse Email'
+                                onChangeText={(val) => {this.setState({email:val})}}
+                                editable={is_loading ? false : true}
+                                value={email}
+                            />
+
+                            <Text style={[styles.text, loginstyle.label]}>Numéro de téléphone</Text>
+                            <TextInput
+                                style={[loginstyle.inputform, styles.text]}
+                                autoCapitalize="none" 
+                                autoCorrect={false}
+                                keyboardType='numeric'
+                                placeholderTextColor='#b1b1b1'
+                                placeholder='Votre numéro de téléphone'
+                                onChangeText={(val) => {this.setState({phone:val})}}
+                                editable={is_loading ? false : true}
+                                value={phone}
+                            />
+
+                            <TouchableOpacity onPress={this._navigateToForm2}
+                                style={loginstyle.submitButton}
+                                disabled={is_loading ? true : false}
+                            >
                                 {
                                     is_loading ?
-                                        <View style={loginstyle.loaderbtn}>
-                                            <ActivityIndicator size="small" color="#fff" />
-                                        </View>  
+                                        <ActivityIndicator size="small" color="#fff" />
                                     :
-                                        <Text style={[styles.textBold, loginstyle.textbtnsubmit]}>Suivant</Text>
+                                        <Text style={[styles.textBold, loginstyle.submitBtnText]}>Continuer</Text>
                                 }
-                                </TouchableOpacity>       
-                            </View>
-
+                            </TouchableOpacity>     
                         </View>
-                    </ImageBackground>
-                </ScrollView>
-
-                {/* Manage Error Alert */}
-                <AwesomeAlert
-                    show={false}
-                    title={alert_title}
-                    titleStyle={[styles.textBold, styles.titlealert]}
-                    message={alert_subtitle}
-                    messageStyle={[styles.text, styles.descriptionalert]}
-                    closeOnTouchOutside={true}
-                    closeOnHardwareBackPress={false}
-                    showCancelButton={false}
-                    showConfirmButton={true}
-                    confirmText="Corriger"
-                    confirmButtonStyle={[styles.text, styles.btnalert]}
-                    confirmButtonColor="#060064"
-                    onConfirmPressed={this._closeAlert}
-                />
-            </View>
+                    </View>
+                    <View style={loginstyle.copyrihtcontainer}>
+                        <Text style={[loginstyle.copyrtext, styles.textBold]}>© {currentyear.getFullYear()} Tous droits reservés à T-Cash.</Text>
+                        <TouchableOpacity style={loginstyle.partdevbtn}>
+                            <Text style={styles.text}>Dévelopé par Poly-H Technology</Text>
+                        </TouchableOpacity>
+                    </View>
+                </ImageBackground>
+            </ScrollView>
         )
     }
 
@@ -303,7 +275,7 @@ class SignupForm1 extends PureComponent {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        ...bindActionCreators({}, dispatch),
+        ...bindActionCreators({switchLoginFormAction, switchSignupForm2Action}, dispatch),
     }
 };
 

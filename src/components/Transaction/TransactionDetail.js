@@ -7,29 +7,19 @@ import { store } from '../../reducers/store';
 import { IS_AUTH_ERROR, PAGE_TITLE, ROOT_NAVIGATION } from '../../reducers/actions/types';
 import Moment from 'moment';
 import 'moment/locale/fr';
-import cover from '../../assets/images/biblio.jpg';
 import { transactionstyle } from '../../assets/styles/transaction';
-import { switchHeaderAction } from '../../reducers/actions';
+import { BASE_URL } from '../../api/config';
 
 class TransactionDetail extends PureComponent {
     constructor(props){
         super(props);
         this.state = {
             isScroll : false,
-            isVisibleTckCrModal : false
         }
     };
 
-
-    _navigateToSupportChat = () => {
-        const {navigation} = this.props; 
-        store.dispatch({type:ROOT_NAVIGATION, value:navigation});
-        navigation.navigate('SupportChat');
-    }
-
-    _backToTransaction = () => {
+    _backToHome = () => {
         const {root_navigation} = this.props;  
-        switchHeaderAction(true);
         root_navigation.goBack();
     } 
 
@@ -40,44 +30,32 @@ class TransactionDetail extends PureComponent {
         console.log(data)
     }
 
-    _openModalTicketCreation = () => {
-        this.setState({isVisibleTckCrModal:true});
-    }
-
-    _closeModalTicketCreation = () => {
-        this.setState({isVisibleTckCrModal:false});
-    }
-
     render(){
-        const {is_loading} = this.props;
-        const {isVisibleTckCrModal} = this.state;
+        const {transaction_detail} = this.props;
         return( 
             <ImageBackground source={require('../../assets/images/background.jpg')} style={styles.backgroundapp}>
-                <ScrollView 
-                    onScrollBeginDrag={this._toggleScrollView} 
-                    contentContainerStyle={transactionstyle.scrollContainer}>
-
+                <ScrollView onScrollBeginDrag={this._toggleScrollView} style={transactionstyle.containerdetail}>
                     <View style={transactionstyle.headertransdetail}>
                         <TouchableOpacity 
-                            onPress={this._backToTransaction}
+                            onPress={this._backToHome}
                             style={transactionstyle.backbtn}>
-                            <Image source={require('../../assets/images/back.png')} style={transactionstyle.backicon} />
+                            <Image source={require('../../assets/images/back-w.png')} style={transactionstyle.backicon} />
                         </TouchableOpacity>
                         <View style={transactionstyle.containertitledetail}>
                             <Text 
                                 numberOfLines={1}
-                                style={[styles.textBold, transactionstyle.titledetailpage]}>Transaction Nº T-CASH012</Text>
+                                style={[styles.textBold, transactionstyle.titledetailpage]}>Transaction Nº T-CASH{transaction_detail.id}</Text>
                         </View>
                     </View>
 
                     <View style={transactionstyle.detailrubrique}>
                         <View style={transactionstyle.containerlogotransdetail}>
-                            <Image source={require('../../assets/images/mtn_tcash.png')} style={transactionstyle.logotransdetail} />
+                            <Image source={{ uri : BASE_URL + transaction_detail.service.logo }} style={transactionstyle.logotransdetail} />
                         </View>
                         <View style={transactionstyle.pricedatetransdetail}>
-                            <Text style={[styles.textBold, transactionstyle.pricedetailpage]}>11 000,00 FCFA</Text>
-                            <Text style={[styles.text, transactionstyle.phonedetailpage]}>De +237****221</Text>
-                            <Text style={[styles.text, transactionstyle.datedetailpage]}>Mardi, 05 aout 2025, 16:59</Text>
+                            <Text style={[styles.textBold, transactionstyle.pricedetailpage]}>{transaction_detail.initial_amount} {transaction_detail.currency === 'XAF' ? 'FCFA' : transaction_detail.currency}</Text>
+                            <Text style={[styles.text, transactionstyle.phonedetailpage]}>Compte {transaction_detail.mobileWalletNumber}</Text>
+                            <Text style={[styles.text, transactionstyle.datedetailpage]}>De {transaction_detail.created_day} à {transaction_detail.created_time}</Text>
                         </View>
                     </View>
 
@@ -85,17 +63,17 @@ class TransactionDetail extends PureComponent {
                         <Text style={[styles.textBold, transactionstyle.rwoitemtitle]}>Détail du paiement</Text>
                         <View style={transactionstyle.rowitem}>
                             <Text style={[styles.text, transactionstyle.rowitemlabel]}>Statut</Text>
-                            <Text style={[styles.textBold, transactionstyle.rowitemvalue]}>Terminé</Text>
-                        </View>
-
-                        <View style={transactionstyle.rowitem}>
-                            <Text style={[styles.text, transactionstyle.rowitemlabel]}>Catégories</Text>
-                            <Text style={[styles.textBold, transactionstyle.rowitemvalue]}>Recharge</Text>
+                                {
+                                    transaction_detail.transactionStatus === 'SUCCESS' ?
+                                        <Text style={[styles.textBold, transactionstyle.rowitemvalue]}>Réussie</Text>
+                                    :
+                                        <Text style={[styles.textBold, transactionstyle.rowitemvalue]}>Échouée</Text>
+                                }
                         </View>
 
                         <View style={transactionstyle.rowitem}>
                             <Text style={[styles.text, transactionstyle.rowitemlabel]}>Nom du service</Text>
-                            <Text style={[styles.textBold, transactionstyle.rowitemvalue]}>Recharge compte T-cash</Text>
+                            <Text style={[styles.textBold, transactionstyle.rowitemvalue]}>{transaction_detail.service.name}</Text>
                         </View>
                     </View>
                     
@@ -104,32 +82,41 @@ class TransactionDetail extends PureComponent {
 
                         <View style={transactionstyle.rowitem}>
                             <Text style={[styles.text, transactionstyle.rowitemlabel]}>Wallet</Text>
-                            <Text style={[styles.textBold, transactionstyle.rowitemvalue]}>Orange Money</Text>
+                            <Text style={[styles.textBold, transactionstyle.rowitemvalue]}>
+                                {
+                                    transaction_detail.service.service_code === 1001 ?
+                                        'Opérateur Mobile Money'
+                                    :
+                                        'Portefeuille T-cash'
+                                }
+                            </Text>
                         </View>
 
                         <View style={transactionstyle.rowitem}>
-                            <Text style={[styles.text, transactionstyle.rowitemlabel]}>Numero anrede</Text>
-                            <Text style={[styles.textBold, transactionstyle.rowitemvalue]}>+237****221</Text>
+                            <Text style={[styles.text, transactionstyle.rowitemlabel]}>Compte de la source</Text>
+                            <Text style={[styles.textBold, transactionstyle.rowitemvalue]}>
+                                {
+                                    transaction_detail.service.service_code === 1001 ?
+                                        transaction_detail.mobileWalletNumber
+                                    :
+                                        'Mon compte T-Cash'
+                                }
+                            </Text>
                         </View>
 
                         <View style={transactionstyle.rowitem}>
                             <Text style={[styles.text, transactionstyle.rowitemlabel]}>Montant</Text>
-                            <Text style={[styles.textBold, transactionstyle.rowitemvalue]}>11 000,00 FCFA</Text>
+                            <Text style={[styles.textBold, transactionstyle.rowitemvalue]}>{transaction_detail.initial_amount} {transaction_detail.currency === 'XAF' ? 'FCFA' : transaction_detail.currency}</Text>
                         </View>
 
                         <View style={transactionstyle.rowitem}>
                             <Text style={[styles.text, transactionstyle.rowitemlabel]}>Total des frais</Text>
-                            <Text style={[styles.textBold, transactionstyle.rowitemvalue]}>Gratuit</Text>
+                            <Text style={[styles.textBold, transactionstyle.rowitemvalue]}>{Number(transaction_detail.final_amount) - Number(transaction_detail.initial_amount)} {transaction_detail.currency === 'XAF' ? 'FCFA' : transaction_detail.currency}</Text>
                         </View>
 
                         <View style={transactionstyle.rowitem}>
-                            <Text style={[styles.text, transactionstyle.rowitemlabel]}>Montant payé</Text>
-                            <Text style={[styles.textBold, transactionstyle.rowitemvalue]}>11 000,00 FCFA</Text>
-                        </View>
-
-                        <View style={transactionstyle.rowitem}>
-                            <Text style={[styles.text, transactionstyle.rowitemlabel]}>Origine</Text>
-                            <Text style={[styles.textBold, transactionstyle.rowitemvalue]}>Cameroun</Text>
+                            <Text style={[styles.text, transactionstyle.rowitemlabel]}>Montant total payé</Text>
+                            <Text style={[styles.textBold, transactionstyle.rowitemvalue]}>{transaction_detail.final_amount} {transaction_detail.currency === 'XAF' ? 'FCFA' : transaction_detail.currency}</Text>
                         </View>
                     </View>
 
@@ -138,12 +125,19 @@ class TransactionDetail extends PureComponent {
 
                             <View style={transactionstyle.rowitem}>
                                 <Text style={[styles.text, transactionstyle.rowitemlabel]}>Bénéficiaire</Text>
-                                <Text style={[styles.textBold, transactionstyle.rowitemvalue]}>Compte T_cash</Text>
+                                <Text style={[styles.textBold, transactionstyle.rowitemvalue]}>
+                                    {
+                                        transaction_detail.service.service_code === 1001 ?
+                                            transaction_detail.mobileWalletNumber
+                                        :
+                                            'Mon compte T-Cash'
+                                    }
+                                </Text>
                             </View>
 
                             <View style={transactionstyle.rowitem}>
                                 <Text style={[styles.text, transactionstyle.rowitemlabel]}>Référence</Text>
-                                <Text style={[styles.textBold, transactionstyle.rowitemvalue]}>1234-5678-9123</Text>
+                                <Text style={[styles.textBold, transactionstyle.rowitemvalue]}>{transaction_detail.transaction_ref}</Text>
                             </View>
                     </View>
 
@@ -157,13 +151,16 @@ class TransactionDetail extends PureComponent {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        ...bindActionCreators({switchHeaderAction}, dispatch),
+        ...bindActionCreators({
+
+        }, dispatch),
     }
 };
 
 const mapStateToProps = (state) => {
     return {
-        root_navigation:state.navigation.root_navigation
+        root_navigation     : state.navigation.root_navigation,
+        transaction_detail  : state.detail.transaction_detail
     }
 }
 

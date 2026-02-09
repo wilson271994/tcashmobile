@@ -6,13 +6,13 @@ import Moment from 'moment';
 import 'moment/locale/fr';
 import {switchHeaderAction, TransactionListAction} from '../../reducers/actions/index.js';
 import { styles } from '../../assets/styles/index.js';
-import { transactionstyle } from '../../assets/styles/transaction.js';
 import IconFA  from 'react-native-vector-icons/FontAwesome';
 import { ROOT_NAVIGATION, TRANSACTION_DETAIL } from '../../reducers/actions/types.js';
 import { store } from '../../reducers/store.js';
 import { BASE_URL } from '../../api/config.js';
+import { notifstyle } from '../../assets/styles/notif.js';
 
-class TransactionIndex extends PureComponent {
+class NotificationIndex extends PureComponent {
     constructor(props){
         super(props); 
         this.state = {
@@ -25,13 +25,18 @@ class TransactionIndex extends PureComponent {
     };
 
     componentDidMount(){
-        this._fechtData();
+        //this._fechtData();
     }
 
     _fechtData = async () => {
         const {user_token} = this.props;
         TransactionListAction(user_token);
-    } 
+    }
+
+    _backToHome = () => {
+        const {root_navigation} = this.props;
+        root_navigation.goBack();
+    }
 
     _onRefresh = async () => { 
         this.setState({refreshing:true}) 
@@ -49,7 +54,7 @@ class TransactionIndex extends PureComponent {
         const {is_loading} = this.props;
         if (!is_loading) return null;
         return (
-            <View style={transactionstyle.footerlist}> 
+            <View style={notifstyle.footerlist}> 
                 <ActivityIndicator size="small" />
             </View>
         );
@@ -60,42 +65,42 @@ class TransactionIndex extends PureComponent {
             <View>
                 <TouchableOpacity
                     onPress={this. _navigateTotransactionDetail.bind(this, item)}
-                    style={transactionstyle.historytransitem}>
-                    <View style={transactionstyle.histcovercontainer}>
+                    style={notifstyle.historytransitem}>
+                    <View style={notifstyle.histcovercontainer}>
                         <Image
                             source={{ uri : BASE_URL + item.service.logo }}
-                            style={transactionstyle.historycover} />
+                            style={notifstyle.historycover} />
                     </View>
 
-                    <View style={transactionstyle.historycontent}>
-                        <Text style={[styles.textBold, transactionstyle.histtranstype]}>{item.service.name}</Text>
-                        <Text style={[styles.textItalicBold, transactionstyle.histransamount]}>
+                    <View style={notifstyle.historycontent}>
+                        <Text style={[styles.textBold, notifstyle.histtranstype]}>{item.service.name}</Text>
+                        <Text style={[styles.textItalicBold, notifstyle.histransamount]}>
                             {item.service.service_code === 1001 ? '+ ' : '- '  }{item.initial_amount} {item.currency === 'XAF' ? 'FCFA' : item.currency}
                         </Text>
-                        <Text style={[styles.text, transactionstyle.histtransauthor]}>Auteur : {item.MobileWcustomerName}</Text>
+                        <Text style={[styles.text, notifstyle.histtransauthor]}>Auteur : {item.MobileWcustomerName}</Text>
                     </View>
 
-                    <View style={transactionstyle.historystatus}>
+                    <View style={notifstyle.historystatus}>
                         {
                             item.transactionStatus === 'SUCCESS' ?
-                                <Text style={[styles.textItalicBold, transactionstyle.histtransstatussuccess]}>Réussie</Text>
+                                <Text style={[styles.textItalicBold, notifstyle.histtransstatussuccess]}>Réussie</Text>
                             :
-                                <Text style={[styles.textItalicBold, transactionstyle.histtransstatusfail]}>Échouée</Text>
+                                <Text style={[styles.textItalicBold, notifstyle.histtransstatusfail]}>Échouée</Text>
                         }
                         <Text 
                             numberOfLines={3}
-                            style={[styles.text, transactionstyle.histtranstime]}>{item.created_day} à {item.created_time}</Text>
+                            style={[styles.text, notifstyle.histtranstime]}>{item.created_day} à {item.created_time}</Text>
                     </View>
                 </TouchableOpacity>
-                <View style={transactionstyle.separatoritemhist} />
+                <View style={notifstyle.separatoritemhist} />
             </View>
         )
     }
 
     _renderEmpty = (item) => {
         return (
-            <View style={transactionstyle.emptycard}>
-                <Text style={[styles.text, transactionstyle.emptylisttext]}>Aucune Transaction pour l'instant.</Text>
+            <View style={notifstyle.emptycard}>
+                <Text style={[styles.text, notifstyle.emptylisttext]}>Aucune notification pour l'instant.</Text>
             </View>
         )
     }
@@ -104,21 +109,28 @@ class TransactionIndex extends PureComponent {
         const {navigation, is_loading, transaction_list} = this.props; 
         const {refreshing} = this.state;
         return(
-            <View style={transactionstyle.containertrans}>
+            <View style={notifstyle.containertrans}>
                 <ImageBackground 
                     source={require('../../assets/images/background.jpg')} 
                     style={styles.backgroundapp}
                     resizeMode="cover"
                 >
-                    <View style={transactionstyle.headerpage}>
-                        <Text style={[styles.textBold, transactionstyle.titlepage]}>Liste des transactions</Text>
-                        <TouchableOpacity style={transactionstyle.searchtrans}>
-                            <Text style={[styles.text, transactionstyle.searchtext]}>Recherche...</Text> 
-                            <IconFA name='search' style={transactionstyle.logosearch} />
+                    <View style={notifstyle.headerpage}>
+                        <View style={notifstyle.headerpage2}>
+                            <TouchableOpacity 
+                                onPress={this._backToHome}
+                                style={notifstyle.backbtn}>
+                                <Image source={require('../../assets/images/back.png')} style={notifstyle.backicon} />
+                            </TouchableOpacity>
+                            <Text style={[styles.textBold, notifstyle.titlepage]}>Notifications</Text>
+                        </View>
+                        <TouchableOpacity style={notifstyle.searchtrans}>
+                            <Text style={[styles.text, notifstyle.searchtext]}>Recherche...</Text> 
+                            <IconFA name='search' style={notifstyle.logosearch} />
                         </TouchableOpacity>
                     </View>
 
-                    <View style={transactionstyle.containeritem}>
+                    <View style={notifstyle.containeritem}>
                         <FlatList 
                             data={transaction_list}
                             renderItem={({item, index}) => this._renderItem(item, index)}
@@ -148,8 +160,9 @@ const mapStateToProps = (state) => {
         user_infos          : state.auth.user_infos,
         user_token          : state.auth.user_token,
         is_loading          : state.loader.is_loading,
-        transaction_list    : state.list.transaction_list
+        transaction_list    : state.list.transaction_list,
+        root_navigation     : state.navigation.root_navigation
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps, null)(TransactionIndex);
+export default connect(mapStateToProps, mapDispatchToProps, null)(NotificationIndex);

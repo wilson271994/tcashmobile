@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import {connect} from 'react-redux';
 import { SafeAreaView, Platform, Text } from 'react-native';
 import { styles } from '../assets/styles/index.js';
-import {switchHeaderAction} from '../reducers/actions/index.js';
+import {TransactionListAction} from '../reducers/actions/index.js';
 import TransactionIndex from '../components/Transaction/TransactionIndex.js';
 
 class Transaction extends PureComponent {
@@ -13,17 +13,20 @@ class Transaction extends PureComponent {
     };
 
     componentDidMount(){
-        this._fechtData();
+        //this._fechtData();
     } 
 
     _fechtData = async () => {
-        //await switchHeaderAction(true);  
+        const {user_token} = this.props;
+        TransactionListAction(user_token);
     } 
 
     render(){
         const {navigation} = this.props; 
         return(
-            <TransactionIndex navigation={navigation} />
+            <TransactionIndex 
+                navigation={navigation} 
+            />
         )
     }
 } 
@@ -31,14 +34,15 @@ class Transaction extends PureComponent {
 const mapDispatchToProps = (dispatch) => {
     return {
         ...bindActionCreators({
-            switchHeaderAction
+            TransactionListAction
         }, dispatch),
     }
 };
 
 const mapStateToProps = (state) => {
     return {
-        user_infos:state.auth.user_infos,
+        user_infos  : state.auth.user_infos,
+        user_token  : state.auth.user_token,
     }
 }
 

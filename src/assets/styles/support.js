@@ -3,20 +3,13 @@ import { color } from 'react-native-elements/dist/helpers';
 const {width, height} = Dimensions.get('window');
 
 export const supportstyle = StyleSheet.create({
-
-    container:{
-        backgroundColor:'#fff',
+    backbtn:{
+        width:'10%',
+        marginTop:0
     },
-    container2: {
-        backgroundColor: '#F5F5F5',
-        justifyContent: 'flex-end'
-    },
-    container3:{
-        backgroundColor:'#fff',
-        borderRadius:20,
-        height: 'auto',
-        marginTop:15,
-       
+    backicon:{
+        width:25,
+        height:25
     },
     scrollContainer: {
         padding: 20,
@@ -34,7 +27,6 @@ export const supportstyle = StyleSheet.create({
         left: 20,
         top: 25,
         borderRadius: 30,
-
     },
     Text1:{
         fontSize: 18,
@@ -52,9 +44,8 @@ export const supportstyle = StyleSheet.create({
         left:15,
         top:8,
         zIndex:999
-      },
+    },
     btnsubmit:{
-        
         borderRadius:30,
         backgroundColor:'#ECB817' ,
         borderColor:'#fff',
@@ -121,18 +112,18 @@ export const supportstyle = StyleSheet.create({
     select:{
         
     },
-   image:{
-    borderRadius:20,
-    marginTop:20,
-   },
-   textbtnsubmit:{
-    fontSize:20,
-    color:'#fff',
-    left:30,
-    paddingTop:5,
-    
-   },
-     btn:{
+    image:{
+        borderRadius:20,
+        marginTop:20,
+    },
+    textbtnsubmit:{
+        fontSize:20,
+        color:'#fff',
+        left:30,
+        paddingTop:5,
+        
+    },
+    btn:{
         borderRadius:30,
         backgroundColor:"#6dcabb",
         borderColor:'#fff',
@@ -154,119 +145,170 @@ export const supportstyle = StyleSheet.create({
         left:130,
         top:8,
         zIndex:999,
-      },
+    },
 
+    //Chat Support style
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+    },
+    header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 15,
+        backgroundColor: '#f8f8f8',
+        borderBottomWidth: 1,
+        borderBottomColor: '#ddd',
+    },
+    backButton: {
+        paddingRight: 15,
+    },
+    backIcon: {
+        width: 24,
+        height: 24,
+        tintColor: '#333',
+    },
+    headerTitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#333',
+    },
+    conversationsList: {
+        flex: 1,
+        padding: 10,
+    },
+    conversationItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: 'white',
+        padding: 15,
+        borderRadius: 10,
+        marginBottom: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.1,
+        shadowRadius: 2,
+        elevation: 2,
+    },
+    profileImage: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        marginRight: 15,
+    },
+    conversationDetails: {
+        flex: 1,
+    },
+    conversationSender: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#333',
+    },
+    conversationTime: {
+        fontSize: 14,
+        color: '#999',
+        marginTop: 2,
+    },
+    unreadIndicator: {
+        width: 10,
+        height: 10,
+        borderRadius: 5,
+        backgroundColor: '#FF6347', // Couleur rouge pour l'indicateur
+    },
+    fab: {
+        position: 'absolute',
+        bottom: 100,
+        right: 20,
+        width: 50,
+        height: 50,
+        borderRadius: 30,
+        backgroundColor: '#6DCABB', // Couleur verte
+        justifyContent: 'center',
+        alignItems: 'center',
+        elevation: 5,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+    },
+    fabIcon: {
+        width: 40,
+        height: 40,
+        tintColor: 'white',
+    },
+    emptycard:{
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 5,
+            height: 5
+        },
+        shadowOpacity: 0.6,
+        backgroundColor:"#fff",
+        elevation: 2,
+        borderRadius:5,
+        padding:95
+    },
+    footerlist:{
+        paddingVertical: 20,
+    },
 
+    //Faq style
+    headefaq: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 15,
+        backgroundColor: '#fff',
+        borderBottomWidth: 1,
+        borderBottomColor: '#ddd',
+        marginBottom:5,
+        marginTop:5
+    },
+    faqItemcard: {
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        padding: 15,
+        borderRadius: 5,
+        marginBottom: 10,
+        marginLeft:5,
+        marginRight:5,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.1,
+        shadowRadius: 2,
+        elevation: 2,
+    },
+    faqItem: {
+        flexDirection: 'row',
+    },
+    fapitemtext:{
+        width:'90%'
+    },
+    faqquestiontext: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#333',
+    },
+    faqbtncontainer:{
+        width:'10%'
+    },
+    faqbtn:{
+        height:30,
+        alignItems:'center'
+    },
+    faqbtnicon:{
+        fontSize:20,
+        color:'#000'
+    },
+    containerdetailfaq:{
+        marginTop:10,
+        borderTopColor:'#eee',
+        borderTopWidth:1,
+        paddingTop:10
+    },
+    titledetailfaq:{
+        fontSize:15,
+        color:'#666',
+        marginBottom:5
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      container: {
-    flex: 1,
-    backgroundColor: '#E0E0E0', // Fond gris clair
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 15,
-    backgroundColor: '#f8f8f8',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-  },
-  backButton: {
-    paddingRight: 15,
-  },
-  backIcon: {
-    width: 24,
-    height: 24,
-    tintColor: '#333',
-  },
-  headerTitle: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  conversationsList: {
-    flex: 1,
-    padding: 10,
-  },
-  conversationItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 2,
-  },
-  profileImage: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    marginRight: 15,
-  },
-  conversationDetails: {
-    flex: 1,
-  },
-  conversationSender: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  conversationTime: {
-    fontSize: 14,
-    color: '#999',
-    marginTop: 2,
-  },
-  unreadIndicator: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    backgroundColor: '#FF6347', // Couleur rouge pour l'indicateur
-  },
-  fab: {
-    position: 'absolute',
-    bottom: 20,
-    right: 20,
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: '#6DCABB', // Couleur verte
-    justifyContent: 'center',
-    alignItems: 'center',
-    elevation: 5,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-  },
-  fabIcon: {
-    width: 30,
-    height: 30,
-    tintColor: 'white',
-  },
 })

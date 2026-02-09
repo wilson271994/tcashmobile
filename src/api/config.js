@@ -1,10 +1,10 @@
 import { AXIO_PERCENT_REQUEST } from "../reducers/actions/types";
 import { store } from "../reducers/store";
 
-// export const BASE_URL="https://t-cash.ca/"
+export const BASE_URL="https://t-cash.ca"
 
 //link local server
-export const BASE_URL="http://10.0.2.2:8000" 
+//export const BASE_URL="http://10.0.2.2:8000" 
 
 const onUploadProgress = (progressEvent) => {
     const { loaded, total } = progressEvent;

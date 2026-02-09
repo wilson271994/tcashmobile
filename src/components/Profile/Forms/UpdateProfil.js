@@ -7,6 +7,7 @@ import { styles } from '../../../assets/styles/index.js';
 import Toast from 'react-native-toast-message';
 import { FetchPreloadDataAction, UpdateProfilAction } from '../../../reducers/actions/index.js';
 import { profilstyle } from '../../../assets/styles/profil.js';
+import { switchProfilHomeAction } from '../../../navigations/rootNavigation.js';
 
 class UpdateProfil extends PureComponent {
     constructor(props){
@@ -44,8 +45,7 @@ class UpdateProfil extends PureComponent {
     }
 
     _navigateToProfil = () => {
-        const { navigation } = this.props;
-        navigation.goBack();
+        switchProfilHomeAction(true);
     }
 
     _toggleCountry = (item) => {
@@ -224,7 +224,8 @@ class UpdateProfil extends PureComponent {
 const mapDispatchToProps = (dispatch) => {
     return {
         ...bindActionCreators({
-            FetchPreloadDataAction
+            FetchPreloadDataAction,
+            switchProfilHomeAction
         }, dispatch),
     }
 };

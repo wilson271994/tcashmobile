@@ -22,12 +22,6 @@ class HomeIndex extends PureComponent {
     };
 
     componentDidMount(){
-        this._fechtData();
-    } 
-
-    _fechtData = async () => {
-        const {user_token} = this.props;
-        GetUserInfoAction(user_token);
     } 
 
     _onRefresh = async () => { 

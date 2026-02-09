@@ -1,14 +1,13 @@
 import axios from 'axios';
 import { store } from '../store';
-import { BASE_URL, SERVER_KEY, headerRequest } from '../../api/config';
+import { BASE_URL, headerRequest } from '../../api/config';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import {
     AUTH_ERROR_MESSAGE,
     FAQ_LIST,
     IS_AUTHENTICATED,
-    IS_AUTH_ERROR,
-    IS_HEADER, IS_LOADING,
+    IS_LOADING,
     LAST_TRANSACTION,
     SERVICE_LIST,
     SITE_INFOS,
@@ -29,13 +28,6 @@ axiosClient.defaults.onDownloadProgress = headerRequest.onUploadProgress;
 axiosClient.defaults.withCredentials = true;
 
 /**
- * Manage switcher Action
- */
-export const switchHeaderAction = (data) => {
-    store.dispatch({ type: IS_HEADER, value: data });
-}
-
-/**
  * Check If Auth Persist
  */
 export const checkAuthDataAction = async () => {
@@ -43,11 +35,11 @@ export const checkAuthDataAction = async () => {
     const dataToken = await AsyncStorage.getItem('userToken'); 
     if(dataUser && dataToken){
         store.dispatch({type:IS_AUTHENTICATED, value:true});
-        const user_data     = JSON.parse(dataUser);
-        const user_token    = JSON.parse(dataToken);
+        const user_data     = await JSON.parse(dataUser);
+        const user_token    = await JSON.parse(dataToken);
         store.dispatch({type:USER_INFOS, value:user_data});
         store.dispatch({type:USER_TOKEN, value:user_token});
-        GetUserInfoAction(user_token);
+        await GetUserInfoAction(user_token);
     }
     await switchHomePageAction(true);
     await FetchPreloadDataAction();
@@ -88,7 +80,6 @@ export const LoginAction = (postdata) => {
     store.dispatch({ type: IS_LOADING, value: true });
     axiosClient.post(`${BASE_URL}/api/auth`, postdata)
     .then(async (res) => {
-        console.log(res.data)
         const result = res.data.result;
         if (res.data.status === 200) {
             await store.dispatch({ type: USER_TOKEN, value: result.token });

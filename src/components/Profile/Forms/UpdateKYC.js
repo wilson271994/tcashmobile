@@ -10,6 +10,7 @@ import { profilstyle } from '../../../assets/styles/profil.js';
 import { launchImageLibrary } from 'react-native-image-picker';
 import BackgroundImage from 'react-native-elements/dist/config/BackgroundImage.js';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5.js';
+import { switchProfilHomeAction } from '../../../navigations/rootNavigation.js';
 
 const dataidentification = [
     {
@@ -65,8 +66,7 @@ class UpdateProfil extends PureComponent {
     }
 
     _navigateToProfil = () => {
-        const { navigation } = this.props;
-        navigation.goBack();
+        switchProfilHomeAction(true);
     }
 
     _updateKyc = () => {
@@ -273,7 +273,8 @@ class UpdateProfil extends PureComponent {
 const mapDispatchToProps = (dispatch) => {
     return {
         ...bindActionCreators({
-            FetchPreloadDataAction
+            FetchPreloadDataAction,
+            switchProfilHomeAction
         }, dispatch),
     }
 };

@@ -3,13 +3,12 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { View, TouchableOpacity, Text, Image, StatusBar} from "react-native";
 import StackHome from "../navigations/stack/StackHome.js";
-import StackAuth from "../navigations/stack/StackAuth.js"; 
 import { styles } from "../assets/styles/index.js";  
 import StackService from "../navigations/stack/StackService.js";
 import StackTransaction from "../navigations/stack/StackTransaction.js";
-import StackProfil from "../navigations/stack/StackProfil.js";
 import AuthNavigation from "../navigations/AuthNavigation.js";
 import { switchHomePageAction, switchProfilPageAction, switchServicePageAction, switchTransactionPageAction } from "../navigations/rootNavigation.js";
+import ProfilNavigation from "../navigations/ProfilNavigation.js";
 
 class BaseContainer extends Component { 
         constructor(props) {
@@ -115,7 +114,7 @@ class BaseContainer extends Component {
                                 }
                                 {
                                     is_profil_page ?
-                                        <StackProfil />
+                                        <ProfilNavigation />
                                     : null
                                 }
                             </>

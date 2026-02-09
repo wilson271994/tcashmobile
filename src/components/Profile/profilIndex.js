@@ -13,6 +13,7 @@ import cover from '../../assets/images/biblio.jpg';
 import { profilstyle } from '../../assets/styles/profil.js'; 
 import { store } from '../../reducers/store.js';
 import AwesomeAlert from 'react-native-awesome-alerts';
+import { switchProfilFaqAction, switchProfilHomeAction, switchProfilUpdateInfoAction, switchProfilUpdateKycAction, switchProfilUpdateNotifAction } from '../../navigations/rootNavigation.js';
 
 class ProfilIndex extends PureComponent {
     constructor(props) {
@@ -26,7 +27,7 @@ class ProfilIndex extends PureComponent {
     };
 
     componentDidMount(){
-
+        switchProfilHomeAction(true); 
     }
 
     _toggleLogout = () => {
@@ -58,15 +59,11 @@ class ProfilIndex extends PureComponent {
     }
 
     _navigateToProfilUpdate = () => {
-        const { navigation } = this.props;
-        store.dispatch({ type: ROOT_NAVIGATION, value: navigation });
-        navigation.navigate('UpdateProfil');
+        switchProfilUpdateInfoAction(true);
     }
 
     _navigateToNotifyUpdate = () => {
-        const { navigation } = this.props;
-        store.dispatch({ type: ROOT_NAVIGATION, value: navigation });
-        navigation.navigate('UpdateNotify');
+        switchProfilUpdateNotifAction(true);
     }
 
     _navigateToSupport = () => {
@@ -76,15 +73,11 @@ class ProfilIndex extends PureComponent {
     }
 
     _navigateToFaq = () => {
-        const { navigation } = this.props;
-        store.dispatch({ type: ROOT_NAVIGATION, value: navigation });
-        navigation.navigate('SupportFaq');
+        switchProfilFaqAction(true);
     }
 
     _navigateToKYC = () => {
-        const { navigation } = this.props;
-        store.dispatch({ type: ROOT_NAVIGATION, value: navigation });
-        navigation.navigate('UpdateKYC');
+        switchProfilUpdateKycAction(true); 
     }
 
 

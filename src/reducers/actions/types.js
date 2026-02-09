@@ -47,6 +47,15 @@ export const SET_SIGNUP1_FORM           = 'SET_SIGNUP1_FORM';
 export const SET_SIGNUP2_FORM           = 'SET_SIGNUP2_FORM';
 export const SET_ACTIVATION_FORM        = 'SET_ACTIVATION_FORM';
 
+//Profil Routing
+export const SET_PROFIL_HOME            = 'SET_PROFIL_HOME';
+export const SET_PROFIL_UPDATE_INFO     = 'SET_PROFIL_UPDATE_INFO';
+export const SET_PROFIL_UPDATE_KYC      = 'SET_PROFIL_UPDATE_KYC';
+export const SET_PROFIL_UPDATE_NOTIF    = 'SET_PROFIL_UPDATE_NOTIF';
+export const SET_PROFIL_WALLETS         = 'SET_PROFIL_WALLETS';
+export const SET_PROFIL_FAQ             = 'SET_PROFIL_FAQ';
+export const SET_PROFIL_REFERAL         = 'SET_PROFIL_REFERAL';
+
 //LIST ACTION
 export const LAST_TRANSACTION           = 'LAST_TRANSACTION';
 export const USER_LIST                  = 'USER_LIST';

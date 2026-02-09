@@ -7,6 +7,7 @@ import { supportstyle } from '../../assets/styles/support';
 import { FaqListAction } from '../../reducers/actions';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 import HTMLView from 'react-native-htmlview';
+import { switchProfilHomeAction } from '../../navigations/rootNavigation';
 
 class SupportFaq extends PureComponent {
     constructor(props){
@@ -32,9 +33,8 @@ class SupportFaq extends PureComponent {
         this._fechtData().then(() => {this.setState({refreshing:false})})
     }
 
-    _backToHome = () => {
-        const {root_navigation} = this.props;
-        root_navigation.goBack();
+    _backToProfil = () => {
+        switchProfilHomeAction(true);
     }
 
     _toggleContentFaq = (data) => {
@@ -48,7 +48,7 @@ class SupportFaq extends PureComponent {
     _renderItem = (item) => {
         const {visibleFaqContent, selectedItem} = this.state;
         return (
-            <View style={supportstyle.faqItemcard}>
+            <View style={supportstyle.faqItemcard}> 
                 <View style={supportstyle.faqItem}>
                     <View style={supportstyle.fapitemtext}>
                         <Text style={supportstyle.faqquestiontext}>{item.subject}</Text>
@@ -113,7 +113,7 @@ class SupportFaq extends PureComponent {
                 >
                     <View style={supportstyle.headefaq}>
                             <TouchableOpacity 
-                                onPress={this._backToHome}
+                                onPress={this._backToProfil}
                                 style={supportstyle.backbtn}>
                                 <Image source={require('../../assets/images/back.png')} style={supportstyle.backicon} />
                             </TouchableOpacity>
@@ -144,6 +144,7 @@ class SupportFaq extends PureComponent {
 const mapDispatchToProps = (dispatch) => {
     return {
         ...bindActionCreators({
+            switchProfilHomeAction,
         }, dispatch),
     }
 };

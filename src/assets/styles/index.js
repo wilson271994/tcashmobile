@@ -508,7 +508,6 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         padding: 15,
-        marginTop:40
     },
     container_pp:{
         width:'20%'

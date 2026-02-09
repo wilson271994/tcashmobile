@@ -7,6 +7,7 @@ import { styles } from '../../../assets/styles/index.js';
 import Toast from 'react-native-toast-message';
 import { profilstyle } from '../../../assets/styles/profil.js';
 import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5.js';
+import { switchProfilHomeAction } from '../../../navigations/rootNavigation.js';
 
 class UpdateNotify extends PureComponent {
     constructor(props){
@@ -38,8 +39,7 @@ class UpdateNotify extends PureComponent {
     }
 
     _navigateToProfil = () => {
-        const { navigation } = this.props;
-        navigation.goBack();
+        switchProfilHomeAction(true);
     }
 
     _toggleReceiveAnounce = () => {
@@ -241,7 +241,8 @@ class UpdateNotify extends PureComponent {
 const mapDispatchToProps = (dispatch) => {
     return {
         ...bindActionCreators({
-            UpdateNotificationPermissionAction
+            UpdateNotificationPermissionAction,
+            switchProfilHomeAction
         }, dispatch),
     }
 };

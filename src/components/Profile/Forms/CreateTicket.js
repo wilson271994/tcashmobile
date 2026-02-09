@@ -237,19 +237,19 @@ class CreateTicket extends PureComponent {
                             <Button title="Associer une image" onPress={this.chooseImage}  />
                         </View>
                     </View>
-              
-              <View style={supportstyle.footerlogin}> 
-                    <TouchableOpacity 
-                        style={supportstyle.btn}
-                        >
-                        <Text style={supportstyle.textbtnsubmit}>
-                            
-                            Envoyer
-                            
-                        </Text>
-                        <MaterialCommunityIcons size={25}  color='#ECB818' name='send' style={supportstyle.icon} />
-                    </TouchableOpacity>
-                </View>
+
+                    <View style={supportstyle.footerlogin}> 
+                        <TouchableOpacity 
+                            style={supportstyle.btn}
+                            >
+                            <Text style={supportstyle.textbtnsubmit}>
+                                
+                                Envoyer
+                                
+                            </Text>
+                            <MaterialCommunityIcons size={25}  color='#ECB818' name='send' style={supportstyle.icon} />
+                        </TouchableOpacity>
+                    </View>
                 </ScrollView>
             </Modal>
 

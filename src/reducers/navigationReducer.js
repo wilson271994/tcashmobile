@@ -1,4 +1,4 @@
-import { IS_HEADER, PAGE_TITLE, ROOT_NAVIGATION, SET_ACTIVATION_FORM, SET_HOME_PAGE, SET_LOGIN_FORM, SET_PROFIL_PAGE, SET_SERVICE_PAGE, SET_SIGNUP1_FORM, SET_SIGNUP2_FORM, SET_TRANSACTION_PAGE } from "./actions/types"
+import { IS_HEADER, PAGE_TITLE, ROOT_NAVIGATION, SET_ACTIVATION_FORM, SET_HOME_PAGE, SET_LOGIN_FORM, SET_PROFIL_FAQ, SET_PROFIL_HOME, SET_PROFIL_PAGE, SET_PROFIL_REFERAL, SET_PROFIL_UPDATE_INFO, SET_PROFIL_UPDATE_KYC, SET_PROFIL_UPDATE_NOTIF, SET_SERVICE_PAGE, SET_SIGNUP1_FORM, SET_SIGNUP2_FORM, SET_TRANSACTION_PAGE } from "./actions/types"
 
 
 const initialState = {
@@ -15,6 +15,14 @@ const initialState = {
     is_signup1_form     : false,
     is_signup2_form     : false,
     is_activation_form  : false,
+
+    //Profil
+    is_profil_home          : true,
+    is_profil_update_info   : false,
+    is_profil_update_notif  : false,
+    is_profil_update_kyc    : false,
+    is_profil_faq           : false,
+    is_profil_referal       : false
 }
 
 const navigationReducer = ( state = initialState, action ) => {
@@ -81,6 +89,43 @@ const navigationReducer = ( state = initialState, action ) => {
             return {
                 ...state,
                 is_activation_form: action.value
+            }
+
+        //Profil
+        case SET_PROFIL_HOME:
+            return {
+                ...state, 
+                is_profil_home: action.value
+            }
+
+        case SET_PROFIL_UPDATE_INFO:
+            return {
+                ...state, 
+                is_profil_update_info: action.value
+            }
+
+        case SET_PROFIL_UPDATE_KYC:
+            return {
+                ...state, 
+                is_profil_update_kyc: action.value
+            }
+
+        case SET_PROFIL_UPDATE_NOTIF:
+            return {
+                ...state, 
+                is_profil_update_notif: action.value
+            }
+
+        case SET_PROFIL_FAQ:
+            return {
+                ...state, 
+                is_profil_faq: action.value
+            }
+
+        case SET_PROFIL_REFERAL:
+            return {
+                ...state, 
+                is_profil_referal: action.value
             }
 
         default:

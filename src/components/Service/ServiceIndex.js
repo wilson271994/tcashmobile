@@ -33,8 +33,8 @@ class ServiceIndex extends PureComponent {
     } 
 
     _fechtData = async () => {
-        await switchHeaderAction(true);  
     } 
+    
     _navigateToBookDetail = () => {
         const {navigation} = this.props;
         store.dispatch({type:ROOT_NAVIGATION, value:navigation});
